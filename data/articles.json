@@ -266,10 +266,10 @@
     "featured": false
   },
   {
-    "id": "jiashangzhou",
+    "id": "xiashangzhou",
     "title": "宅兹中国",
-    "subtitle": "Jia Shang Zhou",
-    "file": "jiashangzhou.pdf",
+    "subtitle": "Xia Shang Zhou",
+    "file": "xiashangzhou.pdf",
     "type": "pdf",
     "categories": [
       "museum-guides"
