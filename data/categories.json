@@ -30,5 +30,13 @@
     "description": "市场、投资、资产与个人金融知识",
     "accent": "#7A6A45",
     "order": 4
+  },
+  {
+    "id": "museum-guides",
+    "name": "博物馆手册",
+    "nameEn": "Museum Guides",
+    "description": "博物馆、展览与文化机构的导览册、展览手册与图录",
+    "accent": "#8A654A",
+    "order": 5
   }
 ]
