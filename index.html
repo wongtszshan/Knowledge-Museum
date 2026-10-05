@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
   <link rel="apple-touch-startup-image" href="assets/splash/startup-image.png">
   <link rel="icon" type="image/png" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css?v=20261005-3">
   <style>
     #app-splash{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#f7f3ea url('assets/splash/background.png') center/cover no-repeat;opacity:1;visibility:visible;transition:opacity .38s ease,visibility .38s ease}
     #app-splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -74,7 +74,7 @@
     <footer>KNOWLEDGE MUSEUM · Curated by you · GitHub Pages ready</footer>
   </div>
 
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/app.js?v=20261005-3"></script>
   <script>
     (()=>{const s=document.getElementById('app-splash');const hide=()=>{if(!s)return;s.classList.add('is-hidden');setTimeout(()=>s.remove(),450)};if(sessionStorage.getItem('km-splash-shown'))s?.remove();else{sessionStorage.setItem('km-splash-shown','1');addEventListener('load',()=>setTimeout(hide,650),{once:true});setTimeout(hide,1800)}})();
     if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
