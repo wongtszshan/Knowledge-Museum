@@ -79,16 +79,59 @@ function bindRandom(){
 function renderHome(){
   const grid=$('#categoryGrid');
   const cats=[...state.categories].sort((a,b)=>(a.order||999)-(b.order||999));
+
+  const categoryCount=c=>state.articles.filter(a=>(a.categories||[]).includes(c.id)).length;
+  const homeCard=(c,i)=>`<a class="category home-category-card" href="${categoryUrl(c.id)}">
+    <div class="num">${String(i+1).padStart(2,'0')} · ${categoryCount(c)} EXHIBITS</div>
+    <h3>${c.name}</h3>
+    <p>${c.nameEn}</p>
+  </a>`;
+
   if(grid){
-    grid.innerHTML=cats.map((c,i)=>{
-      const count=state.articles.filter(a=>(a.categories||[]).includes(c.id)).length;
-      return `<a class="category" href="${categoryUrl(c.id)}" style="text-align:left">
-        <div class="num">${String(i+1).padStart(2,'0')} · ${count} EXHIBITS</div>
-        <h3>${c.name}</h3>
-        <p>${c.nameEn}<br>${c.description||''}</p>
-      </a>`;
-    }).join('');
+    grid.innerHTML=cats.slice(0,6).map(homeCard).join('');
   }
+
+  const modal=$('#collectionsModal');
+  const list=$('#collectionsList');
+  const modalSearch=$('#collectionsSearch');
+
+  const renderAllCollections=()=>{
+    if(!list)return;
+    const q=(modalSearch?.value||'').trim().toLowerCase();
+    const filtered=cats.filter(c=>
+      !q || [c.name,c.nameEn,c.description,c.id].join(' ').toLowerCase().includes(q)
+    );
+    list.innerHTML=filtered.length
+      ? filtered.map(c=>`<a class="collection-list-item" href="${categoryUrl(c.id)}">
+          <div>
+            <strong>${c.name}</strong>
+            <span>${c.nameEn}</span>
+          </div>
+          <em>${categoryCount(c)}</em>
+        </a>`).join('')
+      : '<div class="empty">没有找到匹配的分类。</div>';
+  };
+
+  const openCollections=()=>{
+    if(!modal)return;
+    renderAllCollections();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    setTimeout(()=>modalSearch?.focus(),120);
+  };
+  const closeCollections=()=>{
+    if(!modal)return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+  };
+
+  $('#allCollectionsBtn')?.addEventListener('click',openCollections);
+  $('#collectionsClose')?.addEventListener('click',closeCollections);
+  $('#collectionsBackdrop')?.addEventListener('click',closeCollections);
+  modalSearch?.addEventListener('input',renderAllCollections);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal?.classList.contains('open'))closeCollections()});
 
   renderRows('#recentList',sortRecent(state.articles).slice(0,6));
   renderRows('#featuredList',state.articles.filter(a=>a.featured).slice(0,6),'暂时还没有精选展品。');
