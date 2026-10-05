@@ -1,5 +1,34 @@
 [
-  {"id":"history","name":"历史与文明","nameEn":"History & Civilization","description":"制度、社会、文化与文明变迁","accent":"#B16A3B","order":1},
-  {"id":"science","name":"科学与原理","nameEn":"Science & Principles","description":"物理、自然现象与可视化演示","accent":"#0E8F83","order":2},
-  {"id":"nature","name":"自然与生命","nameEn":"Nature & Life","description":"植物、生物与自然结构","accent":"#5D8A55","order":3}
+  {
+    "id": "history",
+    "name": "历史与文明",
+    "nameEn": "History & Civilization",
+    "description": "制度、社会、文化与文明变迁",
+    "accent": "#B16A3B",
+    "order": 1
+  },
+  {
+    "id": "science",
+    "name": "科学与原理",
+    "nameEn": "Science & Principles",
+    "description": "物理、自然现象与可视化演示",
+    "accent": "#0E8F83",
+    "order": 2
+  },
+  {
+    "id": "nature",
+    "name": "自然与生命",
+    "nameEn": "Nature & Life",
+    "description": "植物、生物与自然结构",
+    "accent": "#5D8A55",
+    "order": 3
+  },
+  {
+    "id": "finance",
+    "name": "金融与投资",
+    "nameEn": "Finance & Investing",
+    "description": "市场、投资、资产与个人金融知识",
+    "accent": "#7A6A45",
+    "order": 4
+  }
 ]
