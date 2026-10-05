@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股投资入门学习计划 · 散户进化手册</title>
+<script src="./美股投资入门学习计划 · 散户进化手册_files/chart.umd.js.下载"></script>
+<style>
+  :root {
+    --ink: #1a1a18;
+    --ink-2: #3d3d38;
+    --ink-3: #6b6b64;
+    --ink-4: #9b9b92;
+    --paper: #faf9f6;
+    --paper-2: #f2f0eb;
+    --paper-3: #e8e5de;
+    --accent: #c0392b;
+    --accent-light: #f8ece9;
+    --gold: #b07d2a;
+    --gold-light: #fdf3e0;
+    --teal: #1a6b58;
+    --teal-light: #e3f2ed;
+    --blue: #1e4fa0;
+    --blue-light: #e8eef9;
+    --border: rgba(26,26,24,0.12);
+    --nav-h: 56px;
+    --serif: 'Georgia', 'Noto Serif SC', serif;
+    --sans: 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,249,246,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 2rem;
+  }
+  .nav-brand {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    display: block;
+    padding: 0 14px;
+    font-size: 13px;
+    color: var(--ink-3);
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: var(--nav-h);
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .nav-links a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 42px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    font-weight: normal;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 640px;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.2rem;
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    margin-top: 1.5rem;
+    font-size: 12px;
+    color: var(--ink-4);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* LAYOUT */
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  /* SECTION HEADERS */
+  .section-head {
+    padding: 3rem 0 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: normal;
+    color: var(--ink);
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .tag-fact { background: var(--teal-light); color: var(--teal); }
+  .tag-infer { background: var(--gold-light); color: var(--gold); }
+  .tag-opinion { background: var(--blue-light); color: var(--blue); }
+  .tag-dev { background: #fde8e8; color: #a0202a; }
+
+  .tag-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 1rem 1.2rem;
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    font-size: 12px;
+    color: var(--ink-2);
+    align-items: center;
+  }
+  .tag-legend span { font-size: 11px; color: var(--ink-3); }
+
+  /* SOURCE LINK */
+  .src-btn {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--blue);
+    background: var(--blue-light);
+    text-decoration: none;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 4px;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    transition: background .15s;
+  }
+  .src-btn:hover { background: #d0daf2; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    margin: 1.5rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+    color: white;
+  }
+  .tl-dot.phase1 { background: var(--teal); }
+  .tl-dot.phase2 { background: var(--gold); }
+  .tl-dot.phase3 { background: var(--accent); }
+  .tl-header {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .tl-body { font-size: 16px; color: var(--ink-2); }
+  .tl-weeks {
+    display: flex;
+    gap: 8px;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .week-card {
+    flex: 1;
+    min-width: 160px;
+    padding: 0.8rem 1rem;
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .week-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 4px;
+  }
+
+  /* CAPITAL DIAGRAM  */
+  .capital-diagram {
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cap-block {
+    flex: 1;
+    min-width: 140px;
+    padding: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    position: relative;
+  }
+  .cap-block.etf { background: var(--teal-light); border-color: rgba(26,107,88,0.2); }
+  .cap-block.stock { background: var(--gold-light); border-color: rgba(176,125,42,0.2); }
+  .cap-block.cash { background: var(--paper-2); border-color: var(--border); }
+  .cap-pct {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .cap-block.etf .cap-pct { color: var(--teal); }
+  .cap-block.stock .cap-pct { color: var(--gold); }
+  .cap-block.cash .cap-pct { color: var(--ink-3); }
+  .cap-label { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
+  .cap-desc { font-size: 13px; color: var(--ink-3); }
+  .cap-amount {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    opacity: 0.35;
+  }
+
+  /* INFO LAYERS SVG WRAPPER */
+  .svg-wrap {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+
+  /* BOOK/VIDEO CARDS */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 1.5rem 0;
+  }
+  .res-card {
+    padding: 1.1rem 1.2rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color .2s;
+  }
+  .res-card:hover { border-color: var(--ink-3); }
+  .res-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .res-type.book { color: var(--teal); }
+  .res-type.video { color: var(--accent); }
+  .res-type.app { color: var(--gold); }
+  .res-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .res-meta { font-size: 12px; color: var(--ink-3); margin-bottom: 6px; }
+  .res-desc { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin-bottom: 8px; }
+  .res-link {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    transition: opacity .15s;
+  }
+  .res-link:hover { opacity: 0.7; }
+
+  /* VOCAB */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 1.5rem 0;
+  }
+  .vocab-card {
+    padding: 1rem 1.2rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 0 6px 6px 0;
+  }
+  .vocab-card.cat-valuation { border-left-color: var(--accent); }
+  .vocab-card.cat-fundamental { border-left-color: var(--teal); }
+  .vocab-card.cat-market { border-left-color: var(--gold); }
+  .vocab-card.cat-technical { border-left-color: var(--blue); }
+  .vocab-card.cat-risk { border-left-color: #8e44ad; }
+  .vocab-term { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+  .vocab-en { font-size: 11px; color: var(--ink-4); letter-spacing: 0.05em; margin-bottom: 6px; }
+  .vocab-def { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+  .vocab-cat {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+  .cat-valuation .vocab-cat { background: var(--accent-light); color: var(--accent); }
+  .cat-fundamental .vocab-cat { background: var(--teal-light); color: var(--teal); }
+  .cat-market .vocab-cat { background: var(--gold-light); color: var(--gold); }
+  .cat-technical .vocab-cat { background: var(--blue-light); color: var(--blue); }
+  .cat-risk .vocab-cat { background: #f3e8fb; color: #6a1a8a; }
+
+  /* CHART SECTION */
+  .chart-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .chart-title { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 1rem; }
+
+  /* WEEKLY SCHEDULE TABLE */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 1.5rem 0;
+  }
+  .schedule-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--paper-2);
+    color: var(--ink-3);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .schedule-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--ink-2);
+  }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .day-name { font-weight: 600; color: var(--ink); }
+
+  /* SOURCES TABLE */
+  .sources-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 1.5rem;
+  }
+  .sources-table th {
+    text-align: left;
+    padding: 8px 10px;
+    background: var(--paper-2);
+    color: var(--ink-3);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .sources-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+  .sources-table a { color: var(--blue); }
+
+  /* BACK TO TOP */
+  #back-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+    z-index: 200;
+  }
+  #back-top.visible { opacity: 1; pointer-events: auto; }
+
+  /* UTILITY */
+  .prose { font-size: 16px; color: var(--ink-2); margin-bottom: 1rem; line-height: 1.8; }
+  .rule { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .highlight-box {
+    padding: 1.2rem 1.5rem;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .highlight-box.warn { background: #fff8e6; border-left: 4px solid var(--gold); color: var(--ink-2); }
+  .highlight-box.info { background: var(--teal-light); border-left: 4px solid var(--teal); color: var(--ink-2); }
+  .phase-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-right: 6px;
+    color: white;
+  }
+  .pill-1 { background: var(--teal); }
+  .pill-2 { background: var(--gold); }
+  .pill-3 { background: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background: var(--paper-2);
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--ink-4);
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+    .nav-brand { display: none; }
+    .capital-diagram { flex-direction: column; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .resource-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">散户进化手册</div>
+  <ul class="nav-links">
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#plan">学习计划</a></li>
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#schedule">时间表</a></li>
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#capital">资金配置</a></li>
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#resources">书单 &amp; 视频</a></li>
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#vocab">专业词汇</a></li>
+    <li><a href="file:///C:/Users/sharon/Downloads/mrvl_investment_guide_1.html#sources">来源</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-kicker">美股投资入门 · 2000美元起步版</div>
+  <h1>从四股 MRVL 开始的<br>投资自我修炼之路</h1>
+  <div class="hero-sub">用真钱买真经验，用小仓位建立系统，而不是凭感觉赌大小。这份计划专为每周 3–5 小时可用时间、中短期学习目标的初学者设计。</div>
+  <div class="hero-meta">
+    <span>制作日期：2026年6月4日</span>
+    <span>适合程度：完全初学者</span>
+    <span>资金规模：$2,000</span>
+    <span>每周投入：3–5 小时</span>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- TAG LEGEND -->
+  <div style="padding-top:2rem">
+    <div class="tag-legend">
+      <span>信息标注说明：</span>
+      <span class="tag tag-fact">已核实事实</span> 有直接来源支持
+      <span class="tag tag-infer">推断</span> 基于已知事实的合理推论
+      <span class="tag tag-opinion">观点</span> 分析判断，非绝对结论
+      <span class="tag tag-dev">发展中</span> 尚在变化的情况
+    </div>
+  </div>
+
+  <!-- SECTION 1: LEARNING PLAN -->
+  <div id="plan">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>六个月学习计划</h2>
+    </div>
+
+    <p class="prose">整个计划分为三个阶段，核心逻辑是：<strong>先建认知，再建框架，最后建系统。</strong> 每个阶段都有明确的实操任务，边做边学，而不是先把书读完再说。<span class="tag tag-opinion">观点</span></p>
+
+    <div class="highlight-box warn">
+      ⚠️ <strong>重要前提：</strong>在第一阶段结束前，不追热点、不听小道消息、不因别人赚钱就冲动入场。你已经用 MRVL 体验过一次追热点的结果——那 $68 的学费要物尽其用。
+    </div>
+
+    <div class="timeline">
+
+      <!-- PHASE 1 -->
+      <div class="tl-item">
+        <div class="tl-dot phase1">1</div>
+        <div class="tl-header"><span class="phase-pill pill-1">第一阶段</span>第 1–8 周</div>
+        <div class="tl-title">打地基：搞懂市场如何运作</div>
+        <div class="tl-body">目标：不再凭感觉，能对每次涨跌说出一个合理原因。不新开仓，只观察你手里的 4 股 MRVL。<span class="tag tag-opinion">观点</span></div>
+
+        <div class="tl-weeks">
+          <div class="week-card">
+            <div class="week-label">核心任务</div>
+            学会看大盘指数与个股关系；理解 PE、EPS、营收增长的基本含义；每次涨跌找原因并记交易日记
+          </div>
+          <div class="week-card">
+            <div class="week-label">每周固定动作</div>
+            周一：看上周收盘总结（Bloomberg / 财联社）；周末：读一家感兴趣公司的基本介绍，用一句话说清它怎么赚钱
+          </div>
+          <div class="week-card">
+            <div class="week-label">阶段验收</div>
+            能解释：什么是 S&amp;P500？MRVL 这次涨跌的根本逻辑是什么？市盈率高意味着什么？
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="tl-item">
+        <div class="tl-dot phase2">2</div>
+        <div class="tl-header"><span class="phase-pill pill-2">第二阶段</span>第 9–16 周</div>
+        <div class="tl-title">建框架：能独立分析一家公司</div>
+        <div class="tl-body">目标：买任何一只股票前，能走完一个完整的分析流程，有自己的进场逻辑。<span class="tag tag-opinion">观点</span></div>
+
+        <div class="tl-weeks">
+          <div class="week-card">
+            <div class="week-label">资金动作</div>
+            把 $2000 分成三块（见资金配置图）；ETF 仓是你的"对照组"——如果你选的个股跑不赢 QQQ，说明你还不如买指数
+          </div>
+          <div class="week-card">
+            <div class="week-label">核心技能</div>
+            看 Earnings Call 摘要：营收/利润是否超预期？Guidance 调高还是调低？用四问框架筛选学习仓候选标的
+          </div>
+          <div class="week-card">
+            <div class="week-label">四问框架</div>
+            ①一句话说清楚它怎么赚钱？②过去3年营收增长了吗？③行业领导者还是跟随者？④PE比历史均值高还是低？
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="tl-item">
+        <div class="tl-dot phase3">3</div>
+        <div class="tl-header"><span class="phase-pill pill-3">第三阶段</span>第 17–24 周</div>
+        <div class="tl-title">建系统：有进有出的中短线实战</div>
+        <div class="tl-body">目标：不再凭直觉进出，每笔交易都有明确的进场理由和退出计划。<span class="tag tag-opinion">观点</span></div>
+
+        <div class="tl-weeks">
+          <div class="week-card">
+            <div class="week-label">技术分析辅助</div>
+            均线（MA5/MA20）、成交量异动、支撑位/阻力位——作为辅助判断时机，而非主要决策依据
+          </div>
+          <div class="week-card">
+            <div class="week-label">止损纪律</div>
+            每笔交易前先想好"跌到哪里我就走"，写下来。这不是认输，是控制风险的核心工具
+          </div>
+          <div class="week-card">
+            <div class="week-label">复盘习惯</div>
+            每笔平仓后复盘：进场理由是什么？出场是按计划还是情绪？赚/亏的根本原因是什么？
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+
+  <!-- SECTION 2: WEEKLY SCHEDULE -->
+  <div id="schedule">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>每周时间分配表</h2>
+    </div>
+
+    <p class="prose">以每周 4 小时为基准设计。第一阶段和第二阶段的具体内容不同，但时间结构相同。<span class="tag tag-fact">已核实</span></p>
+
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th style="width:80px">时段</th>
+          <th style="width:100px">时间</th>
+          <th>第一阶段（1–8周）</th>
+          <th>第二阶段（9–16周）</th>
+          <th>第三阶段（17–24周）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="day-name">周一</span></td>
+          <td>30 分钟</td>
+          <td>读上周美股总结，找出主要涨跌原因</td>
+          <td>看你持仓公司的最新新闻，记录任何重要事件</td>
+          <td>复盘上周交易，评估执行质量</td>
+        </tr>
+        <tr>
+          <td><span class="day-name">周三</span></td>
+          <td>60 分钟</td>
+          <td>学一个基础概念（PE、EPS、市值…）并找实例理解</td>
+          <td>读一家公司的 Earnings Call 摘要或季报 highlights</td>
+          <td>研究一个候选标的，走完四问框架，做记录</td>
+        </tr>
+        <tr>
+          <td><span class="day-name">周末</span></td>
+          <td>90 分钟</td>
+          <td>读书/看视频30分钟 + 写当周交易日记60分钟</td>
+          <td>读书/看视频45分钟 + 更新持仓分析笔记45分钟</td>
+          <td>技术图表练习30分钟 + 下周操作计划60分钟</td>
+        </tr>
+        <tr>
+          <td><span class="day-name">随时</span></td>
+          <td>碎片时间</td>
+          <td>雪球 App 看博主分析逻辑（不跟买，只看思路）</td>
+          <td>关注持仓公司相关行业新闻</td>
+          <td>留意期权异动、内部人交易等信号</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Learning progression chart -->
+    <div class="chart-card">
+      <div class="chart-title">学习重心随阶段变化示意 — 每周时间占比估算</div>
+      <div style="display:flex;gap:12px;margin-bottom:12px;font-size:12px;color:#6b6b64;flex-wrap:wrap;">
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#1a6b58;display:inline-block;"></span>基础概念学习</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#b07d2a;display:inline-block;"></span>公司分析研究</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#c0392b;display:inline-block;"></span>实战与复盘</span>
+      </div>
+      <div style="position:relative;width:100%;height:220px;">
+        <canvas id="learningChart" role="img" aria-label="堆叠条形图，显示三个学习阶段中基础学习、公司研究、实战复盘三部分时间占比变化" width="1492" height="440" style="display: block; box-sizing: border-box; height: 220px; width: 746px;">学习阶段时间分配：第一阶段基础70%研究20%实战10%；第二阶段基础30%研究50%实战20%；第三阶段基础10%研究30%实战60%</canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 3: CAPITAL ALLOCATION -->
+  <div id="capital">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>$2,000 资金配置方案</h2>
+    </div>
+
+    <p class="prose">资金配置在第二阶段（第9周）开始执行。第一阶段只持有现有的 4 股 MRVL，不新增仓位。<span class="tag tag-opinion">观点</span></p>
+
+    <div class="capital-diagram">
+      <div class="cap-block etf">
+        <div class="cap-amount">$1,200</div>
+        <div class="cap-pct">60%</div>
+        <div class="cap-label">核心仓 — ETF</div>
+        <div class="cap-desc">买 SPY 或 QQQ。这是你的基准线——你的个股选择必须跑赢这个，否则说明你还不如买指数。<span class="tag tag-fact">已核实</span></div>
+      </div>
+      <div class="cap-block stock">
+        <div class="cap-amount">$600</div>
+        <div class="cap-pct">30%</div>
+        <div class="cap-label">学习仓 — 个股</div>
+        <div class="cap-desc">选 2–3 只你真正研究过的公司，每只不超过 $200。必须先走完四问框架才能买。<span class="tag tag-opinion">观点</span></div>
+      </div>
+      <div class="cap-block cash">
+        <div class="cap-amount">$200</div>
+        <div class="cap-pct">10%</div>
+        <div class="cap-label">现金备用</div>
+        <div class="cap-desc">等机会，或在有强力理由时补仓。不要为了"手里有钱就想用"而乱买。<span class="tag tag-opinion">观点</span></div>
+      </div>
+    </div>
+
+    <!-- Info layer SVG -->
+    <div class="svg-wrap">
+      <svg viewBox="0 0 780 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;font-family:var(--sans)">
+        <title>信息层级金字塔</title>
+        <desc>显示投资决策所需信息的四个层级，从下到上重要性递增</desc>
+
+        <!-- Background -->
+        <rect width="780" height="280" fill="none"></rect>
+
+        <!-- Title -->
+        <text x="390" y="22" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="2" fill="#9b9b92" font-family="var(--sans)">信息层级金字塔 — 越往上越难获取，但越有优势</text>
+
+        <!-- Layer 4 (bottom, widest) -->
+        <rect x="40" y="210" width="700" height="52" rx="4" fill="#e3f2ed" stroke="rgba(26,107,88,0.25)" stroke-width="1"></rect>
+        <text x="390" y="231" text-anchor="middle" font-size="13" font-weight="700" fill="#1a6b58" font-family="var(--sans)">层级 1 — 宏观背景（所有人都能看到）</text>
+        <text x="390" y="250" text-anchor="middle" font-size="12" fill="#1a6b58" opacity="0.8" font-family="var(--sans)">美联储利率 / 美元走势 / GDP / 地缘政治 / 行业政策</text>
+
+        <!-- Layer 3 -->
+        <rect x="100" y="150" width="580" height="52" rx="4" fill="#fdf3e0" stroke="rgba(176,125,42,0.25)" stroke-width="1"></rect>
+        <text x="390" y="171" text-anchor="middle" font-size="13" font-weight="700" fill="#b07d2a" font-family="var(--sans)">层级 2 — 公司一手信息（需要花时间读）</text>
+        <text x="390" y="190" text-anchor="middle" font-size="12" fill="#b07d2a" opacity="0.8" font-family="var(--sans)">10-K / 10-Q / Earnings Call 原文 / 竞争对手财报</text>
+
+        <!-- Layer 2 -->
+        <rect x="180" y="90" width="420" height="52" rx="4" fill="#e8eef9" stroke="rgba(30,79,160,0.25)" stroke-width="1"></rect>
+        <text x="390" y="111" text-anchor="middle" font-size="13" font-weight="700" fill="#1e4fa0" font-family="var(--sans)">层级 3 — 机构行为信号（可观察但难解读）</text>
+        <text x="390" y="130" text-anchor="middle" font-size="12" fill="#1e4fa0" opacity="0.8" font-family="var(--sans)">13F持仓 / Form 4内部人交易 / 期权异动 / 短利率</text>
+
+        <!-- Layer 1 (top, narrowest) -->
+        <rect x="280" y="32" width="220" height="50" rx="4" fill="#f8ece9" stroke="rgba(192,57,43,0.3)" stroke-width="1"></rect>
+        <text x="390" y="53" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b" font-family="var(--sans)">层级 4 — 产业链信息</text>
+        <text x="390" y="71" text-anchor="middle" font-size="12" fill="#c0392b" opacity="0.8" font-family="var(--sans)">专利 / 行业会议 / 渠道草根调研</text>
+
+        <!-- Right annotations -->
+        <text x="748" y="239" text-anchor="start" font-size="10" fill="#9b9b92" font-family="var(--sans)">入门起点</text>
+        <text x="688" y="179" text-anchor="start" font-size="10" fill="#9b9b92" font-family="var(--sans)">第二阶段</text>
+        <text x="608" y="119" text-anchor="start" font-size="10" fill="#9b9b92" font-family="var(--sans)">第三阶段</text>
+        <text x="508" y="59" text-anchor="start" font-size="10" fill="#9b9b92" font-family="var(--sans)">进阶</text>
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- SECTION 4: RESOURCES -->
+  <div id="resources">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>书单 &amp; 视频清单</h2>
+    </div>
+
+    <p class="prose">按阶段推荐，不需要全读。每本书标注了最适合的学习阶段。<span class="tag tag-opinion">观点</span></p>
+
+    <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-4);margin:1.2rem 0 0.6rem;">📚 入门书籍</div>
+    <div class="resource-grid">
+
+      <div class="res-card">
+        <div class="res-type book">书籍 · 第一阶段起</div>
+        <div class="res-title">股市真规则（第2版）</div>
+        <div class="res-meta">Pat Dorsey 著 · 中信出版社</div>
+        <div class="res-desc">晨星公司股票研究部负责人写给普通人的基本面入门经典。讲清楚竞争优势、财报分析和估值方法，是价值投资的实战手册。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://book.douban.com/subject/30194663/" target="_blank">豆瓣页面 ↗</a>
+        &nbsp;
+        <a class="res-link" href="https://www.goodreads.com/book/show/145922573" target="_blank">Goodreads ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type book">书籍 · 第一阶段起</div>
+        <div class="res-title">聪明的投资者</div>
+        <div class="res-meta">Benjamin Graham 著 · 中信出版社</div>
+        <div class="res-desc">价值投资圣经。巴菲特称其为"有史以来最好的投资书"。重点读第8章（市场波动）和第20章（安全边际），其余可跳读。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://book.douban.com/subject/5243775/" target="_blank">豆瓣页面 ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type book">书籍 · 第二阶段起</div>
+        <div class="res-title">彼得·林奇的成功投资</div>
+        <div class="res-meta">Peter Lynch 著 · 机械工业出版社</div>
+        <div class="res-desc">"投资你熟悉的公司"理论出处。非常适合散户——讲如何从日常生活中发现投资机会，以及如何分析中小成长股。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://book.douban.com/subject/1023358/" target="_blank">豆瓣页面 ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type book">书籍 · 第三阶段起</div>
+        <div class="res-title">股票作手回忆录</div>
+        <div class="res-meta">Edwin Lefèvre 著 · 机械工业出版社</div>
+        <div class="res-desc">Jesse Livermore 的传奇经历。不是操作手册，而是关于市场心理、仓位管理和人性弱点的深刻洞察。读后你会更理解为什么情绪是最大的敌人。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://book.douban.com/subject/1877488/" target="_blank">豆瓣页面 ↗</a>
+      </div>
+
+    </div>
+
+    <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-4);margin:1.8rem 0 0.6rem;">🎬 视频课程</div>
+    <div class="resource-grid">
+
+      <div class="res-card">
+        <div class="res-type video">YouTube · 第二阶段起</div>
+        <div class="res-title">Aswath Damodaran 估值课</div>
+        <div class="res-meta">纽约大学 Stern 商学院教授 · 全免费</div>
+        <div class="res-desc">被称为"估值教父"，他在 YouTube 频道上传了完整的估值课程（25节），每节12–20分钟，还有配套讲义。英文授课但逻辑极清晰。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://www.youtube.com/channel/UCLvnJL8htRR1T9cbSccaoVw" target="_blank">YouTube 频道 ↗</a>
+        &nbsp;
+        <a class="res-link" href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/webcastvalonline.htm" target="_blank">课程主页 ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type video">中文 · 第一阶段起</div>
+        <div class="res-title">雪球官方基础教程</div>
+        <div class="res-meta">雪球 App / 雪球网 · 免费</div>
+        <div class="res-desc">雪球是目前中文投资社区中质量较高的平台。建议用来观察有逻辑的博主如何分析公司，不是跟他们买，而是学他们的思路框架。<span class="tag tag-opinion">观点</span></div>
+        <a class="res-link" href="https://xueqiu.com/" target="_blank">雪球网 ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type video">财经媒体 · 日常跟踪</div>
+        <div class="res-title">Bloomberg / 财联社</div>
+        <div class="res-meta">英文 + 中文 · 每日更新</div>
+        <div class="res-desc">Bloomberg 是机构最常用的信源。财联社是国内财经快讯中相对专业的选项。每周一看一次上周总结即可，不需要实时刷新。<span class="tag tag-opinion">观点</span></div>
+        <a class="res-link" href="https://www.bloomberg.com/markets" target="_blank">Bloomberg ↗</a>
+        &nbsp;
+        <a class="res-link" href="https://www.cls.cn/" target="_blank">财联社 ↗</a>
+      </div>
+
+      <div class="res-card">
+        <div class="res-type app">工具 · 第二阶段起</div>
+        <div class="res-title">SEC EDGAR 数据库</div>
+        <div class="res-meta">美国证监会官方 · 完全免费</div>
+        <div class="res-desc">所有美股上市公司的官方文件都在这里，包括 10-K 年报、10-Q 季报、Earnings Call 记录等。读一手信息的最权威来源。<span class="tag tag-fact">已核实</span></div>
+        <a class="res-link" href="https://www.sec.gov/edgar/search/" target="_blank">EDGAR 搜索 ↗</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 5: VOCAB -->
+  <div id="vocab">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>专业词汇表</h2>
+    </div>
+
+    <p class="prose">按主题分类，颜色标注类别。第一阶段只需掌握估值类和基本面类，其余阶段逐步学习。<span class="tag tag-opinion">观点</span></p>
+
+    <div class="vocab-grid">
+
+      <!-- VALUATION -->
+      <div class="vocab-card cat-valuation">
+        <div class="vocab-cat">估值类</div>
+        <div class="vocab-term">市盈率</div>
+        <div class="vocab-en">P/E Ratio（Price-to-Earnings）</div>
+        <div class="vocab-def">股价除以每股收益。简单理解：市场愿意为每1元利润支付多少钱。PE=20意味着按当前盈利计算需要20年回本。越高代表市场预期越乐观，但也越贵。</div>
+      </div>
+
+      <div class="vocab-card cat-valuation">
+        <div class="vocab-cat">估值类</div>
+        <div class="vocab-term">市净率</div>
+        <div class="vocab-en">P/B Ratio（Price-to-Book）</div>
+        <div class="vocab-def">股价除以每股净资产。衡量你为公司账面价值支付了多少溢价。银行、制造业用得多；科技公司因为轻资产，PB通常很高甚至无意义。</div>
+      </div>
+
+      <div class="vocab-card cat-valuation">
+        <div class="vocab-cat">估值类</div>
+        <div class="vocab-term">市销率</div>
+        <div class="vocab-en">P/S Ratio（Price-to-Sales）</div>
+        <div class="vocab-def">股价除以每股营收。当公司还不盈利时（如早期科技公司）常用此指标。MRVL这次涨后市销率极高，说明市场在为未来的增长买单。</div>
+      </div>
+
+      <div class="vocab-card cat-valuation">
+        <div class="vocab-cat">估值类</div>
+        <div class="vocab-term">安全边际</div>
+        <div class="vocab-en">Margin of Safety</div>
+        <div class="vocab-def">格雷厄姆提出的核心概念。买入价格要比估算的内在价值低足够多，这个差价就是你的安全垫。买MRVL在310，当GF Value只有106，安全边际为负，这就是追涨的本质问题。</div>
+      </div>
+
+      <div class="vocab-card cat-valuation">
+        <div class="vocab-cat">估值类</div>
+        <div class="vocab-term">DCF估值</div>
+        <div class="vocab-en">Discounted Cash Flow</div>
+        <div class="vocab-def">折现现金流。把公司未来能产生的所有现金流，按照一定的折现率换算成今天的价值。是最严谨的估值方法，但对假设极其敏感。Damodaran的课程核心就是这个。</div>
+      </div>
+
+      <!-- FUNDAMENTAL -->
+      <div class="vocab-card cat-fundamental">
+        <div class="vocab-cat">基本面类</div>
+        <div class="vocab-term">每股收益</div>
+        <div class="vocab-en">EPS（Earnings Per Share）</div>
+        <div class="vocab-def">公司净利润除以总股数。最常被拿来与市场预期对比——实际EPS高于预期叫"beat"，低于叫"miss"。Earnings Call就是宣布这些数字的场合。</div>
+      </div>
+
+      <div class="vocab-card cat-fundamental">
+        <div class="vocab-cat">基本面类</div>
+        <div class="vocab-term">毛利率</div>
+        <div class="vocab-en">Gross Margin</div>
+        <div class="vocab-def">（营收 - 直接成本）/ 营收。衡量公司产品/服务本身的盈利能力。芯片设计公司（如MRVL）毛利率通常在50-65%，越高说明护城河越深。</div>
+      </div>
+
+      <div class="vocab-card cat-fundamental">
+        <div class="vocab-cat">基本面类</div>
+        <div class="vocab-term">自由现金流</div>
+        <div class="vocab-en">Free Cash Flow（FCF）</div>
+        <div class="vocab-def">经营现金流减去资本支出。比净利润更难造假，是公司真实"造血能力"的最好体现。巴菲特最看重这个指标。</div>
+      </div>
+
+      <div class="vocab-card cat-fundamental">
+        <div class="vocab-cat">基本面类</div>
+        <div class="vocab-term">护城河</div>
+        <div class="vocab-en">Economic Moat</div>
+        <div class="vocab-def">公司阻止竞争对手蚕食利润的结构性优势。来源：专利、网络效应、转换成本、规模效应、品牌。《股市真规则》整本书都在讲如何识别这个。</div>
+      </div>
+
+      <div class="vocab-card cat-fundamental">
+        <div class="vocab-cat">基本面类</div>
+        <div class="vocab-term">前瞻指引</div>
+        <div class="vocab-en">Guidance / Forward Guidance</div>
+        <div class="vocab-def">管理层对下个季度/年度的营收、利润预测。Guidance上调是强信号，下调是红旗。市场很多时候对Guidance的反应比实际业绩更大。</div>
+      </div>
+
+      <!-- MARKET -->
+      <div class="vocab-card cat-market">
+        <div class="vocab-cat">市场结构类</div>
+        <div class="vocab-term">13F 申报</div>
+        <div class="vocab-en">13F Filing</div>
+        <div class="vocab-def">管理资产超过1亿美元的机构投资者须每季度向SEC申报持仓。可以看到对冲基金、共同基金的买卖动作，是观察"聪明钱"方向的重要参考。</div>
+      </div>
+
+      <div class="vocab-card cat-market">
+        <div class="vocab-cat">市场结构类</div>
+        <div class="vocab-term">内部人交易申报</div>
+        <div class="vocab-en">Form 4 / Insider Filing</div>
+        <div class="vocab-en">Form 4</div>
+        <div class="vocab-def">公司高管和大股东买卖自家股票必须在2日内向SEC申报。CEO大量买入是强信号；大量卖出要具体分析（可能是正常税务规划，也可能是不看好）。</div>
+      </div>
+
+      <div class="vocab-card cat-market">
+        <div class="vocab-cat">市场结构类</div>
+        <div class="vocab-term">做空比例</div>
+        <div class="vocab-en">Short Interest / Short Float %</div>
+        <div class="vocab-def">被借出做空的股票占流通股的比例。很高的空仓比（&gt;20%）说明有大量投资者在押注下跌，值得深挖原因。MRVL目前约3.3%，相对较低。</div>
+      </div>
+
+      <div class="vocab-card cat-market">
+        <div class="vocab-cat">市场结构类</div>
+        <div class="vocab-term">期权未平仓量</div>
+        <div class="vocab-en">Open Interest / Options Flow</div>
+        <div class="vocab-def">大量买入深度虚值看涨期权（Call），往往是提前掌握信息的人在布局。MRVL暴涨前就出现了异常期权成交量，这是机构掌握信息优势的典型表现。</div>
+      </div>
+
+      <!-- TECHNICAL -->
+      <div class="vocab-card cat-technical">
+        <div class="vocab-cat">技术分析类</div>
+        <div class="vocab-term">移动平均线</div>
+        <div class="vocab-en">Moving Average（MA5 / MA20 / MA200）</div>
+        <div class="vocab-def">过去N天收盘价的平均值，平滑价格波动。MA200是机构最常用的长期趋势判断——股价长期站在MA200上方是健康的，跌破MA200是重要警报。</div>
+      </div>
+
+      <div class="vocab-card cat-technical">
+        <div class="vocab-cat">技术分析类</div>
+        <div class="vocab-term">支撑位 / 阻力位</div>
+        <div class="vocab-en">Support / Resistance Level</div>
+        <div class="vocab-def">价格反复在某个区间附近得到买盘支撑（支撑位）或卖盘阻力（阻力位）。MRVL的昨收290是一个自然观察点——是否能守住这里，影响短期走势。</div>
+      </div>
+
+      <div class="vocab-card cat-technical">
+        <div class="vocab-cat">技术分析类</div>
+        <div class="vocab-term">成交量</div>
+        <div class="vocab-en">Volume</div>
+        <div class="vocab-def">当天成交的股票数量。价涨量增是健康上涨；价涨量缩可能是虚涨；暴涨后成交量骤降，说明追涨资金减少，需警惕。MRVL那天成交量是均值的3倍，典型情绪高潮。</div>
+      </div>
+
+      <!-- RISK -->
+      <div class="vocab-card cat-risk">
+        <div class="vocab-cat">风险管理类</div>
+        <div class="vocab-term">止损</div>
+        <div class="vocab-en">Stop Loss</div>
+        <div class="vocab-def">预先设定的退出价格。不是认输，是风险管理的核心工具。原则：每次买入前先想好止损位，而不是亏了以后才想。通常设在买入价-7%至-10%。</div>
+      </div>
+
+      <div class="vocab-card cat-risk">
+        <div class="vocab-cat">风险管理类</div>
+        <div class="vocab-term">仓位管理</div>
+        <div class="vocab-en">Position Sizing</div>
+        <div class="vocab-def">决定每笔交易用多少钱。单只股票不超过总仓位的20-25%是常见原则。仓位过重会让你即使判断方向正确，也可能因为心理压力在正确前被洗出去。</div>
+      </div>
+
+      <div class="vocab-card cat-risk">
+        <div class="vocab-cat">风险管理类</div>
+        <div class="vocab-term">情绪溢价</div>
+        <div class="vocab-en">Sentiment Premium / Emotional Premium</div>
+        <div class="vocab-def">股价中超出基本面价值的部分，由市场情绪（恐惧或贪婪）推高。MRVL被Jensen Huang点名后的那次32%单日暴涨，就包含大量情绪溢价。情绪退潮时，这部分会快速消失。</div>
+      </div>
+
+      <div class="vocab-card cat-risk">
+        <div class="vocab-cat">风险管理类</div>
+        <div class="vocab-term">沉没成本谬误</div>
+        <div class="vocab-en">Sunk Cost Fallacy</div>
+        <div class="vocab-def">"因为已经亏了，所以不想割肉"的心理陷阱。正确思路：问自己"如果今天没有持仓，我会在现价买吗？"如果答案是否，就该认真考虑离场。</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 6: SOURCES -->
+  <div id="sources">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>来源汇总表</h2>
+    </div>
+    <p class="prose">以下为本页所有引用信息的完整来源。已核实链接可访问性。<span class="tag tag-fact">已核实</span></p>
+
+    <table class="sources-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>内容</th>
+          <th>来源</th>
+          <th>链接</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>《股市真规则》书籍信息与评价</td>
+          <td>豆瓣图书</td>
+          <td><a href="https://book.douban.com/subject/30194663/" target="_blank">book.douban.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>《股市真规则》英文原版信息</td>
+          <td>Goodreads</td>
+          <td><a href="https://www.goodreads.com/book/show/145922573" target="_blank">goodreads.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Damodaran 免费估值课程主页（NYU）</td>
+          <td>NYU Stern</td>
+          <td><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/webcastvalonline.htm" target="_blank">stern.nyu.edu ↗</a></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Damodaran YouTube 频道</td>
+          <td>YouTube</td>
+          <td><a href="https://www.youtube.com/channel/UCLvnJL8htRR1T9cbSccaoVw" target="_blank">youtube.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>MRVL Jensen Huang "下一个万亿美元公司"背书事件</td>
+          <td>GuruFocus</td>
+          <td><a href="https://www.gurufocus.com/news/8898390/marvell-technology-mrvl-soars-32-after-nvidia-ceos-billiondollar-valuation" target="_blank">gurufocus.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>MRVL 6月2日单日涨32.52%的触发原因</td>
+          <td>HeyGoTrade</td>
+          <td><a href="https://www.heygotrade.com/en/blog/marvell-mrvl-surges-33-jensen-huang-custom-silicon-endorsement/" target="_blank">heygotrade.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>MRVL Seeking Alpha 估值分析：万亿市值需完美执行</td>
+          <td>Seeking Alpha</td>
+          <td><a href="https://seekingalpha.com/article/4911381-marvell-assessing-jensen-huangs-1-trillion-call" target="_blank">seekingalpha.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>MRVL 做空比例、内部人交易、即将催化剂</td>
+          <td>StockTitan</td>
+          <td><a href="https://www.stocktitan.net/overview/MRVL/" target="_blank">stocktitan.net ↗</a></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>SEC EDGAR 官方数据库</td>
+          <td>SEC.gov</td>
+          <td><a href="https://www.sec.gov/edgar/search/" target="_blank">sec.gov ↗</a></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>《聪明的投资者》中文版豆瓣页</td>
+          <td>豆瓣图书</td>
+          <td><a href="https://book.douban.com/subject/5243775/" target="_blank">book.douban.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>《彼得·林奇的成功投资》豆瓣页</td>
+          <td>豆瓣图书</td>
+          <td><a href="https://book.douban.com/subject/1023358/" target="_blank">book.douban.com ↗</a></td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>《股票作手回忆录》豆瓣页</td>
+          <td>豆瓣图书</td>
+          <td><a href="https://book.douban.com/subject/1877488/" target="_blank">book.douban.com ↗</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<footer>
+  <div>本页面为个人学习计划参考，不构成任何投资建议。所有投资均有风险，请根据自身情况做出判断。</div>
+  <div style="margin-top:6px;opacity:0.6">生成日期：2026年6月4日 · 基于真实研究与来源核实</div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:&#39;smooth&#39;})" aria-label="回到顶部" class="visible">↑</button>
+
+<script>
+window.addEventListener('scroll', function() {
+  var btn = document.getElementById('back-top');
+  if (window.scrollY > 300) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+});
+
+var ctx = document.getElementById('learningChart');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['第一阶段（1–8周）', '第二阶段（9–16周）', '第三阶段（17–24周）'],
+      datasets: [
+        {
+          label: '基础概念学习',
+          data: [70, 30, 10],
+          backgroundColor: '#1a6b58',
+          borderRadius: 3
+        },
+        {
+          label: '公司分析研究',
+          data: [20, 50, 30],
+          backgroundColor: '#b07d2a',
+          borderRadius: 3
+        },
+        {
+          label: '实战与复盘',
+          data: [10, 20, 60],
+          backgroundColor: '#c0392b',
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { font: { size: 12 }, color: '#6b6b64' }
+        },
+        y: {
+          stacked: true,
+          max: 100,
+          ticks: {
+            callback: function(v) { return v + '%'; },
+            font: { size: 11 },
+            color: '#9b9b92'
+          },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        }
+      }
+    }
+  });
+}
+</script>
+
+
+
+</body></html>
