@@ -23,11 +23,17 @@
         <div class="collection-count" id="archiveCount"></div>
       </section>
       <section class="section compact-section">
-        <div class="controls archive-controls">
-          <input class="search" id="archiveSearch" placeholder="搜索标题、标签或关键词…">
-          <div class="chip-row" id="archiveFilters"></div>
+        <div class="browse-toolbar archive-toolbar">
+          <div class="controls archive-controls">
+            <input class="search" id="archiveSearch" placeholder="搜索标题、标签或关键词…">
+            <div class="chip-row" id="archiveFilters"></div>
+          </div>
+          <div class="view-toggle" aria-label="切换展示方式">
+  <button class="view-btn active" data-view="gallery" title="Gallery">▦ <span>Gallery</span></button>
+  <button class="view-btn" data-view="list" title="List">☰ <span>List</span></button>
+</div>
         </div>
-        <div class="article-list" id="archiveList"></div>
+        <div class="exhibit-view gallery-view" id="archiveList"></div>
       </section>
     </main>
     <footer>KNOWLEDGE MUSEUM · Full Archive</footer>
