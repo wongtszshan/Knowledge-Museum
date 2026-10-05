@@ -57,10 +57,10 @@ function setupViewToggle(target){
     el.dataset.view=mode;
     el.classList.toggle('gallery-view',mode==='gallery');
     el.classList.toggle('list-view',mode==='list');
-    $('.view-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===mode));
+    $$('.view-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===mode));
     localStorage.setItem('km-exhibit-view',mode);
   };
-  $('.view-btn').forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.view)));
+  $$('.view-btn').forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.view)));
   apply(saved);
 }
 function sortRecent(items){
@@ -126,7 +126,7 @@ function renderCategory(){
     renderRows('#categoryArticleList',items);
   };
   input.addEventListener('input',update);
-  $('.view-btn').forEach(btn=>btn.addEventListener('click',update));
+  $$('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   update();
 }
 
@@ -160,7 +160,7 @@ function renderArchive(){
     update();
   }));
   input.addEventListener('input',update);
-  $('.view-btn').forEach(btn=>btn.addEventListener('click',update));
+  $$('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   bindRandom();
   update();
 }
