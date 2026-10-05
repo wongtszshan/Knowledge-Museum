@@ -122,3 +122,23 @@ body.modal-open{overflow:hidden}
   .collections-panel-head h2{font-size:30px}
   .collection-list-item{padding:15px 2px}
 }
+
+/* ===== PDF exhibit support ===== */
+.content-type-badge{display:inline-block;margin-left:8px;padding:2px 6px;border:1px solid var(--line);border-radius:999px;font-family:Inter,"Noto Sans SC",sans-serif;font-size:9px;letter-spacing:.08em;vertical-align:middle;color:var(--muted);white-space:nowrap}
+.content-type-inline{color:var(--accent)}
+.pdf-viewer-body{margin:0;background:#262522;color:#fff;overflow:hidden}
+.pdf-viewer-bar{height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px;background:rgba(20,20,18,.96);border-bottom:1px solid rgba(255,255,255,.12);position:fixed;inset:0 0 auto 0;z-index:50;backdrop-filter:blur(14px)}
+.pdf-viewer-left,.pdf-viewer-actions{display:flex;align-items:center;gap:8px;min-width:0}
+.pdf-viewer-title{font-size:13px;color:#ddd8cf;max-width:45vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-viewer-btn{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:9px 13px;text-decoration:none;font-size:12px;cursor:pointer;white-space:nowrap}
+.pdf-stage{position:fixed;top:62px;left:0;right:0;bottom:0;background:#353430}
+.pdf-frame{width:100%;height:100%;border:0;background:#fff}
+.pdf-fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;color:#eee}
+.pdf-fallback a{color:#fff}
+@media(max-width:600px){
+  .content-type-badge{margin-left:4px;font-size:8px}
+  .pdf-viewer-bar{height:56px;padding:0 10px}
+  .pdf-stage{top:56px}
+  .pdf-viewer-title{display:none}
+  .pdf-viewer-btn{padding:8px 10px;font-size:11px}
+}
