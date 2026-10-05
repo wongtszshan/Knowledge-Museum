@@ -38,5 +38,13 @@
     "description": "博物馆、展览与文化机构的导览册、展览手册与图录",
     "accent": "#8A654A",
     "order": 5
+  },
+  {
+    "id": "coffee",
+    "name": "咖啡与萃取",
+    "nameEn": "Coffee & Brewing",
+    "description": "咖啡萃取、器具、养豆、储存与风味研究",
+    "accent": "#8B5E3C",
+    "order": 6
   }
 ]
