@@ -103,5 +103,206 @@
     "created": "2026-10-05",
     "updated": "2026-10-05",
     "featured": false
+  },
+  {
+    "id": "wallace-chan-half-a-century",
+    "title": "陈世英半世纪珠宝艺术",
+    "subtitle": "Wallace Chan · Half a Century",
+    "file": "wallace-chan-half-a-century.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "珠宝艺术",
+      "陈世英"
+    ],
+    "summary": "陈世英半世纪珠宝艺术相关展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "chinese-cloisonne-as-a-gift",
+    "title": "金琅华灿 · 上海博物馆",
+    "subtitle": "Chinese Cloisonné as a Gift",
+    "file": "chinese-cloisonne-as-a-gift.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "珐琅",
+      "上海博物馆"
+    ],
+    "summary": "上海博物馆相关珐琅艺术展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "the-spiraling-glory",
+    "title": "宁夏固原展",
+    "subtitle": "The Spiraling Glory",
+    "file": "the-spiraling-glory.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "宁夏",
+      "固原"
+    ],
+    "summary": "宁夏固原主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "stars-over-china",
+    "title": "三星堆展",
+    "subtitle": "Stars over China",
+    "file": "stars-over-china.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "三星堆",
+      "考古"
+    ],
+    "summary": "三星堆主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "painted-pottery",
+    "title": "陶上星河 · 炫彩手作",
+    "subtitle": "深圳博物馆 · Painted Pottery",
+    "file": "painted-pottery.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "彩陶",
+      "深圳博物馆"
+    ],
+    "summary": "深圳博物馆彩陶主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "shaping-clay",
+    "title": "抟泥化万物：古代东西方文明中的陶瓷艺术",
+    "subtitle": "Shaping Clay",
+    "file": "shaping-clay.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "陶瓷",
+      "古代文明"
+    ],
+    "summary": "古代东西方文明中的陶瓷艺术主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "china-guardian-hong-kong-autumn-auctions-2025",
+    "title": "香港嘉德 2025 年秋拍 · 观华——金石雅玩及古典家具",
+    "subtitle": "China Guardian Hong Kong Autumn Auctions 2025",
+    "file": "china-guardian-hong-kong-autumn-auctions-2025.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "拍卖图录",
+      "香港嘉德",
+      "金石",
+      "古典家具"
+    ],
+    "summary": "香港嘉德 2025 年秋季拍卖“观华——金石雅玩及古典家具”PDF 图录。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "treasures-from-the-kiln",
+    "title": "窑火遗萃：辽宋夏金时代的窑作技艺",
+    "subtitle": "Treasures from the Kiln",
+    "file": "treasures-from-the-kiln.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "陶瓷",
+      "辽宋夏金",
+      "窑作"
+    ],
+    "summary": "辽宋夏金时代窑作技艺主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "jiashangzhou",
+    "title": "宅兹中国",
+    "subtitle": "Jia Shang Zhou",
+    "file": "jiashangzhou.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "中国古代",
+      "历史"
+    ],
+    "summary": "《宅兹中国》主题展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "convergence-of-elegance",
+    "title": "珍瓷萃美",
+    "subtitle": "Convergence of Elegance",
+    "file": "convergence-of-elegance.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "瓷器",
+      "陶瓷艺术"
+    ],
+    "summary": "《珍瓷萃美》相关展览 PDF 手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
   }
 ]
