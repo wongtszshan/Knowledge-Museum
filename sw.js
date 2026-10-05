@@ -5,7 +5,10 @@ const CORE = [
   './viewer.html',
   './assets/css/app.css',
   './assets/js/app.js',
-  './manifest.webmanifest'
+  './manifest.webmanifest',
+  './assets/icons/app-icon-1024.png',
+  './assets/splash/background.png',
+  './assets/splash/startup-image.png'
 ];
 
 self.addEventListener('install', event => {
@@ -52,26 +55,25 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // The catalogue/config must reflect newly added exhibits as soon as possible.
   if (url.pathname.includes('/data/')) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // Exhibit HTML changes frequently. Prefer the latest online copy, cache it for offline reading.
   if (url.pathname.includes('/content/html/')) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // Navigations should show the current site when online and still work offline.
   if (request.mode === 'navigate') {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // App shell assets load instantly from cache and refresh themselves in the background.
-  if (url.pathname.includes('/assets/') || url.pathname.endsWith('/manifest.webmanifest')) {
+  if (
+    url.pathname.includes('/assets/') ||
+    url.pathname.endsWith('/manifest.webmanifest')
+  ) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });

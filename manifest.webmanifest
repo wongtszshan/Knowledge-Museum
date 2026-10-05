@@ -1,1 +1,25 @@
-{"name":"Knowledge Museum","short_name":"Museum","start_url":"./index.html","display":"standalone","background_color":"#f2efe8","theme_color":"#f2efe8","description":"Personal knowledge archive"}
+{
+  "id": "./",
+  "name": "Knowledge Museum",
+  "short_name": "Museum",
+  "description": "Personal knowledge archive",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f3ea",
+  "theme_color": "#f7f3ea",
+  "icons": [
+    {
+      "src": "assets/icons/app-icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/app-icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
