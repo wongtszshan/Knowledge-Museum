@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v3';
+const CACHE_NAME = 'knowledge-museum-shell-v4';
 const CORE = [
   './',
   './index.html',
