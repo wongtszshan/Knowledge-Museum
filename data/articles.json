@@ -145,26 +145,6 @@
     "featured": false
   },
   {
-    "id": "the-spiraling-glory",
-    "title": "宁夏固原展",
-    "subtitle": "The Spiraling Glory",
-    "file": "the-spiraling-glory.pdf",
-    "type": "pdf",
-    "categories": [
-      "museum-guides"
-    ],
-    "tags": [
-      "博物馆",
-      "展览手册",
-      "宁夏",
-      "固原"
-    ],
-    "summary": "宁夏固原主题展览 PDF 手册。",
-    "created": "2026-10-05",
-    "updated": "2026-10-05",
-    "featured": false
-  },
-  {
     "id": "stars-over-china",
     "title": "三星堆展",
     "subtitle": "Stars over China",
@@ -200,26 +180,6 @@
       "深圳博物馆"
     ],
     "summary": "深圳博物馆彩陶主题展览 PDF 手册。",
-    "created": "2026-10-05",
-    "updated": "2026-10-05",
-    "featured": false
-  },
-  {
-    "id": "shaping-clay",
-    "title": "抟泥化万物：古代东西方文明中的陶瓷艺术",
-    "subtitle": "Shaping Clay",
-    "file": "shaping-clay.pdf",
-    "type": "pdf",
-    "categories": [
-      "museum-guides"
-    ],
-    "tags": [
-      "博物馆",
-      "展览手册",
-      "陶瓷",
-      "古代文明"
-    ],
-    "summary": "古代东西方文明中的陶瓷艺术主题展览 PDF 手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
     "featured": false
