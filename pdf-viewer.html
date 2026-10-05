@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#171714">
+  <title>PDF · Knowledge Museum</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
+  <link rel="stylesheet" href="assets/css/app.css?v=20261005-5">
+</head>
+<body class="pdf-viewer-body">
+  <header class="pdf-viewer-bar">
+    <div class="pdf-viewer-left">
+      <button class="pdf-viewer-btn" id="backBtn">← 返回</button>
+      <a class="pdf-viewer-btn" href="index.html">Museum</a>
+      <span class="pdf-viewer-title" id="pdfTitle">PDF</span>
+    </div>
+    <div class="pdf-viewer-actions">
+      <a class="pdf-viewer-btn" id="openPdf" href="#" target="_blank" rel="noopener">原始 PDF ↗</a>
+    </div>
+  </header>
+
+  <main class="pdf-stage">
+    <div class="pdf-fallback" id="pdfFallback">正在载入 PDF…</div>
+    <iframe class="pdf-frame" id="pdfFrame" title="PDF 阅读器"></iframe>
+  </main>
+
+  <script>
+    const params=new URLSearchParams(location.search);
+    const id=params.get('id');
+    const titleEl=document.getElementById('pdfTitle');
+    const frame=document.getElementById('pdfFrame');
+    const fallback=document.getElementById('pdfFallback');
+    const openPdf=document.getElementById('openPdf');
+
+    document.getElementById('backBtn').addEventListener('click',()=>{
+      if(history.length>1) history.back();
+      else location.href='index.html';
+    });
+
+    fetch('data/articles.json',{cache:'no-store'})
+      .then(r=>r.json())
+      .then(items=>{
+        const a=items.find(x=>x.id===id && x.type==='pdf');
+        if(!a) throw new Error('PDF not found');
+        const src='content/pdf/'+encodeURIComponent(a.file)+'#view=FitH';
+        document.title=a.title+' · Knowledge Museum';
+        titleEl.textContent=a.title;
+        openPdf.href='content/pdf/'+encodeURIComponent(a.file);
+        frame.src=src;
+        frame.addEventListener('load',()=>{fallback.style.display='none'},{once:true});
+        setTimeout(()=>{
+          if(fallback.style.display!=='none'){
+            fallback.innerHTML='如果当前设备没有内嵌显示 PDF，<a href="'+openPdf.href+'" target="_blank">点这里打开原始 PDF</a>。';
+          }
+        },2500);
+      })
+      .catch(()=>{
+        fallback.innerHTML='找不到这份 PDF。<br><a href="index.html">返回 Knowledge Museum</a>';
+        openPdf.style.display='none';
+      });
+  </script>
+</body>
+</html>
