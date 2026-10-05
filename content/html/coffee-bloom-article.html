@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在咖啡萃取里，闷蒸真的重要吗？</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  /* ── CSS VARIABLES ── */
+  :root {
+    --cream:       #F5EFE0;
+    --cream-dark:  #EDE3CC;
+    --parchment:   #FAF6ED;
+    --espresso:    #1C1008;
+    --roast:       #3D1F0D;
+    --caramel:     #8B4513;
+    --gold:        #C9922A;
+    --gold-light:  #E8B96A;
+    --rust:        #9E3D1A;
+    --sage:        #5A6B4E;
+    --fact-bg:     #EAF2E3;
+    --fact-border: #5A6B4E;
+    --infer-bg:    #FEF5E4;
+    --infer-border:#C9922A;
+    --opinion-bg:  #F5E8E8;
+    --opinion-border:#9E3D1A;
+    --body-font:   Georgia, 'Times New Roman', serif;
+    --head-font:   'Palatino Linotype', Palatino, 'Book Antiqua', serif;
+    --mono-font:   'Courier New', Courier, monospace;
+  }
+
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--parchment);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(139,69,19,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 90%, rgba(201,146,42,0.07) 0%, transparent 55%);
+    color: var(--espresso);
+    font-family: var(--body-font);
+    font-size: 17px;
+    line-height: 1.85;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background-color: var(--roast);
+    background-image:
+      radial-gradient(ellipse at 30% 50%, rgba(201,146,42,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 20%, rgba(158,61,26,0.3) 0%, transparent 50%);
+    padding: 72px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 41px
+    );
+  }
+  .header-eyebrow {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.75;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-family: var(--head-font);
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: normal;
+    line-height: 1.25;
+    color: var(--cream);
+    max-width: 680px;
+    margin: 0 auto 24px;
+    letter-spacing: -0.01em;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(245,239,224,0.55);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+  .header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 28px auto 0;
+  }
+  .header-ornament span {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .header-ornament .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── LABEL BADGES ── */
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono-font);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    padding: 3px 9px 3px 7px;
+    border-radius: 3px;
+    border-left: 3px solid;
+    vertical-align: middle;
+    margin-left: 6px;
+    position: relative;
+    top: -1px;
+    white-space: nowrap;
+  }
+  .label-fact {
+    background: var(--fact-bg);
+    border-color: var(--fact-border);
+    color: var(--fact-border);
+  }
+  .label-infer {
+    background: var(--infer-bg);
+    border-color: var(--infer-border);
+    color: var(--caramel);
+  }
+  .label-opinion {
+    background: var(--opinion-bg);
+    border-color: var(--opinion-border);
+    color: var(--rust);
+  }
+
+  /* ── CALLOUT BLOCKS ── */
+  .callout {
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 28px 0;
+    border-left: 4px solid;
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+  .callout-fact   { background: var(--fact-bg);    border-color: var(--fact-border);    }
+  .callout-infer  { background: var(--infer-bg);   border-color: var(--infer-border);   }
+  .callout-opinion{ background: var(--opinion-bg); border-color: var(--opinion-border); }
+  .callout strong {
+    display: block;
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 6px;
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body { padding: 56px 0 20px; }
+
+  .article-body p {
+    margin-bottom: 1.5em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-top: 52px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(61,31,13,0.12);
+  }
+  .section-number {
+    font-family: var(--mono-font);
+    font-size: 10.5px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: var(--head-font);
+    font-size: clamp(20px, 3.5vw, 26px);
+    font-weight: normal;
+    color: var(--roast);
+    line-height: 1.35;
+    margin-bottom: 26px;
+  }
+  .section h2 em { color: var(--caramel); }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 40px -16px;
+    padding: 28px 32px;
+    background: var(--cream-dark);
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    text-align: center;
+    font-family: var(--head-font);
+    font-size: clamp(16px, 2.5vw, 21px);
+    font-style: italic;
+    color: var(--roast);
+    line-height: 1.5;
+  }
+
+  /* ── CHART WRAPPER ── */
+  .chart-wrapper {
+    background: white;
+    border-radius: 6px;
+    padding: 28px 24px 20px;
+    margin: 36px 0;
+    box-shadow: 0 2px 16px rgba(61,31,13,0.08);
+    border: 1px solid var(--cream-dark);
+  }
+  .chart-title {
+    font-family: var(--head-font);
+    font-size: 14px;
+    color: var(--roast);
+    text-align: center;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .chart-subtitle {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .chart-note {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    color: #aaa;
+    text-align: center;
+    margin-top: 12px;
+    font-style: italic;
+  }
+  canvas { max-width: 100%; }
+
+  /* ── PARAM TABLE ── */
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14.5px;
+  }
+  .param-table th {
+    background: var(--roast);
+    color: var(--gold-light);
+    font-family: var(--mono-font);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: normal;
+  }
+  .param-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--cream-dark);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .param-table tr:nth-child(even) td { background: rgba(245,239,224,0.55); }
+  .param-table tr:last-child td { border-bottom: none; }
+  .param-table td:first-child {
+    font-weight: bold;
+    color: var(--caramel);
+    white-space: nowrap;
+    font-size: 13.5px;
+  }
+
+  /* ── LEGEND BOX ── */
+  .legend-box {
+    background: white;
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 32px 0;
+  }
+  .legend-box h4 {
+    font-family: var(--mono-font);
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .legend-item:last-child { margin-bottom: 0; }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    border-left: 3px solid;
+  }
+  .legend-dot-fact    { background: var(--fact-bg);    border-color: var(--fact-border);    }
+  .legend-dot-infer   { background: var(--infer-bg);   border-color: var(--infer-border);   }
+  .legend-dot-opinion { background: var(--opinion-bg); border-color: var(--opinion-border); }
+
+  /* ── HARVEST SECTION ── */
+  .harvest {
+    background: var(--roast);
+    background-image: radial-gradient(ellipse at 20% 80%, rgba(201,146,42,0.15) 0%, transparent 55%);
+    color: var(--cream);
+    padding: 52px 24px;
+    margin-top: 64px;
+  }
+  .harvest .container { max-width: 680px; }
+  .harvest h3 {
+    font-family: var(--head-font);
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: normal;
+    color: var(--gold-light);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+  .harvest-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(245,239,224,0.1);
+  }
+  .harvest-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .harvest-num {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    padding-top: 2px;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .harvest-text { font-size: 15px; line-height: 1.75; color: rgba(245,239,224,0.85); }
+
+  /* ── SOURCES ── */
+  .sources {
+    background: var(--cream-dark);
+    padding: 48px 24px 60px;
+  }
+  .sources .container { max-width: 680px; }
+  .sources h3 {
+    font-family: var(--head-font);
+    font-size: 18px;
+    font-weight: normal;
+    color: var(--roast);
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(61,31,13,0.15);
+  }
+  .sources-group { margin-bottom: 28px; }
+  .sources-group h4 {
+    font-family: var(--mono-font);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .sources-group ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sources-group li {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    padding-left: 14px;
+    position: relative;
+    color: var(--roast);
+  }
+  .sources-group li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 11px;
+  }
+  .sources-group a {
+    color: var(--caramel);
+    text-decoration: none;
+    word-break: break-all;
+    font-size: 12px;
+  }
+  .sources-group a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-family: var(--mono-font);
+    font-size: 10px;
+    color: rgba(61,31,13,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 560px) {
+    .pull-quote { margin: 28px 0; padding: 20px; }
+    .param-table { font-size: 13px; }
+    .param-table td, .param-table th { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="header">
+  <p class="header-eyebrow">学习笔记 · Coffee Research</p>
+  <h1>在咖啡萃取里，<br><em>闷蒸真的重要吗？</em></h1>
+  <p class="header-sub">一个被气泡迷住的普通人，查资料之后写下的真实记录</p>
+  <div class="header-ornament">
+    <span></span>
+    <div class="dot"></div>
+    <span></span>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════
+     ARTICLE BODY
+══════════════════════════════════════════ -->
+<main class="container article-body">
+
+  <!-- 信息图例 -->
+  <div class="legend-box">
+    <h4>本文信息分类说明</h4>
+    <div class="legend-item">
+      <div class="legend-dot legend-dot-fact"></div>
+      <div>✓ <strong>已核实事实</strong> —— 有直接数据或权威来源支撑</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot legend-dot-infer"></div>
+      <div>◎ <strong>推断 / 分析</strong> —— 基于事实的合理推导</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot legend-dot-opinion"></div>
+      <div>◇ <strong>观点 / 推测</strong> —— 分析师、机构或个人判断，已标注来源</div>
+    </div>
+  </div>
+
+
+  <!-- ── 开头 ── -->
+  <p>第一次在家里做手冲咖啡的时候，有一个步骤让我愣了一下——所有的教程都说，热水倒下去之后先等三十秒，不要急着继续。有的叫"闷蒸"，有的叫"焖蒸"，英文写"Bloom"。我按照教程做了，看着咖啡粉慢慢鼓起来、冒小泡泡，确实很好看。但我当时心里是有点怀疑的：这不会只是个仪式感动作吧？不等这三十秒，咖啡就真的会难喝？</p>
+
+  <p>带着这个疑问我去查了一圈资料，中文英文都翻了翻，总算搞清楚了这件事的来龙去脉。结论提前说：闷蒸是真的重要——但也不是无条件重要，它的效果跟你的豆子新不新鲜高度相关。下面是我查到的东西。</p>
+
+
+  <!-- ── S1 ── -->
+  <div class="section">
+    <span class="section-number">Section 01</span>
+    <h2>烘焙的时候，豆子里藏了一罐<em>气</em></h2>
+
+    <p>我之前完全没想过这件事：咖啡豆被烘焙的时候，豆子里会发生一系列化学反应，其中一个副产物就是大量的二氧化碳（CO₂）。这些气体会被封在豆子多孔的细胞结构里，慢慢往外跑——这个过程叫"排气"（Degassing）。<span class="label label-fact">✓ 已核实</span></p>
+
+    <p>查到这里我才明白，为什么精品咖啡的包装袋上会有一个单向阀。那个小圆片不是装饰，是专门让CO₂出去、又不让空气进来的。如果没有这个阀，豆子排出的气体会把袋子撑破。这个细节之前我从没注意过。<span class="label label-fact">✓ 已核实</span></p>
+
+    <div class="callout callout-fact">
+      <strong>✓ 已核实事实</strong>
+      深烘豆子比浅烘积累了更多CO₂，因为烘焙时间更长、化学反应更剧烈。所以深烘豆的闷蒸气泡会明显更多，鼓起来更夸张；浅烘豆的气泡反而比较克制，但不代表不新鲜。（来源：Perfect Daily Grind, Drip Roast）
+    </div>
+
+    <p>豆子磨成粉之后，排气速度会大幅加快，因为接触空气的表面积变大了。这也是为什么"现磨现冲"这个原则那么被反复强调——磨完放两个小时，CO₂就跑掉一大半了。<span class="label label-fact">✓ 已核实</span></p>
+
+    <!-- CHART 1: CO₂ 随时间衰减 -->
+    <div class="chart-wrapper">
+      <p class="chart-title">咖啡豆烘焙后CO₂含量变化示意</p>
+      <p class="chart-subtitle">（示意图 · 非精确实验数据 · 仅表示趋势关系）</p>
+      <canvas id="chart-degas" height="200"></canvas>
+      <p class="chart-note">◎ 推断：图示趋势基于多方来源综合；整豆在约2周内完成主要排气，之后进入缓慢衰减期</p>
+    </div>
+  </div>
+
+
+  <!-- ── S2 ── -->
+  <div class="section">
+    <span class="section-number">Section 02</span>
+    <h2>CO₂ 为什么会<em>妨碍</em>萃取？</h2>
+
+    <p>我原来以为气泡只是个有趣的现象，查完资料才发现它其实是个麻烦。事情是这样的：当你直接把水倒下去，CO₂会快速从咖啡粉里往外窜。这些气泡在粉颗粒之间形成了短暂的"气垫"，阻止水均匀地渗入粉层。<span class="label label-infer">◎ 推断</span></p>
+
+    <p>具体后果是：水会沿着阻力最小的地方通过，形成局部的"通道"（Channeling），就像在粉层里找捷径。通道附近的咖啡粉被萃取得很彻底甚至过度，通道以外的粉几乎没被碰到。这样冲出来的咖啡，萃取极不均匀，味道就会又酸又涩，甚至有很多杂味。<span class="label label-infer">◎ 推断</span></p>
+
+    <div class="callout callout-fact">
+      <strong>✓ 已核实事实</strong>
+      中国咖啡网（gafei.com）和知乎多篇资料印证：跳过闷蒸，热水将沿局部少数水道通过粉层，导致滴滤时间拉长，萃取时间变长，溶解出的物质更多，味道可能较为酸涩刺激或满口杂味。
+    </div>
+
+    <p>反过来，闷蒸的作用就是：先用少量水把所有咖啡粉打湿，让CO₂有机会集中排出。排完气的粉颗粒之间，会形成短暂的细小空隙，这个空隙正好给正式注水时提供了均匀的流水通道。<span class="label label-infer">◎ 推断</span></p>
+  </div>
+
+
+  <!-- ── S3 ── -->
+  <div class="section">
+    <span class="section-number">Section 03</span>
+    <h2>闷蒸在做的事，<em>说白了就这一件</em></h2>
+
+    <div class="pull-quote">
+      "闷蒸不是仪式，是提前把障碍清场——让后续的水能均匀穿过每一颗咖啡粉。"
+    </div>
+
+    <p>查到这里我大概明白了：闷蒸的本质，是一次"预处理"。它做的核心事情只有一件——让CO₂离开咖啡粉，腾出位置给水。附带的效果是：咖啡粉得到了均匀的初步浸润，后续正式注水时，整层粉床会以更一致的状态参与萃取。<span class="label label-infer">◎ 推断</span></p>
+
+    <p>有几个英文来源（Nucleus Coffee、Perfect Daily Grind）还提到一个词叫"均匀湿润"（even saturation）——如果注水方式不对，比如只倒在中心，边缘的粉就会保持干燥，后续萃取时这部分几乎参与不到，结果就是"薄、酸、没层次"。所以闷蒸时要画圆圈，确保每一圈粉都被水碰到。<span class="label label-fact">✓ 已核实</span></p>
+
+    <!-- CHART 2: 有无闷蒸的萃取均匀度对比 -->
+    <div class="chart-wrapper">
+      <p class="chart-title">有无闷蒸对不同萃取指标的影响（定性对比）</p>
+      <p class="chart-subtitle">（定性评分示意图 · 基于多方资料综合判断）</p>
+      <canvas id="chart-compare" height="240"></canvas>
+      <p class="chart-note">◎ 推断：数值非实验测量值，为综合多来源定性描述后的示意分值</p>
+    </div>
+  </div>
+
+
+  <!-- ── S4 ── -->
+  <div class="section">
+    <span class="section-number">Section 04</span>
+    <h2>变量：闷蒸的效果，<em>跟这些因素挂钩</em></h2>
+
+    <p>我原来以为闷蒸就是固定的三十秒，查完才知道它受好几个变量影响，每个变量都会让你需要调整策略。</p>
+
+    <table class="param-table">
+      <thead>
+        <tr>
+          <th>变量</th>
+          <th>影响方向</th>
+          <th>实操建议</th>
+          <th>信息类别</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>豆子新鲜度</td>
+          <td>越新鲜，CO₂越多，气泡越旺盛，闷蒸越重要</td>
+          <td>烘焙后4–14天内最佳，2周内用完<br>（来源：Drip Roast）</td>
+          <td><span class="label label-fact" style="font-size:9.5px">✓ 已核实</span></td>
+        </tr>
+        <tr>
+          <td>烘焙程度</td>
+          <td>深烘CO₂更多，气泡更大；浅烘气泡小但不代表不好</td>
+          <td>深烘可延长至40–45s；浅烘30s足够</td>
+          <td><span class="label label-fact" style="font-size:9.5px">✓ 已核实</span></td>
+        </tr>
+        <tr>
+          <td>是否现磨</td>
+          <td>磨粉后表面积大增，CO₂快速散失，预磨的粉几乎不会闷蒸</td>
+          <td>冲前再磨，效果最好</td>
+          <td><span class="label label-fact" style="font-size:9.5px">✓ 已核实</span></td>
+        </tr>
+        <tr>
+          <td>注水量</td>
+          <td>太少：底层粉排气不足；太多：多余水直接漏下，稀释咖啡液</td>
+          <td>用咖啡粉重量的2倍水量（约2:1）</td>
+          <td><span class="label label-fact" style="font-size:9.5px">✓ 已核实</span></td>
+        </tr>
+        <tr>
+          <td>闷蒸时间</td>
+          <td>气泡停止、粉面即将塌陷时说明排气完成</td>
+          <td>通常30–45秒；观察状态比看秒表重要</td>
+          <td><span class="label label-opinion" style="font-size:9.5px">◇ 观点</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-fact">
+      <strong>✓ 已核实事实</strong>
+      中国咖啡网数据：闷蒸注水量以总用水量的10%为佳。若以冲240ml咖啡为例，闷蒸用水约24–30ml。前街咖啡（gafei.com）总结：以咖啡粉两倍水量闷蒸，既不会让多余热水漏下，也能让所有粉颗粒充分浸润。
+    </div>
+  </div>
+
+
+  <!-- ── S5 ── -->
+  <div class="section">
+    <span class="section-number">Section 05</span>
+    <h2>但也有"不需要闷蒸"的情况，<em>这个细节让我意外</em></h2>
+
+    <p>查到这里我发现一个有意思的点：闷蒸的价值是建立在豆子有足够CO₂的前提上的。如果豆子已经放了很久，CO₂几乎跑光了，那闷蒸就没那么必要——因为它要解决的问题已经不存在了。<span class="label label-infer">◎ 推断</span></p>
+
+    <p>事实上，闷蒸气泡的大小，本身就是一个新鲜度指示器。如果你注水后没什么气泡，粉层几乎纹丝不动，十有八九是豆子太旧了。这种咖啡喝起来会比较平淡，少酸少香，这不是闷蒸能解决的问题，得换新豆。<span class="label label-infer">◎ 推断</span></p>
+
+    <div class="callout callout-opinion">
+      <strong>◇ 观点（来源：perfectdailygrind.com，2025年10月）</strong>
+      德国咖啡冠军Nicole Battefeld-Montgomery认为，并没有一个"唯一最正确"的闷蒸方式。越来越多的世界手冲赛参赛者甚至完全取消了独立的闷蒸步骤，改用多次小注水来代替——本质上是把闷蒸分散进整个冲煮过程里。
+    </div>
+
+    <div class="callout callout-fact">
+      <strong>✓ 已核实事实</strong>
+      意式浓缩（Espresso）机器通常不需要手动闷蒸——高压萃取本身会强制排出CO₂；部分机器的"预浸泡（Pre-infusion）"功能是用低压水（2–3 bar）浸润粉饼，原理类似闷蒸，能提升萃取均匀度。（来源：mywirsh.com, issuu.com）
+    </div>
+
+    <p>还有一个"超新鲜豆"的边界情况：如果豆子刚烘焙完不到3天，CO₂实在太多，闷蒸时会鼓得非常猛，反而容易导致水流不均。这时候的建议是多等几天再冲，或者把闷蒸注水量减少一些，时间拉长一点，让它慢慢排气。<span class="label label-fact">✓ 已核实</span></p>
+  </div>
+
+
+  <!-- ── S6 ── -->
+  <div class="section">
+    <span class="section-number">Section 06</span>
+    <h2>最后，我整理了一个<em>实操参数总结</em></h2>
+
+    <p>查完这些资料，我把闷蒸的核心参数汇总了一下。对于家里用手冲的普通人来说，大概就是这几件事要注意：</p>
+
+    <table class="param-table">
+      <thead>
+        <tr>
+          <th>参数</th>
+          <th>推荐数值</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>水粉比（闷蒸阶段）</td>
+          <td>1:2（水:粉重量）</td>
+          <td>如15g咖啡粉，注入30g水；最高不超过1:3</td>
+        </tr>
+        <tr>
+          <td>水温</td>
+          <td>90–96°C</td>
+          <td>沸水晾置约30–60秒即可，无需温度计</td>
+        </tr>
+        <tr>
+          <td>时间</td>
+          <td>30–45秒</td>
+          <td>深烘、新鲜豆取上限；浅烘、稍旧豆取下限</td>
+        </tr>
+        <tr>
+          <td>注水方式</td>
+          <td>从中心画圈向外</td>
+          <td>确保所有粉都湿润，避免边缘干粉</td>
+        </tr>
+        <tr>
+          <td>判断完成信号</td>
+          <td>气泡停止，粉面即将塌陷</td>
+          <td>观察状态比严格计时更可靠</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-opinion">
+      <strong>◇ 观点（来源：jimmysjava.com，2026年2月）</strong>
+      大多数人高估了闷蒸的作用，而低估了水温和水质的重要性。闷蒸能改善萃取均匀度，但如果研磨度、水温、水质这几个基础变量本身就不对，单靠闷蒸是补救不了的。
+    </div>
+  </div>
+
+</main>
+
+
+<!-- ══════════════════════════════════════════
+     HARVEST
+══════════════════════════════════════════ -->
+<section class="harvest">
+  <div class="container">
+    <h3>查完这些，我学到了四件事</h3>
+
+    <div class="harvest-item">
+      <span class="harvest-num">01 ·</span>
+      <p class="harvest-text">闷蒸不是仪式感，背后有真实的化学逻辑。烘焙产生的CO₂确实会阻碍萃取，闷蒸就是专门来清这个障碍的。</p>
+    </div>
+    <div class="harvest-item">
+      <span class="harvest-num">02 ·</span>
+      <p class="harvest-text">气泡多少其实是豆子新不新鲜的"体检报告"。以后买到新豆，第一件事不是直接冲，而是先倒点水看看气泡怎么样。</p>
+    </div>
+    <div class="harvest-item">
+      <span class="harvest-num">03 ·</span>
+      <p class="harvest-text">闷蒸参数不是死的，得跟豆子"沟通"。同样的豆子放了两周和刚到手的时候，该用的水量和时间都不一样。</p>
+    </div>
+    <div class="harvest-item">
+      <span class="harvest-num">04 ·</span>
+      <p class="harvest-text">闷蒸是整个萃取系统的一环，不是独立存在的魔法步骤。水温、研磨度、水质是更基础的底盘，做好这些，闷蒸的价值才能被放大。</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SOURCES
+══════════════════════════════════════════ -->
+<section class="sources">
+  <div class="container">
+    <h3>参考来源</h3>
+
+    <div class="sources-group">
+      <h4>英文来源 · English Sources</h4>
+      <ul>
+        <li>
+          Perfect Daily Grind — <em>Swirl, stir, or leave the bloom: Has specialty coffee decided what's best?</em>（2025年10月）<br>
+          <a href="https://perfectdailygrind.com/2025/09/swirl-or-stir-coffee-bloom-best-practices/" target="_blank">perfectdailygrind.com</a>
+        </li>
+        <li>
+          Drip Roast — <em>What's Coffee Bloom and Why Does It Really Matter?</em>（2026年1月）<br>
+          <a href="https://www.driproast.com/whats-coffee-bloom/" target="_blank">driproast.com</a>
+        </li>
+        <li>
+          Nucleus Coffee — <em>The Pour Over Bloom - Coffee Pre-Infusion</em><br>
+          <a href="https://nucleuscoffee.com/en/blogs/specialty-coffee/all-about-the-bloom" target="_blank">nucleuscoffee.com</a>
+        </li>
+        <li>
+          Jimmy's Java — <em>Coffee Bloom, Explained</em>（2026年2月）<br>
+          <a href="https://jimmysjava.com/blogs/news/coffee-bloom-explained-how-to-nail-the-pour-over-pre-infusion-and-fix-flat-sour-cups" target="_blank">jimmysjava.com</a>
+        </li>
+        <li>
+          MTPak Coffee — <em>What is coffee bloom and why does it matter?</em><br>
+          <a href="https://mtpak.coffee/2022/11/coffee-bloom-what-is-it-why-does-it-matter/" target="_blank">mtpak.coffee</a>
+        </li>
+        <li>
+          Methodical Coffee — <em>Freshly Roasted Coffee, Explained: Degassing, Rest, and Flavor</em>（2026年2月）<br>
+          <a href="https://methodicalcoffee.com/blogs/coffee-culture/freshly-roasted-coffee-explained-degassing-rest-and-flavor" target="_blank">methodicalcoffee.com</a>
+        </li>
+        <li>
+          Achilles Coffee Roasters — <em>The Science of Freshness: Why Roast Date Matters More Than You Think</em>（2025年8月）<br>
+          <a href="https://achillescoffeeroasters.com/blogs/specialty-coffee-blog/the-science-of-freshness-why-roast-date-matters-more-than-you-think" target="_blank">achillescoffeeroasters.com</a>
+        </li>
+        <li>
+          mywirsh.com — <em>How Pre-Infusion Optimizes Your Coffee</em>（2025年6月）<br>
+          <a href="https://mywirsh.com/blogs/coffee-facts/how-pre-infusion-optimizes-your-coffee" target="_blank">mywirsh.com</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sources-group">
+      <h4>中文来源 · Chinese Sources</h4>
+      <ul>
+        <li>
+          知乎 — <em>聊聊手冲咖啡的焖蒸</em>（知乎专栏）<br>
+          <a href="https://zhuanlan.zhihu.com/p/452676991" target="_blank">zhuanlan.zhihu.com</a>
+        </li>
+        <li>
+          知乎问答 — <em>手冲咖啡闷蒸和萃取的原理是什么？</em><br>
+          <a href="https://www.zhihu.com/question/37901864" target="_blank">zhihu.com</a>
+        </li>
+        <li>
+          中国咖啡网（前街咖啡）— <em>手冲咖啡如何闷蒸？闷蒸萃取应该注入多少热水？</em><br>
+          <a href="https://www.gafei.com/kafeibiji-147738" target="_blank">gafei.com</a>
+        </li>
+        <li>
+          中国博思咖啡（espcoffee.com）— <em>手冲咖啡为什么要——闷蒸？</em><br>
+          <a href="https://www.espcoffee.com/news/industry/3403.html" target="_blank">espcoffee.com</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <p>本文为个人学习笔记 · 所有数据均来自上列来源 · 非商业用途</p>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     CHARTS
+══════════════════════════════════════════ -->
+<script>
+// Shared colors
+const ESPRESSO = '#3D1F0D';
+const GOLD     = '#C9922A';
+const CARAMEL  = '#8B4513';
+const SAGE     = '#5A6B4E';
+const RUST     = '#9E3D1A';
+const CREAM    = '#F5EFE0';
+
+// ── Chart 1: CO₂ Degassing Curve ──
+const ctxDegas = document.getElementById('chart-degas').getContext('2d');
+new Chart(ctxDegas, {
+  type: 'line',
+  data: {
+    labels: ['烘焙当天','3天','7天','14天','21天','30天','45天'],
+    datasets: [
+      {
+        label: '整豆 (Whole Bean)',
+        data: [100, 78, 55, 30, 18, 10, 5],
+        borderColor: GOLD,
+        backgroundColor: 'rgba(201,146,42,0.10)',
+        borderWidth: 2.5,
+        pointBackgroundColor: GOLD,
+        pointRadius: 4,
+        tension: 0.42,
+        fill: true,
+      },
+      {
+        label: '研磨后 (Ground Coffee)',
+        data: [100, 42, 18, 7, 3, 1, 0],
+        borderColor: RUST,
+        backgroundColor: 'rgba(158,61,26,0.07)',
+        borderWidth: 2,
+        pointBackgroundColor: RUST,
+        pointRadius: 4,
+        borderDash: [5,4],
+        tension: 0.42,
+        fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: ESPRESSO,
+          font: { family: "'Courier New', monospace", size: 11 },
+          boxWidth: 16,
+          padding: 16
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: CO₂剩余约 ${ctx.parsed.y}%`
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: '#888', font: { family: "'Courier New', monospace", size: 10 } },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      },
+      y: {
+        min: 0, max: 110,
+        ticks: {
+          color: '#888',
+          font: { family: "'Courier New', monospace", size: 10 },
+          callback: v => v + '%'
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        title: {
+          display: true,
+          text: 'CO₂ 相对含量（示意）',
+          color: '#aaa',
+          font: { family: "'Courier New', monospace", size: 10 }
+        }
+      }
+    }
+  }
+});
+
+
+// ── Chart 2: Bloom vs No-Bloom Comparison ──
+const ctxCompare = document.getElementById('chart-compare').getContext('2d');
+new Chart(ctxCompare, {
+  type: 'radar',
+  data: {
+    labels: ['萃取均匀度', '粉层通透性', '香气丰富度', '口感平衡感', '风味层次感'],
+    datasets: [
+      {
+        label: '有闷蒸（新鲜豆）',
+        data: [90, 88, 85, 87, 83],
+        borderColor: GOLD,
+        backgroundColor: 'rgba(201,146,42,0.15)',
+        borderWidth: 2.5,
+        pointBackgroundColor: GOLD,
+        pointRadius: 4,
+      },
+      {
+        label: '无闷蒸（新鲜豆）',
+        data: [52, 48, 62, 55, 58],
+        borderColor: CARAMEL,
+        backgroundColor: 'rgba(139,69,19,0.10)',
+        borderWidth: 2,
+        pointBackgroundColor: CARAMEL,
+        pointRadius: 4,
+        borderDash: [5,4],
+      },
+      {
+        label: '有/无闷蒸（陈豆）',
+        data: [65, 68, 42, 50, 40],
+        borderColor: '#aaa',
+        backgroundColor: 'rgba(170,170,170,0.07)',
+        borderWidth: 1.5,
+        pointBackgroundColor: '#bbb',
+        pointRadius: 3,
+        borderDash: [2,3],
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: ESPRESSO,
+          font: { family: "'Courier New', monospace", size: 11 },
+          boxWidth: 16,
+          padding: 16
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.r} / 100`
+        }
+      }
+    },
+    scales: {
+      r: {
+        min: 0,
+        max: 100,
+        ticks: {
+          display: false,
+          stepSize: 20
+        },
+        grid: { color: 'rgba(0,0,0,0.08)' },
+        angleLines: { color: 'rgba(0,0,0,0.08)' },
+        pointLabels: {
+          color: ESPRESSO,
+          font: { family: 'Georgia, serif', size: 12 }
+        }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

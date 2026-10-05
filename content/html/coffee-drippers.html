@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>滤杯玄学：我花了两周搞明白的那些事</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --espresso: #2C1810;
+    --roast-dark: #4A2C2A;
+    --roast-mid: #7B4F3A;
+    --roast-light: #C17F5A;
+    --cream: #F5EDD8;
+    --parchment: #EDE0C4;
+    --milk: #FAF5EC;
+    --accent-gold: #C9A84C;
+    --accent-sage: #7A9E7E;
+    --accent-terra: #C0614A;
+    --verified: #4A7C59;
+    --inference: #7A6B40;
+    --opinion: #8B4A6B;
+    --text-main: #2C1810;
+    --text-body: #3D2B1F;
+    --text-muted: #7B5E4A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--text-body);
+    font-family: 'Georgia', 'STSong', 'SimSun', serif;
+    line-height: 1.9;
+    font-size: 17px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--espresso);
+    padding: 60px 0 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(193,127,90,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%);
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--roast-light);
+    text-transform: uppercase;
+    border: 1px solid rgba(193,127,90,0.4);
+    padding: 5px 14px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+
+  header h1 {
+    font-size: clamp(26px, 5vw, 48px);
+    color: var(--cream);
+    font-weight: normal;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto 20px;
+    padding: 0 24px;
+  }
+
+  .header-subtitle {
+    color: rgba(245,237,216,0.55);
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.12em;
+    position: relative;
+  }
+
+  /* ─── LAYOUT ─── */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  article {
+    padding: 64px 0;
+  }
+
+  /* ─── SECTION HEADINGS ─── */
+  h2 {
+    font-size: 22px;
+    color: var(--espresso);
+    font-weight: normal;
+    margin: 56px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--parchment);
+    position: relative;
+  }
+
+  h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--accent-gold);
+  }
+
+  h3 {
+    font-size: 18px;
+    color: var(--roast-dark);
+    font-weight: normal;
+    margin: 32px 0 12px;
+  }
+
+  p {
+    margin-bottom: 18px;
+    color: var(--text-body);
+  }
+
+  /* ─── INFO BADGES ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.08em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin: 0 2px;
+    font-weight: 600;
+  }
+
+  .badge-v {
+    background: rgba(74,124,89,0.12);
+    color: var(--verified);
+    border: 1px solid rgba(74,124,89,0.3);
+  }
+
+  .badge-i {
+    background: rgba(122,107,64,0.12);
+    color: var(--inference);
+    border: 1px solid rgba(122,107,64,0.3);
+  }
+
+  .badge-o {
+    background: rgba(139,74,107,0.12);
+    color: var(--opinion);
+    border: 1px solid rgba(139,74,107,0.3);
+  }
+
+  /* ─── LEGEND ─── */
+  .legend-bar {
+    background: var(--parchment);
+    border: 1px solid rgba(74,44,42,0.12);
+    border-radius: 8px;
+    padding: 16px 22px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 32px 0;
+    font-size: 13px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+  }
+
+  /* ─── OPENING QUOTE / PULL ─── */
+  .pull-quote {
+    border-left: 4px solid var(--accent-gold);
+    padding: 16px 24px;
+    margin: 36px 0;
+    background: rgba(201,168,76,0.06);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--roast-dark);
+    line-height: 1.7;
+  }
+
+  /* ─── DRIPPER CARDS ─── */
+  .dripper-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 32px 0;
+  }
+
+  .dripper-card {
+    background: var(--milk);
+    border: 1px solid rgba(74,44,42,0.12);
+    border-radius: 10px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dripper-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent-gold));
+  }
+
+  .dripper-card.v60 { --card-accent: #C0614A; }
+  .dripper-card.kalita { --card-accent: #4A7C59; }
+  .dripper-card.chemex { --card-accent: #5B7FA6; }
+  .dripper-card.melitta { --card-accent: #8B6B4A; }
+
+  .dripper-card h3 {
+    font-size: 16px;
+    margin: 0 0 8px;
+    color: var(--espresso);
+  }
+
+  .dripper-card .card-origin {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .dripper-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .flavor-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--parchment);
+    color: var(--roast-mid);
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin: 2px 2px 8px 0;
+    font-family: 'Courier New', monospace;
+  }
+
+  /* ─── CHARTS ─── */
+  .chart-wrap {
+    background: var(--milk);
+    border: 1px solid rgba(74,44,42,0.10);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin: 36px 0;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  canvas { max-width: 100%; }
+
+  /* ─── PARAMETER TABLE ─── */
+  .param-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(74,44,42,0.12);
+  }
+
+  .param-table thead {
+    background: var(--espresso);
+    color: var(--cream);
+  }
+
+  .param-table th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    font-family: 'Courier New', monospace;
+  }
+
+  .param-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(74,44,42,0.08);
+    vertical-align: top;
+    color: var(--text-body);
+    line-height: 1.5;
+  }
+
+  .param-table tr:last-child td { border-bottom: none; }
+  .param-table tbody tr:nth-child(odd) { background: var(--parchment); }
+  .param-table tbody tr:nth-child(even) { background: var(--milk); }
+  .param-table tbody tr:hover { background: rgba(201,168,76,0.08); }
+
+  /* ─── HIGHLIGHT BOX ─── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(44,24,16,0.04) 0%, rgba(201,168,76,0.06) 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 10px;
+    padding: 24px 26px;
+    margin: 32px 0;
+  }
+
+  .highlight-box .box-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  /* ─── TAKEAWAYS ─── */
+  .takeaway-list {
+    counter-reset: takeaway;
+    list-style: none;
+    margin: 20px 0;
+  }
+
+  .takeaway-list li {
+    counter-increment: takeaway;
+    padding: 14px 16px 14px 52px;
+    position: relative;
+    border-bottom: 1px dashed rgba(74,44,42,0.12);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .takeaway-list li::before {
+    content: counter(takeaway);
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    width: 26px;
+    height: 26px;
+    background: var(--espresso);
+    color: var(--cream);
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  /* ─── REFERENCES ─── */
+  .references {
+    background: var(--espresso);
+    padding: 52px 0;
+    color: rgba(245,237,216,0.7);
+    margin-top: 60px;
+  }
+
+  .references h2 {
+    color: var(--cream);
+    border-bottom-color: rgba(255,255,255,0.1);
+    margin-top: 0;
+  }
+
+  .references h2::before {
+    background: var(--roast-light);
+  }
+
+  .ref-group {
+    margin-bottom: 28px;
+  }
+
+  .ref-group-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--roast-light);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .ref-item {
+    padding: 8px 0;
+    font-size: 13px;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .ref-item a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .ref-item a:hover {
+    text-decoration: underline;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--accent-gold);
+    font-size: 18px;
+    letter-spacing: 0.5em;
+    opacity: 0.5;
+  }
+
+  /* ─── SCROLL ANIMATION ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .dripper-grid { grid-template-columns: 1fr; }
+    .legend-bar { flex-direction: column; gap: 10px; }
+    .param-table { font-size: 12px; }
+    .param-table th, .param-table td { padding: 9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header>
+  <div class="header-tag">学习笔记 · 手冲咖啡</div>
+  <h1>滤杯玄学：我花了两周搞明白的那些事</h1>
+  <p class="header-subtitle">V60 · Kalita Wave · Chemex · Melitta &nbsp;|&nbsp; 萃取 · 研磨 · 烘焙</p>
+</header>
+
+<!-- ════════════════════ LEGEND ════════════════════ -->
+<div class="container">
+  <div class="legend-bar fade-up">
+    <span class="legend-item"><span class="badge badge-v">✓ 已核实</span> 有数据或权威来源支撑</span>
+    <span class="legend-item"><span class="badge badge-i">◎ 推断</span> 基于事实的合理推导</span>
+    <span class="legend-item"><span class="badge badge-o">◇ 观点</span> 咖啡师或个人判断，已注明来源</span>
+  </div>
+</div>
+
+<!-- ════════════════════ ARTICLE ════════════════════ -->
+<article>
+<div class="container">
+
+  <!-- ── 开头 ── -->
+  <p>我第一次认真站在咖啡器材货架面前，是因为朋友送了我一包瑰夏豆。她专门叮嘱："这个豆子要手冲，别用挂耳。"好，我知道要手冲。于是我去买了一个"手冲套装"，是那种橙色的梯形滤杯，冲出来喝着……不太对劲。又酸又有点苦，涩涩的。我搜了一下说可能是"萃取过度"，然后又刷到有人说V60才是正确答案，还有人说"Chemex出来的才叫清透"……我当时就懵了，这些东西到底差在哪里？</p>
+
+  <p>查了将近两周的资料，看了不少评测和对比文章，也翻了一些专业咖啡社区里的讨论，终于把这件事理顺了一点。今天我来把我查到的东西整理出来，希望对同样在门口转悠的人有用。</p>
+
+  <div class="pull-quote">
+    "不同的滤杯不是好坏之分，是目标不同——你想要'干净明亮'，还是'醇厚均衡'，决定了你该选哪个。"
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 1 ── -->
+  <h2>一、先搞清楚：滤杯是怎么影响味道的？</h2>
+
+  <p>我之前以为滤杯就是个漏斗，水从上面浇进去，咖啡从下面流出来，有什么区别呢？查完之后我才明白，水流过咖啡粉这个过程其实极其敏感——流得快，接触时间短，萃取出来的主要是前段的花香、果酸和甜感；流得慢，接触时间长，后段的醇厚感、苦味也会被带出来。<span class="badge badge-v">✓ 已核实</span></p>
+
+  <p>有一个来自中文手冲讨论社区的说法让我觉得特别好理解：<strong>在正常的手冲萃取中，小分子的酸物质最先释出，然后到甜分子，最后才会大量释出大分子的苦物质。</strong>所以控制冲煮时间，本质上是在决定"我想把哪些东西萃取进杯子里"。<span class="badge badge-v">✓ 已核实</span></p>
+
+  <p>而滤杯的形状、孔洞设计、肋骨走向，直接决定了水流速度。这就是为什么换一个滤杯，同样的豆子、同样的手法，喝起来差别可以很大。<span class="badge badge-i">◎ 推断</span></p>
+
+  <p>简单来说，影响萃取风味的，主要是这几个滤杯设计要素：</p>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>设计要素</th>
+        <th>对萃取的影响</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>杯型</strong>（锥形 / 平底 / 扇形）</td><td>决定粉床形状，影响水与粉接触是否均匀</td></tr>
+      <tr><td><strong>肋骨 / 导流槽</strong></td><td>影响排气效率和水流路径长短</td></tr>
+      <tr><td><strong>出水孔</strong>（数量与大小）</td><td>孔越大、越多，流速越快；反之越慢</td></tr>
+      <tr><td><strong>滤纸厚度</strong></td><td>越厚，过滤掉的油脂越多，口感越"干净"</td></tr>
+      <tr><td><strong>材质</strong></td><td>陶瓷保温好；玻璃/金属散热快；塑料轻便</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 2 ── -->
+  <h2>二、四款主流滤杯，逐一拆解</h2>
+
+  <div class="dripper-grid">
+
+    <div class="dripper-card v60">
+      <h3>Hario V60</h3>
+      <div class="card-origin">JAPAN · 2004 · 锥形</div>
+      <div>
+        <span class="flavor-tag">明亮</span>
+        <span class="flavor-tag">果酸</span>
+        <span class="flavor-tag">层次感</span>
+        <span class="flavor-tag">清爽</span>
+      </div>
+      <p>螺旋肋骨 + 大出水孔，流速快，最能展现单品豆的地域风味。需要一定技术，是进阶玩家的最爱。</p>
+    </div>
+
+    <div class="dripper-card kalita">
+      <h3>Kalita Wave</h3>
+      <div class="card-origin">JAPAN · 1958 · 平底</div>
+      <div>
+        <span class="flavor-tag">均衡</span>
+        <span class="flavor-tag">醇厚</span>
+        <span class="flavor-tag">甜感</span>
+        <span class="flavor-tag">稳定</span>
+      </div>
+      <p>平底三孔设计，萃取均匀，对新手友好。口感平衡扎实，不容易冲出极端风味，日常喝很稳。</p>
+    </div>
+
+    <div class="dripper-card chemex">
+      <h3>Chemex</h3>
+      <div class="card-origin">USA · 1941 · 锥形一体壶</div>
+      <div>
+        <span class="flavor-tag">茶感</span>
+        <span class="flavor-tag">超干净</span>
+        <span class="flavor-tag">透亮</span>
+        <span class="flavor-tag">低油脂</span>
+      </div>
+      <p>专属超厚滤纸，将咖啡油脂大量过滤，口感最为清透纯粹。适合单品豆展示，颜值担当。</p>
+    </div>
+
+    <div class="dripper-card melitta">
+      <h3>Melitta / 扇形杯</h3>
+      <div class="card-origin">GERMANY · 1908 · 扇形</div>
+      <div>
+        <span class="flavor-tag">醇厚</span>
+        <span class="flavor-tag">平稳</span>
+        <span class="flavor-tag">经典</span>
+        <span class="flavor-tag">复古</span>
+      </div>
+      <p>咖啡滤杯的鼻祖设计。单孔、流速最慢，萃取较充分，口感偏醇厚，是欧洲家庭的传统选择。</p>
+    </div>
+
+  </div>
+
+  <!-- CHART 1: Flavor Profile Radar -->
+  <div class="chart-wrap">
+    <p class="chart-title">【图表一】四款滤杯风味雷达对比（综合多方评测的主观评分参考）<span class="badge badge-i">◎ 推断</span></p>
+    <canvas id="radarChart" style="max-height:380px;"></canvas>
+  </div>
+
+  <h3>先说 V60，我以为它是最简单的那个</h3>
+
+  <p>因为它长得最"直白"——一个锥形漏斗，中间一个大孔，外观简单。结果我查到，<span class="badge badge-v">✓ 已核实</span>V60内壁的螺旋肋骨是专门设计的，它的作用是：延长水流路径、让咖啡粉快速排气、水能从四面均匀浸透粉层。这个设计让V60的流速成为几款里最快的，但也因此，<strong>你怎么倒水，直接影响结果</strong>——因为快速流走的水，能忠实反映你的手法好坏。所以V60是"高响应"型滤杯，用得好，水果花香全出来；用得差，风味就薄。</p>
+
+  <p>一位东京咖啡匠人的说法让我印象很深：<span class="badge badge-o">◇ 观点</span> "建议用V60冲泡Gesha豆和浅烘埃塞俄比亚——能充分表现其明亮、轻盈和花茶香。" 这和很多测评的结论是一致的，V60最适合浅焙单品豆。</p>
+
+  <h3>Kalita Wave，"蛋糕杯"不只是颜值</h3>
+
+  <p><span class="badge badge-v">✓ 已核实</span>Kalita Wave最大的结构特点是平底加三孔。平底让咖啡粉均匀铺开，三个小孔减缓出水速度，波形滤纸让滤纸和滤杯几乎没有直接接触——这样温度保持更稳定，粉床也不会因为局部贴壁而出现"通道效应"（就是水沿着某条缝隙直冲下去，导致萃取不均匀）。</p>
+
+  <p>柏林咖啡吧Barn Berlin的咖啡主理人曾这样说过：<span class="badge badge-o">◇ 观点</span> "我用Kalita是因为它的平底——可以给出更好的、更均匀的萃取，更少的通道效应，杯中口感更丰富复杂，而V60或Chemex给你的是更多的清晰感和锐度。"</p>
+
+  <p>用知乎上一位手冲爱好者的亲测数据来对比一下：<span class="badge badge-v">✓ 已核实</span>用同款浅焙耶加雪菲水洗豆、同样的冲泡手法，V60测出萃取率约20%，Kalita扇形约19.4%，冲煮时间V60用时2分46秒，Kalita扇形2分36秒——数字差异不大，但杯中风味差异明显：V60"层次较清晰，先是柑橘花香，随后有桃子的酸甜"；Kalita扇形"层次感有，酸质明亮，转甜略慢，尾端牛奶巧克力"。</p>
+
+  <h3>Chemex，最极端的"清透派"</h3>
+
+  <p>Chemex是1941年一个美国化学家设计的，<span class="badge badge-v">✓ 已核实</span>它使用的滤纸比普通滤纸厚20-30%，这张厚滤纸几乎把咖啡中所有的油脂和细粉全部过滤掉，出来的咖啡透明程度极高，很多人形容是"像茶一样"。</p>
+
+  <p>但代价是：正因为过滤得太彻底，<span class="badge badge-i">◎ 推断</span>Chemex出来的咖啡醇厚度（Body）是几款中最低的，也不太适合喜欢"有厚度感、有油脂感"那种口感的人。它冲出来的豆子风味展示很纯粹，非常适合精品单品豆，但对中深烘的豆子来说，可能会"过滤掉太多"，导致风味偏薄。</p>
+
+  <h3>Melitta扇形杯，不要小看"鼻祖"</h3>
+
+  <p><span class="badge badge-v">✓ 已核实</span>Melitta是1908年德国人发明的，是人类历史上第一款纸质咖啡滤杯，也是滤杯概念的发明者。扇形设计、底部单孔，流速在这几款里是最慢的——这意味着水和粉的接触时间最长，口感偏醇厚、浓郁，但也更容易"过萃"（就是苦感和涩感出来），用来冲浅焙豆需要调整参数。</p>
+
+  <div class="highlight-box">
+    <div class="box-label">一句话记住各款特点</div>
+    <p style="margin:0;font-size:15px;line-height:2;color:var(--roast-dark);">
+      <strong>V60</strong> = 高手的放大镜，豆子什么味道你就喝到什么<br>
+      <strong>Kalita Wave</strong> = 稳健选手，均衡不偏科，日常喝最舒服<br>
+      <strong>Chemex</strong> = 极简主义者，追求纯净透亮，颜值最高<br>
+      <strong>Melitta</strong> = 欧洲传统，醇厚扎实，注意别过萃
+    </p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 3 ── -->
+  <h2>三、研磨度：被我忽视最久的那个变量</h2>
+
+  <p>我开始手冲的时候，买了一个手摇磨豆机，也没研究刻度，就按照说明书调到"中等"。后来查资料才发现，<strong>不同滤杯对研磨度的要求不一样</strong>，而且研磨度和滤杯流速是要配合使用的。<span class="badge badge-v">✓ 已核实</span></p>
+
+  <p>逻辑是这样的：<span class="badge badge-i">◎ 推断</span>流速快的滤杯（比如V60），如果研磨太粗，水会来不及萃取就流走，结果就是"萃取不足"——酸、薄、没有回甘；流速慢的滤杯（比如Melitta），如果研磨太细，水流更慢，接触时间更长，就会"过度萃取"——苦、涩。所以要在流速和研磨度之间找平衡。</p>
+
+  <!-- CHART 2: Grind size bar -->
+  <div class="chart-wrap">
+    <p class="chart-title">【图表二】各滤杯推荐研磨粗细区间（参考值）<span class="badge badge-v">✓ 已核实</span></p>
+    <canvas id="grindChart" style="max-height:280px;"></canvas>
+  </div>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>滤杯</th>
+        <th>建议研磨度</th>
+        <th>约等于</th>
+        <th>目标萃取时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Hario V60</td><td>中细（medium-fine）</td><td>食盐颗粒感</td><td>2:30–3:30 分钟</td></tr>
+      <tr><td>Kalita Wave</td><td>中等（medium）</td><td>砂糖颗粒感</td><td>3:00–3:45 分钟</td></tr>
+      <tr><td>Chemex</td><td>中粗（medium-coarse）</td><td>粗砂感</td><td>3:30–4:30 分钟</td></tr>
+      <tr><td>Melitta/扇形</td><td>中偏粗</td><td>粗砂偏上</td><td>3:00–4:00 分钟</td></tr>
+    </tbody>
+  </table>
+
+  <p>有一个很实用的微调原则：<strong>如果你喝起来偏苦或偏涩，研磨调粗一点；如果偏酸或者风味很薄，研磨调细一点。</strong> 每次只调一个方向，喝完再判断。这是我觉得最容易上手的"调试方法"。<span class="badge badge-i">◎ 推断</span></p>
+
+  <p>另外，<span class="badge badge-v">✓ 已核实</span>来自Perfect Daily Grind和多位专业咖啡师的访谈都强调：<strong>研磨的均匀度比研磨粗细更重要。</strong> 一台能磨出粒径一致颗粒的磨豆机，比一台研磨度调了很多档但颗粒大小参差不齐的磨豆机，冲出来的结果要好得多。这就是为什么手冲党都会强调"入手一台好一点的磨豆机"。</p>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 4 ── -->
+  <h2>四、烘焙度：和滤杯该怎么搭？</h2>
+
+  <p>这也是我之前完全没想过的问题。我以为咖啡豆就是咖啡豆，冲法不同而已，没想到烘焙深浅和选择哪种滤杯、怎么设置参数有直接关系。<span class="badge badge-v">✓ 已核实</span></p>
+
+  <p>核心原理是：<strong>烘焙程度越浅，豆子越致密，越不容易溶出风味；烘焙程度越深，豆子越疏松多孔，更容易萃取，但也更容易过萃出苦味。</strong><span class="badge badge-v">✓ 已核实</span></p>
+
+  <!-- CHART 3: Roast x Temperature x Grind Matrix -->
+  <div class="chart-wrap">
+    <p class="chart-title">【图表三】烘焙度 × 水温 × 研磨度 推荐区间<span class="badge badge-v">✓ 已核实</span></p>
+    <canvas id="roastChart" style="max-height:300px;"></canvas>
+  </div>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>烘焙度</th>
+        <th>豆子特点</th>
+        <th>推荐水温</th>
+        <th>研磨调整</th>
+        <th>适合搭配</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>浅焙（Light）</td>
+        <td>致密，难萃取，风味复杂</td>
+        <td>93–96°C</td>
+        <td>比中焙稍细</td>
+        <td>V60、Kalita Wave 最佳；尽量展现花果酸香</td>
+      </tr>
+      <tr>
+        <td>中焙（Medium）</td>
+        <td>平衡，适应性强</td>
+        <td>90–93°C</td>
+        <td>中等标准</td>
+        <td>任何滤杯均可；最推荐新手入门</td>
+      </tr>
+      <tr>
+        <td>深焙（Dark）</td>
+        <td>疏松，易过萃，偏苦巧克力</td>
+        <td>88–92°C</td>
+        <td>比浅焙稍粗</td>
+        <td>Kalita Wave、聪明杯更宽容；避免V60快速流完</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>来自新加坡咖啡师Sam Koh在Perfect Daily Grind的一段采访让我觉得很好理解：<span class="badge badge-o">◇ 观点</span> <em>"浅烘豆会给你更多细腻的风味层次，这些层次最适合通过手冲这种缓慢萃取方式来呈现。而深烘豆通过手冲反而容易产生酸涩或苦感。"</em></p>
+
+  <p>这也解释了为什么我最开始用扇形滤杯冲瑰夏豆（浅焙）会感觉不对——扇形杯流速慢、水温我估计不够高、研磨还偏粗，几个参数叠加在一起，就是典型的"萃取不足 + 局部过萃"，当然既酸又涩。<span class="badge badge-i">◎ 推断</span></p>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 5 ── -->
+  <h2>五、滤纸：不只是个"漏网"</h2>
+
+  <p>我之前以为滤纸只是防止咖啡粉跑进杯里，查完才知道<strong>滤纸厚度会直接影响口感</strong>。厚的滤纸过滤掉更多咖啡油脂（Lipid），油脂是"醇厚感"和"油润感"的来源，过滤越多，杯子越干净透亮，但醇厚感也越低。</p>
+
+  <p><span class="badge badge-v">✓ 已核实</span>三款主流滤纸的过滤能力排序大约是：Chemex专属厚滤纸 > V60标准滤纸 ≈ Kalita Wave波形滤纸 > 布滤（法兰绒） > 金属滤网。金属滤网几乎不过滤油脂，出来的口感最厚重，法压壶也是这个道理。</p>
+
+  <p>另外，滤纸有漂白和未漂白之分。<span class="badge badge-v">✓ 已核实</span>漂白滤纸（白色）萃取前用热水润湿一遍，基本可以消除纸味；未漂白滤纸（棕色/米色）可能有轻微纸浆味，润湿更重要。实际使用中两者的味道差别很小，更多是个人偏好。</p>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── SECTION 6 ── -->
+  <h2>六、综合对比：我该选哪个？</h2>
+
+  <!-- CHART 4: Difficulty/Forgiveness scatter -->
+  <div class="chart-wrap">
+    <p class="chart-title">【图表四】各滤杯"上手难度 vs 风味展现力"综合对比<span class="badge badge-i">◎ 推断（综合多来源评测）</span></p>
+    <canvas id="scatterChart" style="max-height:340px;"></canvas>
+  </div>
+
+  <table class="param-table">
+    <thead>
+      <tr>
+        <th>滤杯</th>
+        <th>适合人群</th>
+        <th>最适豆子</th>
+        <th>性格</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hario V60</td>
+        <td>有一定手法的手冲爱好者，喜欢折腾</td>
+        <td>浅焙单品、花果香豆</td>
+        <td>高风险高回报</td>
+      </tr>
+      <tr>
+        <td>Kalita Wave</td>
+        <td>新手到进阶，喜欢稳定的日常口感</td>
+        <td>中浅焙、各类豆均可</td>
+        <td>最稳的全能选手</td>
+      </tr>
+      <tr>
+        <td>Chemex</td>
+        <td>追求清透口感、喜欢精品豆展示、经常招待客人</td>
+        <td>浅焙单品、轻盈花香豆</td>
+        <td>极简主义清透派</td>
+      </tr>
+      <tr>
+        <td>Melitta/扇形</td>
+        <td>偏好醇厚口感、欧洲传统咖啡爱好者</td>
+        <td>中深焙，浓郁型</td>
+        <td>欧式传统老派</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <div class="box-label">如果你是新手，我的建议</div>
+    <p style="margin:0;font-size:15px;color:var(--roast-dark);line-height:1.85;">
+      先买一个 <strong>Kalita Wave</strong> 或者普通<strong>V60</strong>（塑料款就够了，便宜又耐用）。配合<strong>中焙豆</strong>，研磨调到"中等"，水温90°C左右，先把冲的手感练熟了再说。不要一上来就买瑰夏豆冲，那是把最容易翻车的豆子配上最容易出错的起步阶段——就是我当时干的事情。
+    </p>
+  </div>
+
+  <div class="divider">· · ·</div>
+
+  <!-- ── TAKEAWAYS ── -->
+  <h2>七、查完这些，我学到了什么</h2>
+
+  <ol class="takeaway-list">
+    <li>
+      <strong>滤杯的核心差异是流速控制。</strong>锥形快、平底慢；孔大流速快、孔小流速慢。流速决定了萃取时间，萃取时间决定了你喝到的是"前段花香果酸"还是"后段醇厚苦感"。以前我以为这只是外观差异，其实是物理原理在起作用。
+    </li>
+    <li>
+      <strong>研磨度和滤杯是配对的，不能单独看。</strong>V60流速快，所以要磨细一点来补偿；Chemex有厚滤纸阻力，要磨粗一点防止过萃。这个逻辑我之前完全不知道，一直用一个固定研磨度冲所有杯子，难怪结果飘忽。
+    </li>
+    <li>
+      <strong>烘焙度直接影响参数设置，浅焙不等于"好冲"。</strong>浅焙豆致密、难萃取，需要更高水温、更细研磨、更长冲泡时间，是所有烘焙里最容易冲出问题的——可偏偏精品豆大多是浅焙。所以买到好豆不等于能喝到好咖啡，参数对才行。
+    </li>
+    <li>
+      <strong>没有"最好的"滤杯，只有"最适合当下目标"的滤杯。</strong>要明亮展示豆子个性，选V60；要每天稳定好喝不折腾，选Kalita；要极致干净当艺术品用，选Chemex。我最开始在找答案的时候，一直想找到"哪个最好"，这个问题本身就问错了。
+    </li>
+  </ol>
+
+</div><!-- /container -->
+</article>
+
+<!-- ════════════════════ REFERENCES ════════════════════ -->
+<div class="references">
+  <div class="container">
+    <h2>参考来源</h2>
+
+    <div class="ref-group">
+      <div class="ref-group-title">🇺🇸 英文来源</div>
+      <div class="ref-item">
+        <strong>Barista Life</strong> — V60 vs Chemex vs Kalita Wave: Best Manual Pour Over Equipment Guide<br>
+        <a href="https://baristalife.co/blogs/blog/v60-vs-chemex-vs-kalita" target="_blank">https://baristalife.co/blogs/blog/v60-vs-chemex-vs-kalita</a>
+      </div>
+      <div class="ref-item">
+        <strong>Coffee Gear Hub</strong> — V60 vs Chemex vs Kalita Wave: A Deep, Practical Comparison<br>
+        <a href="https://www.coffeegearhub.com/v60-vs-chemex-vs-kalita-wave/" target="_blank">https://www.coffeegearhub.com/v60-vs-chemex-vs-kalita-wave/</a>
+      </div>
+      <div class="ref-item">
+        <strong>Barista Magazine</strong> — Pick Your Pourover: Comparing and Contrasting the Most Popular Models<br>
+        <a href="https://www.baristamagazine.com/pick-your-pour-over-comparing-and-contrasting-the-most-popular-models/" target="_blank">https://www.baristamagazine.com/pick-your-pour-over-comparing-and-contrasting-the-most-popular-models/</a>
+      </div>
+      <div class="ref-item">
+        <strong>Perfect Daily Grind</strong> — Adjusting A Brewing Recipe To Your Coffee Roast Level<br>
+        <a href="https://perfectdailygrind.com/2019/10/how-to-adjust-your-brewing-recipe-for-coffee-roast-level/" target="_blank">https://perfectdailygrind.com/2019/10/how-to-adjust-your-brewing-recipe-for-coffee-roast-level/</a>
+      </div>
+      <div class="ref-item">
+        <strong>1Zpresso</strong> — How to Dial In the Perfect Grind Size for Pour Over Coffee<br>
+        <a href="https://1zpresso.coffee/how-to-dial-in-the-perfect-grind-size-for-pour-over-coffee/" target="_blank">https://1zpresso.coffee/how-to-dial-in-the-perfect-grind-size-for-pour-over-coffee/</a>
+      </div>
+      <div class="ref-item">
+        <strong>FLTR Magazine</strong> — The Best Pour Over Method: Chemex vs V60 vs Kalita<br>
+        <a href="https://fltrmagazine.com/2022/06/13/the-best-pour-over-method-chemex-vs-v60-vs-kalita/" target="_blank">https://fltrmagazine.com/2022/06/13/the-best-pour-over-method-chemex-vs-v60-vs-kalita/</a>
+      </div>
+      <div class="ref-item">
+        <strong>Achilles Coffee Roasters</strong> — Pour-Over Mastery: V60 vs. Kalita Wave vs. Chemex<br>
+        <a href="https://achillescoffeeroasters.com/blogs/specialty-coffee-blog/pour-over-mastery-v60-vs-kalita-wave-vs-chemex" target="_blank">https://achillescoffeeroasters.com/blogs/specialty-coffee-blog/pour-over-mastery-v60-vs-kalita-wave-vs-chemex</a>
+      </div>
+    </div>
+
+    <div class="ref-group">
+      <div class="ref-group-title">🇨🇳 中文来源</div>
+      <div class="ref-item">
+        <strong>执籽咖啡</strong> — 2024年最好的手冲咖啡滤杯推荐评测&选购指南<br>
+        <a href="https://www.holdoncafe.cn/archives/1771" target="_blank">https://www.holdoncafe.cn/archives/1771</a>
+      </div>
+      <div class="ref-item">
+        <strong>知乎专栏</strong> — 五款常用咖啡滤杯的使用评测（含TDS实测数据）<br>
+        <a href="https://zhuanlan.zhihu.com/p/74895405" target="_blank">https://zhuanlan.zhihu.com/p/74895405</a>
+      </div>
+      <div class="ref-item">
+        <strong>知乎专栏</strong> — 那些咖啡滤杯品牌｜咖啡器具入坑指南<br>
+        <a href="https://zhuanlan.zhihu.com/p/398535308" target="_blank">https://zhuanlan.zhihu.com/p/398535308</a>
+      </div>
+      <div class="ref-item">
+        <strong>OneKayakPanda</strong> — 手冲V60？Chemex？爱乐压？在家如何选择不同工具做咖啡？<br>
+        <a href="https://www.onekayakpanda.com/post/_0906" target="_blank">https://www.onekayakpanda.com/post/_0906</a>
+      </div>
+      <div class="ref-item">
+        <strong>知乎</strong> — 2025年手冲咖啡滤杯深度选购指南<br>
+        <a href="https://zhuanlan.zhihu.com/p/550675031" target="_blank">https://zhuanlan.zhihu.com/p/550675031</a>
+      </div>
+      <div class="ref-item">
+        <strong>嘎肥 gafei.com</strong> — 手冲咖啡滤杯Hario V60与Kalita Wave的区别<br>
+        <a href="https://m.gafei.com/views-120740" target="_blank">https://m.gafei.com/views-120740</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ CHARTS JS ════════════════════ -->
+<script>
+const espresso = '#2C1810';
+const roastMid = '#7B4F3A';
+const roastLight = '#C17F5A';
+const gold = '#C9A84C';
+const sage = '#7A9E7E';
+const terra = '#C0614A';
+const blue = '#5B7FA6';
+
+// ─── CHART 1: RADAR ───
+const radarCtx = document.getElementById('radarChart').getContext('2d');
+new Chart(radarCtx, {
+  type: 'radar',
+  data: {
+    labels: ['清透度', '酸质明亮', '花果香', '醇厚度', '甜感', '风味层次', '新手友好'],
+    datasets: [
+      {
+        label: 'V60',
+        data: [82, 88, 87, 52, 68, 88, 55],
+        borderColor: terra,
+        backgroundColor: 'rgba(192,97,74,0.10)',
+        pointBackgroundColor: terra,
+        borderWidth: 2,
+      },
+      {
+        label: 'Kalita Wave',
+        data: [75, 70, 72, 78, 82, 75, 88],
+        borderColor: sage,
+        backgroundColor: 'rgba(122,158,126,0.10)',
+        pointBackgroundColor: sage,
+        borderWidth: 2,
+      },
+      {
+        label: 'Chemex',
+        data: [96, 80, 78, 38, 70, 70, 60],
+        borderColor: blue,
+        backgroundColor: 'rgba(91,127,166,0.10)',
+        pointBackgroundColor: blue,
+        borderWidth: 2,
+      },
+      {
+        label: 'Melitta',
+        data: [55, 52, 50, 85, 65, 58, 72],
+        borderColor: gold,
+        backgroundColor: 'rgba(201,168,76,0.10)',
+        pointBackgroundColor: gold,
+        borderWidth: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      r: {
+        beginAtZero: true, max: 100,
+        ticks: { stepSize: 20, color: '#7B5E4A', font: { size: 10 }, backdropColor: 'transparent' },
+        grid: { color: 'rgba(74,44,42,0.10)' },
+        pointLabels: { color: '#3D2B1F', font: { size: 12, family: 'Georgia' } }
+      }
+    },
+    plugins: {
+      legend: { labels: { color: '#2C1810', font: { size: 13, family: 'Georgia' } } }
+    }
+  }
+});
+
+// ─── CHART 2: GRIND BAR ───
+const grindCtx = document.getElementById('grindChart').getContext('2d');
+new Chart(grindCtx, {
+  type: 'bar',
+  data: {
+    labels: ['V60', 'Kalita Wave', 'Chemex', 'Melitta/扇形'],
+    datasets: [
+      {
+        label: '研磨粗细范围（微米，越大越粗）',
+        data: [
+          [400, 700],
+          [600, 750],
+          [650, 800],
+          [700, 850],
+        ],
+        backgroundColor: [terra + 'CC', sage + 'CC', blue + 'CC', gold + 'CC'],
+        borderColor: [terra, sage, blue, gold],
+        borderWidth: 1.5,
+        borderSkipped: false,
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        min: 300, max: 950,
+        title: { display: true, text: '研磨粒径（微米 μm）', color: '#7B5E4A', font: { size: 12 } },
+        ticks: { color: '#7B5E4A' },
+        grid: { color: 'rgba(74,44,42,0.08)' }
+      },
+      y: {
+        ticks: { color: '#2C1810', font: { size: 13, family: 'Georgia' } },
+        grid: { display: false }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const v = ctx.raw;
+            return ` 约 ${v[0]}–${v[1]} μm`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// ─── CHART 3: ROAST TEMP LINE ───
+const roastCtx = document.getElementById('roastChart').getContext('2d');
+new Chart(roastCtx, {
+  type: 'bar',
+  data: {
+    labels: ['浅焙 Light', '中焙 Medium', '深焙 Dark'],
+    datasets: [
+      {
+        label: '推荐水温区间（°C）',
+        data: [[93, 96], [90, 93], [88, 92]],
+        backgroundColor: ['rgba(192,97,74,0.7)', 'rgba(201,168,76,0.7)', 'rgba(74,44,42,0.7)'],
+        borderColor: [terra, gold, espresso],
+        borderWidth: 1.5,
+        borderSkipped: false,
+        yAxisID: 'y',
+      },
+      {
+        label: '相对研磨粗细（越高越粗）',
+        data: [3, 5, 7],
+        type: 'line',
+        borderColor: sage,
+        backgroundColor: sage + '40',
+        pointBackgroundColor: sage,
+        borderWidth: 2,
+        tension: 0.3,
+        fill: false,
+        yAxisID: 'y2',
+        pointRadius: 6,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        min: 85, max: 100,
+        title: { display: true, text: '水温 (°C)', color: '#7B5E4A', font: { size: 12 } },
+        ticks: { color: '#7B5E4A' },
+        grid: { color: 'rgba(74,44,42,0.08)' }
+      },
+      y2: {
+        position: 'right',
+        min: 0, max: 10,
+        title: { display: true, text: '相对研磨粗细', color: sage, font: { size: 12 } },
+        ticks: { color: sage },
+        grid: { display: false }
+      },
+      x: {
+        ticks: { color: '#2C1810', font: { size: 13, family: 'Georgia' } },
+        grid: { color: 'rgba(74,44,42,0.06)' }
+      }
+    },
+    plugins: {
+      legend: { labels: { color: '#2C1810', font: { size: 13 } } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            if (ctx.datasetIndex === 0) {
+              const v = ctx.raw;
+              return ` 水温 ${v[0]}–${v[1]}°C`;
+            }
+            const labels = ['偏细', '中等', '偏粗'];
+            return ` 研磨建议：${labels[ctx.dataIndex]}`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// ─── CHART 4: SCATTER ───
+const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+new Chart(scatterCtx, {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'V60',
+        data: [{ x: 75, y: 90 }],
+        backgroundColor: terra,
+        pointRadius: 14, pointHoverRadius: 16,
+      },
+      {
+        label: 'Kalita Wave',
+        data: [{ x: 35, y: 78 }],
+        backgroundColor: sage,
+        pointRadius: 14, pointHoverRadius: 16,
+      },
+      {
+        label: 'Chemex',
+        data: [{ x: 55, y: 70 }],
+        backgroundColor: blue,
+        pointRadius: 14, pointHoverRadius: 16,
+      },
+      {
+        label: 'Melitta',
+        data: [{ x: 42, y: 62 }],
+        backgroundColor: gold,
+        pointRadius: 14, pointHoverRadius: 16,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        min: 0, max: 100,
+        title: { display: true, text: '← 新手友好 ─────────────── 需要技术 →', color: '#7B5E4A', font: { size: 12 } },
+        ticks: { display: false },
+        grid: { color: 'rgba(74,44,42,0.08)' }
+      },
+      y: {
+        min: 40, max: 100,
+        title: { display: true, text: '风味展现力（分数越高越能展现豆子个性）', color: '#7B5E4A', font: { size: 12 } },
+        ticks: { color: '#7B5E4A' },
+        grid: { color: 'rgba(74,44,42,0.08)' }
+      }
+    },
+    plugins: {
+      legend: { labels: { color: '#2C1810', font: { size: 13 } } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const descMap = {
+              'V60': '风味展现力强，但手法要稳',
+              'Kalita Wave': '最容易上手的均衡选手',
+              'Chemex': '清透度最高，偏向展示',
+              'Melitta': '经典醇厚，适合中深焙'
+            };
+            return descMap[ctx.dataset.label] || ctx.dataset.label;
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
