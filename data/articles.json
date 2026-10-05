@@ -264,5 +264,266 @@
     "created": "2026-10-05",
     "updated": "2026-10-05",
     "featured": false
+  },
+  {
+    "id": "treasure-from-iran",
+    "title": "古波斯的荣耀",
+    "subtitle": "Treasure from Iran",
+    "file": "Treasure-from-iran.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Treasure-from-iran.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "波斯",
+      "伊朗",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《古波斯的荣耀》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "precious-rarities",
+    "title": "古犀献珍 · 上海博物馆",
+    "subtitle": "Precious Rarities",
+    "file": "Precious-Rarities.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Precious-Rarities.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "上海博物馆",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《古犀献珍 · 上海博物馆》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "the-gifts-of-the-gods",
+    "title": "瑰丽永驻——古希腊彩陶及普利亚艺术文化特展",
+    "subtitle": "The Gifts Of The Gods",
+    "file": "The-Gifts-Of-The-Gods.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/The-Gifts-Of-The-Gods.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "古希腊",
+      "彩陶",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《瑰丽永驻——古希腊彩陶及普利亚艺术文化特展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "sea-of-the-cloud",
+    "title": "海溟溟",
+    "subtitle": "Sea of the Cloud",
+    "file": "Sea-of-the-cloud.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Sea-of-the-cloud.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《海溟溟》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "legend-of-han-and-huai-valleys",
+    "title": "汉淮传奇 · 上海博物馆",
+    "subtitle": "A Legend Of The Han and Huai Valleys",
+    "file": "A-Legend-Of-The-Han-and-Huai-Valleys.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/A-Legend-Of-The-Han-and-Huai-Valleys.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "上海博物馆",
+      "汉淮",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《汉淮传奇 · 上海博物馆》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "red-jade-in-bloom",
+    "title": "红翠斗芳菲",
+    "subtitle": "",
+    "file": "wvvwe.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/wvvwe.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《红翠斗芳菲》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "legends-of-dragon",
+    "title": "红山文化古国文明特展 · 上海博物馆",
+    "subtitle": "Legends of Dragon",
+    "file": "Legends-of-Dragon.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Legends-of-Dragon.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "红山文化",
+      "上海博物馆",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《红山文化古国文明特展 · 上海博物馆》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "cartier-the-power-of-magic",
+    "title": "卡地亚展",
+    "subtitle": "Cartier · The Power of Magic",
+    "file": "Cartier-the-power-of-magic.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Cartier-the-power-of-magic.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "卡地亚",
+      "珠宝艺术",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《卡地亚展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "pearls-returned-home",
+    "title": "两涂轩展",
+    "subtitle": "Pearls Returned Home",
+    "file": "Pearls-Returned-home.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Pearls-Returned-home.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《两涂轩展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "wonders-of-the-world",
+    "title": "马可波罗展",
+    "subtitle": "Wonders of the World",
+    "file": "Wonders-of-the-world.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Wonders-of-the-world.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "马可波罗",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《马可波罗展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "resonance-of-wood-and-stone",
+    "title": "木石双清展",
+    "subtitle": "The Resonance of Wood and Stone",
+    "file": "The-resonance-of-wood-and-stone.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/The-resonance-of-wood-and-stone.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "木石",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《木石双清展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "towering-treasure-house",
+    "title": "西林塔特展",
+    "subtitle": "A Towering Treasure House",
+    "file": "A-towering-treature-house.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/A-towering-treature-house.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《西林塔特展》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
+  },
+  {
+    "id": "panda-era",
+    "title": "熊猫时代",
+    "subtitle": "Panda",
+    "file": "Panda.pdf",
+    "url": "https://pub-de60bc99a31e4d98ada28ea9f13e8000.r2.dev/Panda.pdf",
+    "type": "pdf",
+    "categories": [
+      "museum-guides"
+    ],
+    "tags": [
+      "熊猫",
+      "博物馆",
+      "展览手册"
+    ],
+    "summary": "《熊猫时代》相关 PDF 展览手册。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
   }
 ]
