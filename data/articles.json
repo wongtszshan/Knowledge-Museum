@@ -17,7 +17,8 @@
     "summary": "一份围绕中国古代主要朝代的封建程度与开放程度展开的多维度评析。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": true
+    "featured": true,
+    "type": "html"
   },
   {
     "id": "venturi-effect",
@@ -36,7 +37,8 @@
     "summary": "通过动态粒子、压力与速度曲线，直观演示狭管中的流体变化。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": true
+    "featured": true,
+    "type": "html"
   },
   {
     "id": "inflorescence-types",
@@ -55,7 +57,8 @@
     "summary": "用结构化 SVG 图解展示常见花序类型及其形态特征。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": true
+    "featured": true,
+    "type": "html"
   },
   {
     "id": "us-stock-investing-guide",
@@ -74,6 +77,31 @@
     "summary": "一份面向个人投资者的美股入门学习与进阶手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": true
+    "featured": true,
+    "type": "html"
+  },
+  {
+    "id": "royal-screen-of-empire",
+    "title": "藩屏天下：湖北明代宗藩文物特展",
+    "subtitle": "深圳博物馆 · 古代艺术馆第 1–4 号展厅 · 展览手册",
+    "file": "royal-screen-of-empire.pdf",
+    "type": "pdf",
+    "pages": 20,
+    "categories": [
+      "museum-guides",
+      "history"
+    ],
+    "tags": [
+      "博物馆",
+      "展览手册",
+      "明代",
+      "宗藩",
+      "湖北",
+      "深圳博物馆"
+    ],
+    "summary": "深圳博物馆“藩屏天下——湖北明代宗藩文物特展”展览手册，介绍明代宗藩制度、藩王生活艺术及相关文物。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false
   }
 ]
