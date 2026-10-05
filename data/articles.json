@@ -525,5 +525,93 @@
     "created": "2026-10-05",
     "updated": "2026-10-05",
     "featured": false
+  },
+  {
+    "id": "coffee-beans-resting-freezing",
+    "title": "咖啡豆养豆与冷冻保存",
+    "subtitle": "关于养豆时间、冷冻保存与研究者观点的系统梳理",
+    "file": "coffee-beans-resting-freezing.html",
+    "categories": [
+      "coffee"
+    ],
+    "tags": [
+      "咖啡",
+      "养豆",
+      "冷冻保存",
+      "储存",
+      "Hendon",
+      "Hoffmann",
+      "Scott Rao"
+    ],
+    "summary": "围绕咖啡豆养豆、排气与冷冻保存整理研究与行业观点，并区分事实、推论与经验判断。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false,
+    "type": "html"
+  },
+  {
+    "id": "coffee-bloom-article",
+    "title": "在咖啡萃取里，闷蒸真的重要吗？",
+    "subtitle": "从气体释放、萃取与冲煮实践理解 Bloom",
+    "file": "coffee-bloom-article.html",
+    "categories": [
+      "coffee"
+    ],
+    "tags": [
+      "咖啡",
+      "手冲",
+      "闷蒸",
+      "Bloom",
+      "萃取"
+    ],
+    "summary": "围绕手冲咖啡闷蒸的作用、气体释放与萃取影响展开的资料梳理与分析。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false,
+    "type": "html"
+  },
+  {
+    "id": "coffee-drippers",
+    "title": "滤杯玄学：我花了两周搞明白的那些事",
+    "subtitle": "V60 · Kalita Wave · Chemex · Melitta｜萃取、研磨与烘焙",
+    "file": "coffee-drippers.html",
+    "categories": [
+      "coffee"
+    ],
+    "tags": [
+      "咖啡",
+      "滤杯",
+      "V60",
+      "Kalita Wave",
+      "Chemex",
+      "Melitta",
+      "手冲"
+    ],
+    "summary": "比较不同滤杯结构与冲煮表现，讨论器具、研磨、烘焙与萃取之间的关系。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false,
+    "type": "html"
+  },
+  {
+    "id": "coffee-freezing-guide",
+    "title": "咖啡豆到底要不要冷冻？",
+    "subtitle": "查阅 20 篇研究后的养豆与冷冻保存指南",
+    "file": "coffee_freezing_guide.html",
+    "categories": [
+      "coffee"
+    ],
+    "tags": [
+      "咖啡",
+      "冷冻",
+      "保存",
+      "养豆",
+      "研究"
+    ],
+    "summary": "聚焦咖啡豆冷冻保存的研究证据、实际操作与仍存在的争议。",
+    "created": "2026-10-05",
+    "updated": "2026-10-05",
+    "featured": false,
+    "type": "html"
   }
 ]
