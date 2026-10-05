@@ -23,10 +23,16 @@
         <div class="collection-count" id="categoryCount"></div>
       </section>
       <section class="section compact-section">
-        <div class="controls">
-          <input class="search" id="categorySearch" placeholder="搜索这个展厅…">
+        <div class="browse-toolbar">
+          <div class="controls">
+            <input class="search" id="categorySearch" placeholder="搜索这个展厅…">
+          </div>
+          <div class="view-toggle" aria-label="切换展示方式">
+  <button class="view-btn active" data-view="gallery" title="Gallery">▦ <span>Gallery</span></button>
+  <button class="view-btn" data-view="list" title="List">☰ <span>List</span></button>
+</div>
         </div>
-        <div class="article-list" id="categoryArticleList"></div>
+        <div class="exhibit-view gallery-view" id="categoryArticleList"></div>
       </section>
     </main>
     <footer>KNOWLEDGE MUSEUM · Collection</footer>
