@@ -3,6 +3,8 @@ const CORE = [
   './',
   './index.html',
   './viewer.html',
+  './category.html',
+  './archive.html',
   './assets/css/app.css',
   './assets/js/app.js',
   './manifest.webmanifest',
