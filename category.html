@@ -7,7 +7,7 @@
   <title>Collection · Knowledge Museum</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css?v=20261005-3">
 </head>
 <body data-page="category">
   <div class="shell">
@@ -37,6 +37,11 @@
     </main>
     <footer>KNOWLEDGE MUSEUM · Collection</footer>
   </div>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/app.js?v=20261005-3"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(() => {});
+    }
+  </script>
 </body>
 </html>
