@@ -44,10 +44,13 @@
       .then(items=>{
         const a=items.find(x=>x.id===id && x.type==='pdf');
         if(!a) throw new Error('PDF not found');
-        const src='content/pdf/'+encodeURIComponent(a.file)+'#view=FitH';
+        const encodePath=p=>p.split('/').map(encodeURIComponent).join('/');
+        const rawPdfUrl=a.url || (/^https?:\/\//i.test(a.file||'') ? a.file : 'content/pdf/'+encodePath(a.file||''));
+        if(!rawPdfUrl) throw new Error('PDF URL missing');
+        const src=rawPdfUrl+(rawPdfUrl.includes('#')?'':'#view=FitH');
         document.title=a.title+' · Knowledge Museum';
         titleEl.textContent=a.title;
-        openPdf.href='content/pdf/'+encodeURIComponent(a.file);
+        openPdf.href=rawPdfUrl;
         frame.src=src;
         frame.addEventListener('load',()=>{fallback.style.display='none'},{once:true});
         setTimeout(()=>{
