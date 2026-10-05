@@ -822,3 +822,31 @@ PDF 默认不加入 Service Worker 离线预缓存，因为博物馆手册可能
 ```text
 museum-guides → 博物馆手册 / Museum Guides
 ```
+
+
+### 18.2 远程 PDF（Cloudflare R2）
+
+PDF 展品同时支持 GitHub 本地文件和远程 URL。
+
+本地 PDF：
+
+```json
+{
+  "type": "pdf",
+  "file": "example.pdf"
+}
+```
+
+读取路径为 `content/pdf/example.pdf`。
+
+远程 PDF：
+
+```json
+{
+  "type": "pdf",
+  "file": "example.pdf",
+  "url": "https://example.r2.dev/example.pdf"
+}
+```
+
+当 `url` 存在时，PDF 阅读器优先使用远程 URL；没有 `url` 时才读取本地 `content/pdf/` 文件。因此本地小 PDF 和 R2 大 PDF 可以同时存在。
