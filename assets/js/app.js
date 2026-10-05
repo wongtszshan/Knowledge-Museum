@@ -7,17 +7,26 @@ async function loadJSON(path){
   if(!r.ok) throw new Error(path);
   return r.json();
 }
-const articleUrl=id=>`viewer.html?id=${encodeURIComponent(id)}`;
+const articleUrl=input=>{
+  const a=typeof input==='string'?state.articles.find(x=>x.id===input):input;
+  const id=typeof input==='string'?input:input?.id;
+  return a?.type==='pdf'
+    ? `pdf-viewer.html?id=${encodeURIComponent(id)}`
+    : `viewer.html?id=${encodeURIComponent(id)}`;
+};
 const categoryUrl=id=>`category.html?id=${encodeURIComponent(id)}`;
 
 function searchableText(a){
   return [a.title,a.subtitle,a.summary,...(a.tags||[])].join(' ').toLowerCase();
 }
+function typeLabel(a){
+  return a.type==='pdf' ? `PDF${a.pages?` · ${a.pages} PAGES`:''}` : 'HTML';
+}
 function articleRow(a,i=0){
-  return `<a class="article" href="${articleUrl(a.id)}">
+  return `<a class="article" href="${articleUrl(a)}">
     <div class="article-index">${String(i+1).padStart(2,'0')}</div>
     <div>
-      <div class="article-title">${a.title}</div>
+      <div class="article-title">${a.title} <span class="content-type-badge">${typeLabel(a)}</span></div>
       <div class="article-meta">${a.subtitle||a.summary||''}<br>${(a.tags||[]).map(t=>`#${t}`).join(' · ')}</div>
     </div>
     <div class="article-arrow">↗</div>
@@ -25,12 +34,12 @@ function articleRow(a,i=0){
 }
 function articleCard(a,i=0){
   const catNames=(a.categories||[]).map(id=>state.categories.find(c=>c.id===id)?.nameEn||id).join(' · ');
-  return `<a class="exhibit-card" href="${articleUrl(a.id)}">
+  return `<a class="exhibit-card" href="${articleUrl(a)}">
     <div class="exhibit-card-top">
       <span class="exhibit-no">${String(i+1).padStart(2,'0')}</span>
       <span class="exhibit-open">↗</span>
     </div>
-    <div class="exhibit-category">${catNames}</div>
+    <div class="exhibit-category">${catNames} · <span class="content-type-inline">${typeLabel(a)}</span></div>
     <h3>${a.title}</h3>
     <p class="exhibit-subtitle">${a.subtitle||a.summary||''}</p>
     <div class="exhibit-tags">${(a.tags||[]).slice(0,4).map(t=>`#${t}`).join(' · ')}</div>
@@ -72,7 +81,7 @@ function bindRandom(){
   btn.onclick=()=>{
     if(!state.articles.length)return;
     const a=state.articles[Math.floor(Math.random()*state.articles.length)];
-    location.href=articleUrl(a.id);
+    location.href=articleUrl(a);
   };
 }
 
