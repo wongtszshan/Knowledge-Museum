@@ -23,10 +23,45 @@ function articleRow(a,i=0){
     <div class="article-arrow">↗</div>
   </a>`;
 }
+function articleCard(a,i=0){
+  const catNames=(a.categories||[]).map(id=>state.categories.find(c=>c.id===id)?.nameEn||id).join(' · ');
+  return `<a class="exhibit-card" href="${articleUrl(a.id)}">
+    <div class="exhibit-card-top">
+      <span class="exhibit-no">${String(i+1).padStart(2,'0')}</span>
+      <span class="exhibit-open">↗</span>
+    </div>
+    <div class="exhibit-category">${catNames}</div>
+    <h3>${a.title}</h3>
+    <p class="exhibit-subtitle">${a.subtitle||a.summary||''}</p>
+    <div class="exhibit-tags">${(a.tags||[]).slice(0,4).map(t=>`#${t}`).join(' · ')}</div>
+    <div class="exhibit-date">${a.updated||a.created||''}</div>
+  </a>`;
+}
 function renderRows(target,items,empty='没有找到匹配的展品。'){
   const el=$(target);
   if(!el)return;
-  el.innerHTML=items.length?items.map((a,i)=>articleRow(a,i)).join(''):`<div class="empty">${empty}</div>`;
+  const mode=el.dataset.view||'list';
+  if(!items.length){
+    el.innerHTML=`<div class="empty">${empty}</div>`;
+    return;
+  }
+  el.innerHTML=mode==='gallery'
+    ? items.map((a,i)=>articleCard(a,i)).join('')
+    : items.map((a,i)=>articleRow(a,i)).join('');
+}
+function setupViewToggle(target){
+  const el=$(target);
+  if(!el)return;
+  const saved=localStorage.getItem('km-exhibit-view')||'gallery';
+  const apply=(mode)=>{
+    el.dataset.view=mode;
+    el.classList.toggle('gallery-view',mode==='gallery');
+    el.classList.toggle('list-view',mode==='list');
+    $('.view-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===mode));
+    localStorage.setItem('km-exhibit-view',mode);
+  };
+  $('.view-btn').forEach(btn=>btn.addEventListener('click',()=>apply(btn.dataset.view)));
+  apply(saved);
 }
 function sortRecent(items){
   return [...items].sort((a,b)=>(b.updated||b.created||'').localeCompare(a.updated||a.created||''));
@@ -83,12 +118,15 @@ function renderCategory(){
   const all=state.articles.filter(a=>(a.categories||[]).includes(id));
   $('#categoryCount').textContent=`${all.length} Exhibits`;
   const input=$('#categorySearch');
+  const target=$('#categoryArticleList');
+  setupViewToggle('#categoryArticleList');
   const update=()=>{
     const q=(input.value||'').trim().toLowerCase();
     const items=q?all.filter(a=>searchableText(a).includes(q)):all;
     renderRows('#categoryArticleList',items);
   };
   input.addEventListener('input',update);
+  $('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   update();
 }
 
@@ -105,6 +143,7 @@ function renderArchive(){
     `<button class="chip active" data-filter="all">全部</button>`+
     cats.map(c=>`<button class="chip" data-filter="${c.id}">${c.name}</button>`).join('');
 
+  setupViewToggle('#archiveList');
   const update=()=>{
     const q=(input.value||'').trim().toLowerCase();
     const items=state.articles.filter(a=>
@@ -121,6 +160,7 @@ function renderArchive(){
     update();
   }));
   input.addEventListener('input',update);
+  $('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   bindRandom();
   update();
 }
