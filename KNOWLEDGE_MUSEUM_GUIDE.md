@@ -760,3 +760,65 @@ data/categories.json
 ```
 
 不要让每次新增知识都变成一次网站开发。
+
+
+---
+
+## 18. PDF 展品
+
+Knowledge Museum 支持两种主要展品类型：
+
+```text
+HTML → content/html/
+PDF  → content/pdf/
+```
+
+PDF 文件同样推荐使用英文、小写、短横线文件名，例如：
+
+```text
+royal-screen-of-empire.pdf
+louvre-exhibition-guide.pdf
+museum-map-guide.pdf
+```
+
+展示标题可以继续使用中文。
+
+PDF 在 `data/articles.json` 中必须包含：
+
+```json
+{
+  "id": "royal-screen-of-empire",
+  "title": "藩屏天下：湖北明代宗藩文物特展",
+  "file": "royal-screen-of-empire.pdf",
+  "type": "pdf",
+  "pages": 20,
+  "categories": ["museum-guides"],
+  "tags": ["博物馆", "展览手册"]
+}
+```
+
+HTML 展品建议明确使用：
+
+```json
+"type": "html"
+```
+
+点击 HTML 时进入 `viewer.html`；点击 PDF 时进入 `pdf-viewer.html`。
+
+PDF 默认不加入 Service Worker 离线预缓存，因为博物馆手册可能较大，避免手机无意义占用大量缓存空间。PDF 在线阅读时由浏览器正常加载。
+
+### 新增 PDF 最简流程
+
+- [ ] 将 PDF 文件改为英文 kebab-case 文件名
+- [ ] 上传到 `content/pdf/`
+- [ ] 检查 / 新增合适分类
+- [ ] 在 `data/articles.json` 添加记录并设置 `"type": "pdf"`
+- [ ] 如已知页数，可填写 `"pages"`
+- [ ] 提交到 `main`
+- [ ] 不需要修改 `pdf-viewer.html`、首页或 Service Worker
+
+当前 PDF 专用分类：
+
+```text
+museum-guides → 博物馆手册 / Museum Guides
+```
