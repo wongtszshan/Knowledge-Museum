@@ -1,12 +1,13 @@
-const CACHE_NAME = 'knowledge-museum-shell-v2';
+const CACHE_NAME = 'knowledge-museum-shell-v3';
 const CORE = [
   './',
   './index.html',
   './viewer.html',
+  './pdf-viewer.html',
   './category.html',
   './archive.html',
-  './assets/css/app.css?v=20261005-3',
-  './assets/js/app.js?v=20261005-3',
+  './assets/css/app.css?v=20261005-5',
+  './assets/js/app.js?v=20261005-5',
   './manifest.webmanifest',
   './assets/icons/app-icon-1024.png',
   './assets/splash/background.png',
@@ -63,6 +64,12 @@ self.addEventListener('fetch', event => {
 
   if (url.pathname.includes('/data/') || url.pathname.includes('/content/html/')) {
     event.respondWith(networkFirst(request));
+    return;
+  }
+
+  // PDF files are intentionally not cached by the app shell: museum guides can be large.
+  // Let the browser stream them normally from GitHub Pages.
+  if (url.pathname.includes('/content/pdf/')) {
     return;
   }
 
