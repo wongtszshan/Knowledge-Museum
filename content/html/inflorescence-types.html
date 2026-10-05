@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花序类型图解 | Inflorescence Types</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            font-size: 1.8em;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .category-intro {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+        .card-desc {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+        .card-example {
+            color: #27ae60;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: white;
+            border-radius: 6px;
+        }
+        .legend {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            font-size: 0.9em;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            vertical-align: middle;
+            border-radius: 3px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>花序类型图解</h1>
+        <div class="subtitle">基于植物学权威分类的 SVG 结构示意图</div>
+
+        <h2>一、无限花序（总状类花序）</h2>
+        <div class="category-intro">
+            <strong>特征：</strong>花轴可继续生长，开花顺序由下至上或由外至内（向顶开花）。花轴下部的花先开，渐次向上，同时花序轴不断增长。
+        </div>
+
+        <div class="grid">
+            <!-- 总状花序 -->
+            <div class="card">
+                <div class="card-title">1. 总状花序 Raceme</div>
+                <div class="card-desc">花序轴细长不分枝，其上着生许多花梗近等长的两性花。</div>
+                <div class="card-example">例如：油菜、紫藤、荠菜、萝卜</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 花轴 -->
+                    <line x1="200" y1="250" x2="200" y2="50" stroke="#2c3e50" stroke-width="4" stroke-linecap="round"/>
+                    <!-- 花 1 (下) -->
+                    <line x1="200" y1="220" x2="150" y2="220" stroke="#7f8c8d" stroke-width="2"/>
+                    <circle cx="140" cy="220" r="8" fill="#e74c3c"/>
+                    <circle cx="130" cy="215" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <circle cx="130" cy="225" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <!-- 花 2 -->
+                    <line x1="200" y1="180" x2="150" y2="180" stroke="#7f8c8d" stroke-width="2"/>
+                    <circle cx="140" cy="180" r="8" fill="#e74c3c"/>
+                    <circle cx="130" cy="175" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <circle cx="130" cy="185" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <!-- 花 3 -->
+                    <line x1="200" y1="140" x2="150" y2="140" stroke="#7f8c8d" stroke-width="2"/>
+                    <circle cx="140" cy="140" r="8" fill="#e74c3c"/>
+                    <circle cx="130" cy="135" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <circle cx="130" cy="145" r="5" fill="#e74c3c" opacity="0.7"/>
+                    <!-- 花 4 (上) -->
+                    <line x1="200" y1="100" x2="150" y2="100" stroke="#7f8c8d" stroke-width="2"/>
+                    <circle cx="140" cy="100" r="6" fill="#bdc3c7"/>
+                    <text x="100" y="225" font-size="12" fill="#555">花梗等长</text>
+                    <text x="210" y="270" font-size="12" fill="#555">花序轴（不断生长）</text>
+                    <polygon points="200,250 195,240 205,240" fill="#2c3e50"/>
+                </svg>
+            </div>
+
+            <!-- 穗状花序 -->
+            <div class="card">
+                <div class="card-title">2. 穗状花序 Spike</div>
+                <div class="card-desc">花序轴细长，其上着生许多无梗或近无梗的两性花。</div>
+                <div class="card-example">例如：车前草、马鞭草、麦冬</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 花轴 -->
+                    <line x1="200" y1="250" x2="200" y2="50" stroke="#2c3e50" stroke-width="4" stroke-linecap="round"/>
+                    <!-- 无柄花直接贴生 -->
+                    <circle cx="200" cy="230" r="6" fill="#9b59b6"/>
+                    <circle cx="200" cy="200" r="6" fill="#9b59b6"/>
+                    <circle cx="200" cy="170" r="6" fill="#9b59b6"/>
+                    <circle cx="200" cy="140" r="6" fill="#9b59b6"/>
+                    <circle cx="200" cy="110" r="6" fill="#9b59b6"/>
+                    <circle cx="200" cy="80" r="5" fill="#bdc3c7"/>
+                    <text x="220" y="235" font-size="12" fill="#555">无花梗</text>
+                    <text x="220" y="205" font-size="12" fill="#555">直接贴生</text>
+                    <text x="210" y="270" font-size="12" fill="#555">花序轴</text>
+                </svg>
+            </div>
+
+            <!-- 柔荑花序 -->
+            <div class="card">
+                <div class="card-title">3. 柔荑花序 Catkin (Ament)</div>
+                <div class="card-desc">花序轴细软下垂，着生许多无柄单性花，常无花被，花后整个花序脱落。</div>
+                <div class="card-example">例如：杨、柳、栎、榛</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 下垂的花序轴 -->
+                    <path d="M 200 50 Q 200 150 180 250" stroke="#8b4513" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <!-- 单性花 -->
+                    <circle cx="200" cy="80" r="5" fill="#d35400"/>
+                    <circle cx="198" cy="110" r="5" fill="#d35400"/>
+                    <circle cx="195" cy="140" r="5" fill="#d35400"/>
+                    <circle cx="192" cy="170" r="5" fill="#d35400"/>
+                    <circle cx="188" cy="200" r="5" fill="#d35400"/>
+                    <circle cx="185" cy="230" r="4" fill="#bdc3c7"/>
+                    <text x="250" y="100" font-size="12" fill="#555">单性花</text>
+                    <text x="250" y="120" font-size="12" fill="#555">无花被</text>
+                    <text x="220" y="260" font-size="12" fill="#555">花序轴细软下垂</text>
+                </svg>
+            </div>
+
+            <!-- 肉穗花序 -->
+            <div class="card">
+                <div class="card-title">4. 肉穗花序 Spadix</div>
+                <div class="card-desc">花序轴肉质肥厚，着生多数无柄单性花，外具佛焰苞。</div>
+                <div class="card-example">例如：马蹄莲、天南星、半夏、玉米雌花序</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 佛焰苞 -->
+                    <path d="M 150 80 Q 120 150 150 220" stroke="#27ae60" stroke-width="2" fill="#d5f5e3" opacity="0.6"/>
+                    <path d="M 250 80 Q 280 150 250 220" stroke="#27ae60" stroke-width="2" fill="#d5f5e3" opacity="0.6"/>
+                    <!-- 肉质花序轴 -->
+                    <rect x="190" y="60" width="20" height="180" fill="#f39c12" stroke="#e67e22" stroke-width="2" rx="5"/>
+                    <!-- 单性花贴生 -->
+                    <circle cx="200" cy="220" r="5" fill="#c0392b"/>
+                    <circle cx="200" cy="190" r="5" fill="#c0392b"/>
+                    <circle cx="200" cy="160" r="5" fill="#c0392b"/>
+                    <circle cx="200" cy="130" r="5" fill="#c0392b"/>
+                    <circle cx="200" cy="100" r="5" fill="#c0392b"/>
+                    <circle cx="200" cy="75" r="4" fill="#bdc3c7"/>
+                    <text x="260" y="150" font-size="12" fill="#555">肉质轴</text>
+                    <text x="90" y="150" font-size="11" fill="#555">佛焰苞</text>
+                </svg>
+            </div>
+
+            <!-- 伞房花序 -->
+            <div class="card">
+                <div class="card-title">5. 伞房花序 Corymb</div>
+                <div class="card-desc">花序轴较短，下部花梗长，上部花梗短，各花排列于同一平面。</div>
+                <div class="card-example">例如：梨、苹果、山楂、绣线菊</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 花轴 -->
+                    <line x1="200" y1="250" x2="200" y2="150" stroke="#2c3e50" stroke-width="4" stroke-linecap="round"/>
+                    <!-- 下部花长梗 -->
+                    <line x1="200" y1="150" x2="100" y2="200" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="150" x2="300" y2="200" stroke="#7f8c8d" stroke-width="2"/>
+                    <!-- 中部花中梗 -->
+                    <line x1="200" y1="150" x2="130" y2="160" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="150" x2="270" y2="160" stroke="#7f8c8d" stroke-width="2"/>
+                    <!-- 上部花短梗 -->
+                    <line x1="200" y1="150" x2="170" y2="130" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="150" x2="230" y2="130" stroke="#7f8c8d" stroke-width="2"/>
+                    <!-- 花 -->
+                    <circle cx="100" cy="200" r="8" fill="#f1c40f"/>
+                    <circle cx="300" cy="200" r="8" fill="#f1c40f"/>
+                    <circle cx="130" cy="160" r="8" fill="#f1c40f"/>
+                    <circle cx="270" cy="160" r="8" fill="#f1c40f"/>
+                    <circle cx="170" cy="130" r="8" fill="#f1c40f"/>
+                    <circle cx="230" cy="130" r="8" fill="#f1c40f"/>
+                    <circle cx="200" cy="115" r="6" fill="#bdc3c7"/>
+                    <!-- 平面线 -->
+                    <line x1="80" y1="200" x2="320" y2="200" stroke="#3498db" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
+                    <text x="250" y="240" font-size="11" fill="#555">花几乎排列在同一平面</text>
+                </svg>
+            </div>
+
+            <!-- 伞形花序 -->
+            <div class="card">
+                <div class="card-title">6. 伞形花序 Umbel</div>
+                <div class="card-desc">花序轴缩短，花梗近等长，从一点辐射状生出，呈伞骨状。</div>
+                <div class="card-example">例如：韭菜、人参、胡萝卜、芹菜</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 缩短的花序轴 -->
+                    <line x1="200" y1="250" x2="200" y2="200" stroke="#2c3e50" stroke-width="4" stroke-linecap="round"/>
+                    <!-- 等长花梗辐射状 -->
+                    <line x1="200" y1="200" x2="100" y2="150" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="140" y2="100" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="200" y2="80" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="260" y2="100" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="300" y2="150" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="280" y2="200" stroke="#7f8c8d" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="120" y2="200" stroke="#7f8c8d" stroke-width="2"/>
+                    <!-- 花 -->
+                    <circle cx="100" cy="150" r="7" fill="#e67e22"/>
+                    <circle cx="140" cy="100" r="7" fill="#e67e22"/>
+                    <circle cx="200" cy="80" r="7" fill="#e67e22"/>
+                    <circle cx="260" cy="100" r="7" fill="#e67e22"/>
+                    <circle cx="300" cy="150" r="7" fill="#e67e22"/>
+                    <circle cx="280" cy="200" r="7" fill="#e67e22"/>
+                    <circle cx="120" cy="200" r="7" fill="#e67e22"/>
+                    <text x="250" y="240" font-size="12" fill="#555">花轴缩短</text>
+                    <text x="250" y="255" font-size="12" fill="#555">花梗等长</text>
+                </svg>
+            </div>
+
+            <!-- 头状花序 -->
+            <div class="card">
+                <div class="card-title">7. 头状花序 Capitulum (Head)</div>
+                <div class="card-desc">花序轴极短缩膨大成盘状或球状，密生无柄小花，外具总苞。</div>
+                <div class="card-example">例如：向日葵、菊花、蒲公英、三叶草</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 总苞 -->
+                    <ellipse cx="200" cy="150" rx="100" ry="80" fill="#27ae60" opacity="0.3" stroke="#27ae60" stroke-width="2"/>
+                    <!-- 花托 -->
+                    <ellipse cx="200" cy="150" rx="80" ry="60" fill="#f4e8c1" stroke="#d4ac0d" stroke-width="2"/>
+                    <!-- 盘花（中央） -->
+                    <circle cx="200" cy="150" r="8" fill="#8e44ad"/>
+                    <circle cx="170" cy="140" r="7" fill="#8e44ad"/>
+                    <circle cx="230" cy="140" r="7" fill="#8e44ad"/>
+                    <circle cx="180" cy="170" r="7" fill="#8e44ad"/>
+                    <circle cx="220" cy="170" r="7" fill="#8e44ad"/>
+                    <circle cx="200" cy="120" r="7" fill="#8e44ad"/>
+                    <circle cx="200" cy="180" r="7" fill="#8e44ad"/>
+                    <circle cx="150" cy="150" r="7" fill="#8e44ad"/>
+                    <circle cx="250" cy="150" r="7" fill="#8e44ad"/>
+                    <!-- 边花 -->
+                    <ellipse cx="120" cy="150" rx="15" ry="8" fill="#f1c40f" opacity="0.8"/>
+                    <ellipse cx="280" cy="150" rx="15" ry="8" fill="#f1c40f" opacity="0.8"/>
+                    <ellipse cx="200" cy="90" rx="8" ry="15" fill="#f1c40f" opacity="0.8"/>
+                    <ellipse cx="200" cy="210" rx="8" ry="15" fill="#f1c40f" opacity="0.8"/>
+                    <text x="150" y="250" font-size="11" fill="#555">盘状花托</text>
+                    <text x="220" y="250" font-size="11" fill="#555">总苞</text>
+                </svg>
+            </div>
+
+            <!-- 隐头花序 -->
+            <div class="card">
+                <div class="card-title">8. 隐头花序 Hypanthodium</div>
+                <div class="card-desc">花序轴顶端膨大凹陷成囊状，小花着生于囊状体内壁，顶端有小孔与外界相通。</div>
+                <div class="card-example">例如：无花果、榕树、薜荔</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 囊状花序轴 -->
+                    <path d="M 150 100 Q 120 150 150 200 Q 200 220 250 200 Q 280 150 250 100 Q 200 80 150 100" fill="#d35400" stroke="#a04000" stroke-width="3" opacity="0.3"/>
+                    <!-- 内部小花 -->
+                    <circle cx="170" cy="130" r="4" fill="#c0392b"/>
+                    <circle cx="200" cy="120" r="4" fill="#c0392b"/>
+                    <circle cx="230" cy="130" r="4" fill="#c0392b"/>
+                    <circle cx="180" cy="160" r="4" fill="#c0392b"/>
+                    <circle cx="220" cy="160" r="4" fill="#c0392b"/>
+                    <circle cx="200" cy="180" r="4" fill="#c0392b"/>
+                    <!-- 顶端开口 -->
+                    <ellipse cx="200" cy="95" rx="15" ry="8" fill="#5d4037"/>
+                    <text x="260" y="150" font-size="11" fill="#555">囊状凹陷</text>
+                    <text x="200" y="70" font-size="11" fill="#555">顶端开口</text>
+                    <text x="140" y="240" font-size="11" fill="#555">花着生于内壁</text>
+                </svg>
+            </div>
+
+            <!-- 圆锥花序 -->
+            <div class="card">
+                <div class="card-title">9. 圆锥花序 Panicle (复总状花序)</div>
+                <div class="card-desc">总状花序的花序轴分枝，每一分枝成一总状花序，整体呈圆锥形。</div>
+                <div class="card-example">例如：水稻、葡萄、燕麦、丁香</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 主轴 -->
+                    <line x1="200" y1="280" x2="200" y2="150" stroke="#2c3e50" stroke-width="4"/>
+                    <!-- 一级分枝 -->
+                    <line x1="200" y1="150" x2="120" y2="100" stroke="#34495e" stroke-width="3"/>
+                    <line x1="200" y1="150" x2="280" y2="100" stroke="#34495e" stroke-width="3"/>
+                    <line x1="200" y1="200" x2="140" y2="160" stroke="#34495e" stroke-width="3"/>
+                    <line x1="200" y1="200" x2="260" y2="160" stroke="#34495e" stroke-width="3"/>
+                    <!-- 花 -->
+                    <circle cx="120" cy="100" r="6" fill="#3498db"/>
+                    <circle cx="100" cy="85" r="6" fill="#3498db"/>
+                    <circle cx="280" cy="100" r="6" fill="#3498db"/>
+                    <circle cx="300" cy="85" r="6" fill="#3498db"/>
+                    <circle cx="140" cy="160" r="6" fill="#3498db"/>
+                    <circle cx="260" cy="160" r="6" fill="#3498db"/>
+                    <circle cx="200" cy="130" r="5" fill="#bdc3c7"/>
+                    <text x="250" y="250" font-size="12" fill="#555">复总状分枝</text>
+                </svg>
+            </div>
+        </div>
+
+        <h2>二、有限花序（聚伞类花序）</h2>
+        <div class="category-intro">
+            <strong>特征：</strong>花轴顶端先形成花芽，最早开花，不再继续生长。由顶端或中心的花先开，渐次到侧枝开花（向基开花）。花序轴为合轴分枝。
+        </div>
+
+        <div class="grid">
+            <!-- 单歧聚伞花序 - 蝎尾状 -->
+            <div class="card">
+                <div class="card-title">10. 单歧聚伞花序 - 蝎尾状 Monochasium (Scorpioid)</div>
+                <div class="card-desc">顶芽成花后，只有一个侧芽发育，侧芽左右交替形成侧枝，花序轴呈之字形弯曲。</div>
+                <div class="card-example">例如：唐菖蒲、萱草、黄花、兰</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 之字形花序轴 -->
+                    <path d="M 100 250 L 150 200 L 100 150 L 150 100 L 100 50" stroke="#8e44ad" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- 顶花 (先开) -->
+                    <circle cx="100" cy="50" r="8" fill="#e74c3c"/>
+                    <text x="120" y="55" font-size="12" fill="#c0392b" font-weight="bold">顶花先开</text>
+                    <!-- 侧花依次 -->
+                    <circle cx="150" cy="100" r="7" fill="#f39c12"/>
+                    <circle cx="100" cy="150" r="7" fill="#f1c40f"/>
+                    <circle cx="150" cy="200" r="6" fill="#f1c40f"/>
+                    <circle cx="100" cy="250" r="5" fill="#f1c40f"/>
+                    <!-- 开花顺序箭头 -->
+                    <path d="M 80 60 Q 70 100 80 140" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+                        </marker>
+                    </defs>
+                    <text x="40" y="100" font-size="11" fill="#e74c3c">开花顺序</text>
+                    <text x="200" y="150" font-size="11" fill="#555">之字形弯曲</text>
+                </svg>
+            </div>
+
+            <!-- 单歧聚伞花序 - 螺形 -->
+            <div class="card">
+                <div class="card-title">11. 单歧聚伞花序 - 螺形 Helicoid Cyme</div>
+                <div class="card-desc">侧芽只在同一侧依次形成侧枝，花序轴卷曲成螺旋状。</div>
+                <div class="card-example">例如：勿忘草、附地菜、茄、番茄</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 螺旋状花序轴 -->
+                    <path d="M 200 280 Q 250 250 250 200 Q 250 150 200 130 Q 150 110 150 80 Q 150 50 180 40" stroke="#8e44ad" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <!-- 顶花 (先开) -->
+                    <circle cx="180" cy="40" r="8" fill="#e74c3c"/>
+                    <text x="200" y="45" font-size="12" fill="#c0392b" font-weight="bold">顶花先开</text>
+                    <!-- 同侧侧花 -->
+                    <circle cx="200" cy="130" r="7" fill="#9b59b6"/>
+                    <circle cx="250" cy="200" r="7" fill="#9b59b6"/>
+                    <circle cx="200" cy="280" r="6" fill="#9b59b6"/>
+                    <text x="270" y="150" font-size="11" fill="#555">同一侧分枝</text>
+                    <text x="270" y="165" font-size="11" fill="#555">螺旋卷曲</text>
+                </svg>
+            </div>
+
+            <!-- 二歧聚伞花序 -->
+            <div class="card">
+                <div class="card-title">12. 二歧聚伞花序 Dichasium (Dichasial Cyme)</div>
+                <div class="card-desc">顶芽成花后，下方两侧侧芽同时发育成两个侧枝，各再形成花。</div>
+                <div class="card-example">例如：卷耳、繁缕、石竹、冬青</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 主花轴 -->
+                    <line x1="200" y1="280" x2="200" y2="200" stroke="#2c3e50" stroke-width="3"/>
+                    <!-- 顶花 (先开) -->
+                    <circle cx="200" cy="200" r="8" fill="#e74c3c"/>
+                    <text x="220" y="205" font-size="12" fill="#c0392b" font-weight="bold">顶花先开</text>
+                    <!-- 二歧分枝 -->
+                    <line x1="200" y1="200" x2="130" y2="140" stroke="#34495e" stroke-width="2"/>
+                    <line x1="200" y1="200" x2="270" y2="140" stroke="#34495e" stroke-width="2"/>
+                    <!-- 二级顶花 -->
+                    <circle cx="130" cy="140" r="7" fill="#f39c12"/>
+                    <circle cx="270" cy="140" r="7" fill="#f39c12"/>
+                    <!-- 再次二歧 -->
+                    <line x1="130" y1="140" x2="80" y2="90" stroke="#34495e" stroke-width="1.5"/>
+                    <line x1="130" y1="140" x2="130" y2="80" stroke="#34495e" stroke-width="1.5"/>
+                    <line x1="270" y1="140" x2="320" y2="90" stroke="#34495e" stroke-width="1.5"/>
+                    <line x1="270" y1="140" x2="270" y2="80" stroke="#34495e" stroke-width="1.5"/>
+                    <circle cx="80" cy="90" r="6" fill="#f1c40f"/>
+                    <circle cx="130" cy="80" r="6" fill="#f1c40f"/>
+                    <circle cx="320" cy="90" r="6" fill="#f1c40f"/>
+                    <circle cx="270" cy="80" r="6" fill="#f1c40f"/>
+                    <text x="130" y="260" font-size="11" fill="#555">两侧同时发育</text>
+                </svg>
+            </div>
+
+            <!-- 多歧聚伞花序 -->
+            <div class="card">
+                <div class="card-title">13. 多歧聚伞花序 Pleiochasium (Polychasial)</div>
+                <div class="card-desc">顶芽成花后，下方有3个以上侧芽同时发育成侧枝。</div>
+                <div class="card-example">例如：泽漆、大戟、茄、香菜</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 主花轴 -->
+                    <line x1="200" y1="280" x2="200" y2="180" stroke="#2c3e50" stroke-width="3"/>
+                    <!-- 顶花 -->
+                    <circle cx="200" cy="180" r="8" fill="#e74c3c"/>
+                    <text x="220" y="185" font-size="12" fill="#c0392b" font-weight="bold">顶花先开</text>
+                    <!-- 多歧分枝 (3个以上) -->
+                    <line x1="200" y1="180" x2="100" y2="120" stroke="#34495e" stroke-width="2"/>
+                    <line x1="200" y1="180" x2="180" y2="100" stroke="#34495e" stroke-width="2"/>
+                    <line x1="200" y1="180" x2="220" y2="100" stroke="#34495e" stroke-width="2"/>
+                    <line x1="200" y1="180" x2="300" y2="120" stroke="#34495e" stroke-width="2"/>
+                    <!-- 侧花 -->
+                    <circle cx="100" cy="120" r="7" fill="#16a085"/>
+                    <circle cx="180" cy="100" r="7" fill="#16a085"/>
+                    <circle cx="220" cy="100" r="7" fill="#16a085"/>
+                    <circle cx="300" cy="120" r="7" fill="#16a085"/>
+                    <text x="130" y="250" font-size="11" fill="#555">3个以上侧枝同时发育</text>
+                </svg>
+            </div>
+
+            <!-- 轮伞花序 -->
+            <div class="card">
+                <div class="card-title">14. 轮伞花序 Verticillaster</div>
+                <div class="card-desc">聚伞花序生于对生叶腋，花序轴及花梗极短，呈假轮状排列。</div>
+                <div class="card-example">例如：薄荷、益母草、薰衣草、罗勒</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 茎 -->
+                    <rect x="190" y="50" width="20" height="200" fill="#27ae60" stroke="#1e8449" stroke-width="2" rx="5"/>
+                    <!-- 对生叶 -->
+                    <ellipse cx="140" cy="100" rx="40" ry="15" fill="#2ecc71" opacity="0.7" transform="rotate(-20 140 100)"/>
+                    <ellipse cx="260" cy="100" rx="40" ry="15" fill="#2ecc71" opacity="0.7" transform="rotate(20 260 100)"/>
+                    <ellipse cx="140" cy="180" rx="40" ry="15" fill="#2ecc71" opacity="0.7" transform="rotate(-20 140 180)"/>
+                    <ellipse cx="260" cy="180" rx="40" ry="15" fill="#2ecc71" opacity="0.7" transform="rotate(20 260 180)"/>
+                    <!-- 轮伞花序 - 对生叶腋的聚伞花 -->
+                    <!-- 上部轮伞 -->
+                    <circle cx="180" cy="100" r="6" fill="#e74c3c"/>
+                    <circle cx="220" cy="100" r="6" fill="#e74c3c"/>
+                    <circle cx="170" cy="85" r="5" fill="#f39c12"/>
+                    <circle cx="230" cy="85" r="5" fill="#f39c12"/>
+                    <!-- 下部轮伞 -->
+                    <circle cx="180" cy="180" r="6" fill="#e74c3c"/>
+                    <circle cx="220" cy="180" r="6" fill="#e74c3c"/>
+                    <circle cx="170" cy="165" r="5" fill="#f39c12"/>
+                    <circle cx="230" cy="165" r="5" fill="#f39c12"/>
+                    <text x="280" y="150" font-size="11" fill="#555">对生叶腋</text>
+                    <text x="280" y="165" font-size="11" fill="#555">假轮生状</text>
+                </svg>
+            </div>
+        </div>
+
+        <h2>三、特殊类型花序</h2>
+        <div class="grid">
+            <!-- 杯状聚伞花序 -->
+            <div class="card">
+                <div class="card-title">15. 杯状聚伞花序 Cyathium</div>
+                <div class="card-desc">大戟属特有，杯状总苞内含1朵雌花和数朵仅1枚雄蕊的雄花。</div>
+                <div class="card-example">例如：一品红、蓖麻、大戟</div>
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 杯状总苞 -->
+                    <path d="M 120 100 Q 200 280 280 100 Z" fill="#e74c3c" opacity="0.3" stroke="#c0392b" stroke-width="2"/>
+                    <ellipse cx="200" cy="100" rx="80" ry="15" fill="#c0392b" opacity="0.8"/>
+                    <!-- 雌花 (中央) -->
+                    <circle cx="200" cy="160" r="10" fill="#8e44ad"/>
+                    <text x="220" y="165" font-size="11" fill="#555">1朵雌花</text>
+                    <!-- 雄花 (周围，只显示雄蕊) -->
+                    <circle cx="160" cy="130" r="4" fill="#f1c40f"/>
+                    <circle cx="240" cy="130" r="4" fill="#f1c40f"/>
+                    <circle cx="180" cy="120" r="4" fill="#f1c40f"/>
+                    <circle cx="220" cy="120" r="4" fill="#f1c40f"/>
+                    <text x="260" y="130" font-size="10" fill="#555">数朵雄花</text>
+                    <text x="260" y="145" font-size="10" fill="#555">(各1枚雄蕊)</text>
+                    <text x="150" y="250" font-size="11" fill="#555">杯状总苞</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>图例说明</h3>
+            <div class="legend-item"><span class="legend-color" style="background:#e74c3c"></span>先开的花 / 顶花</div>
+            <div class="legend-item"><span class="legend-color" style="background:#f39c12"></span>后开的花 / 侧花</div>
+            <div class="legend-item"><span class="legend-color" style="background:#f1c40f"></span>更晚开放的花</div>
+            <div class="legend-item"><span class="legend-color" style="background:#bdc3c7"></span>花蕾 / 未开放</div>
+            <div class="legend-item"><span class="legend-color" style="background:#2c3e50"></span>花序轴</div>
+            <div class="legend-item"><span class="legend-color" style="background:#7f8c8d"></span>花梗</div>
+            <div class="legend-item"><span class="legend-color" style="background:#27ae60"></span>苞片/总苞</div>
+        </div>
+
+        <div class="footer">
+            <p>数据来源：《植物学》教材及百度百科、大英百科全书植物学词条[^2^][^4^]</p>
+            <p>绘制说明：SVG 图示按植物学标准结构绘制，开花顺序用颜色深度表示（深红为先开，黄色为后开）</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "id":"chinese-dynasties",
+    "title":"中国古代朝代封建与开放程度评析",
+    "subtitle":"从政治制度、思想控制、社会自由与对外交流等维度观察历史",
+    "file":"chinese-dynasties.html",
+    "categories":["history"],
+    "tags":["中国史","朝代","政治制度","社会结构","开放程度"],
+    "summary":"一份围绕中国古代主要朝代的封建程度与开放程度展开的多维度评析。",
+    "created":"2026-10-05",
+    "updated":"2026-10-05",
+    "featured":true
+  },
+  {
+    "id":"venturi-effect",
+    "title":"狭管效应 · 动态演示",
+    "subtitle":"流体经过收缩通道时，流速增大、压力降低",
+    "file":"venturi-effect.html",
+    "categories":["science"],
+    "tags":["流体力学","伯努利原理","狭管效应","互动演示"],
+    "summary":"通过动态粒子、压力与速度曲线，直观演示狭管中的流体变化。",
+    "created":"2026-10-05",
+    "updated":"2026-10-05",
+    "featured":true
+  },
+  {
+    "id":"inflorescence-types",
+    "title":"花序类型图解",
+    "subtitle":"Inflorescence Types · SVG 结构示意",
+    "file":"inflorescence-types.html",
+    "categories":["nature"],
+    "tags":["植物学","花序","SVG","结构图解"],
+    "summary":"用结构化 SVG 图解展示常见花序类型及其形态特征。",
+    "created":"2026-10-05",
+    "updated":"2026-10-05",
+    "featured":true
+  }
+]

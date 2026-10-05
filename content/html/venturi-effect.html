@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狭管效应 · 动态演示</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--bg:#060a12;--fg:#e0e6f0;--muted:#4a5568;--accent:#00ffc8;--warm:#ff6b35;--card:rgba(12,18,32,0.92);--border:rgba(255,255,255,0.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 30%,rgba(0,255,200,0.03) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 30% 70%,rgba(255,107,53,0.02) 0%,transparent 60%);pointer-events:none;z-index:0}
+.header{position:relative;z-index:1;text-align:center;padding:28px 20px 8px}
+.header h1{font-size:clamp(26px,5vw,44px);font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--accent),#00b4d8,var(--accent));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header p{color:var(--muted);font-size:14px;font-weight:300;margin-top:4px}
+.svg-wrap{position:relative;z-index:1;width:100%;max-width:1100px;padding:0 12px}
+svg#main{width:100%;height:auto;display:block}
+.tooltip{position:absolute;pointer-events:none;background:rgba(6,10,18,0.92);border:1px solid var(--accent);border-radius:8px;padding:7px 13px;font-size:12px;color:var(--fg);white-space:nowrap;opacity:0;transition:opacity .12s;z-index:10;backdrop-filter:blur(6px)}
+.tooltip.visible{opacity:1}
+.controls{position:relative;z-index:1;display:flex;gap:28px;justify-content:center;flex-wrap:wrap;padding:16px 20px 8px;max-width:780px}
+.ctrl{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:190px}
+.ctrl label{font-size:12px;color:var(--muted)}
+.ctrl .val{font-size:20px;font-weight:900;color:var(--accent)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;background:rgba(255,255,255,0.07);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(0,255,200,0.4);cursor:pointer}
+.info-bar{position:relative;z-index:1;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:8px 20px 28px}
+.info-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 18px;text-align:center;min-width:130px;backdrop-filter:blur(8px)}
+.info-item .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.info-item .num{font-size:21px;font-weight:900;margin-top:2px}
+.c1{color:var(--accent)}.c2{color:var(--warm)}
+.legend{position:relative;z-index:1;display:flex;gap:20px;justify-content:center;padding-bottom:6px;font-size:11px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:28px;height:4px;border-radius:2px;display:inline-block}
+@media(prefers-reduced-motion:reduce){.header h1{animation:none}#narrowGlowEl{animation:none}}
+@media(max-width:640px){.controls{gap:14px}.ctrl{min-width:140px}.info-bar{gap:10px}.info-item{min-width:95px;padding:8px 10px}.info-item .num{font-size:17px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+    <h1>狭管效应</h1>
+    <p>流体经过收缩通道时，流速增大、压力降低 — 伯努利原理的直观展现</p>
+</header>
+
+<div class="legend">
+    <span><i style="background:linear-gradient(90deg,#00b4d8,#00ffc8)"></i>低速区</span>
+    <span><i style="background:linear-gradient(90deg,#a0ff40,#ffe030)"></i>高速区</span>
+    <span><i style="background:var(--warm)"></i>高压</span>
+    <span><i style="background:#00b4d8"></i>低压</span>
+</div>
+
+<div class="svg-wrap">
+    <svg id="main" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glowSm" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <radialGradient id="narrowGlow" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0%" stop-color="rgba(0,255,200,0.07)"/>
+                <stop offset="100%" stop-color="rgba(0,255,200,0)"/>
+            </radialGradient>
+            <clipPath id="pipeClip"><path id="clipPath"/></clipPath>
+        </defs>
+
+        <!-- 背景网格 -->
+        <g opacity="0.035" stroke="#fff" stroke-width="0.5">
+            <line x1="80" y1="110" x2="1120" y2="110"/><line x1="80" y1="155" x2="1120" y2="155"/>
+            <line x1="80" y1="200" x2="1120" y2="200"/><line x1="80" y1="245" x2="1120" y2="245"/>
+            <line x1="80" y1="290" x2="1120" y2="290"/>
+            <line x1="200" y1="90" x2="200" y2="310"/><line x1="400" y1="90" x2="400" y2="310"/>
+            <line x1="600" y1="90" x2="600" y2="310"/><line x1="800" y1="90" x2="800" y2="310"/>
+            <line x1="1000" y1="90" x2="1000" y2="310"/>
+        </g>
+
+        <!-- 标注文字 -->
+        <text x="52" y="78" fill="#00ffc8" font-size="10" font-weight="700" text-anchor="end" opacity="0.6">流速</text>
+        <text x="52" y="340" fill="#ff6b35" font-size="10" font-weight="700" text-anchor="end" opacity="0.6">压力</text>
+        <text x="175" y="100" fill="#8899aa" font-size="10" opacity="0.5" text-anchor="middle">宽处</text>
+        <text x="600" y="100" fill="#8899aa" font-size="10" opacity="0.5" text-anchor="middle">窄处</text>
+        <text x="1025" y="100" fill="#8899aa" font-size="10" opacity="0.5" text-anchor="middle">宽处</text>
+
+        <!-- 管道内部 -->
+        <path id="pipeInterior" fill="#080e1a" stroke="none"/>
+        <!-- 窄处发光 -->
+        <ellipse id="narrowGlowEl" fill="url(#narrowGlow)" style="animation:pulse 3s ease-in-out infinite"/>
+        <style>@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}</style>
+
+        <!-- 流线（裁剪到管道内） -->
+        <g id="streamlines" clip-path="url(#pipeClip)" opacity="0.1"></g>
+        <!-- 粒子拖尾 -->
+        <g id="trails" clip-path="url(#pipeClip)"></g>
+        <!-- 粒子 -->
+        <g id="particles" filter="url(#glow)" clip-path="url(#pipeClip)"></g>
+
+        <!-- 管道壁 -->
+        <path id="pipeTop" fill="none" stroke="#2e3e5e" stroke-width="9" stroke-linecap="round"/>
+        <path id="pipeTopHL" fill="none" stroke="#4a5e82" stroke-width="1.5" stroke-linecap="round"/>
+        <path id="pipeBot" fill="none" stroke="#2e3e5e" stroke-width="9" stroke-linecap="round"/>
+        <path id="pipeBotHL" fill="none" stroke="#1e2a42" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- 入口出口端面 -->
+        <line id="edgeL" stroke="#3a4e6e" stroke-width="2.5" stroke-linecap="round"/>
+        <line id="edgeR" stroke="#3a4e6e" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- 速度箭头 -->
+        <g id="velArrows"></g>
+        <g id="velLabels"></g>
+        <!-- 压力条 -->
+        <g id="presBars"></g>
+        <g id="presLabels"></g>
+
+        <!-- 分隔 -->
+        <line x1="80" y1="372" x2="1120" y2="372" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <text x="600" y="393" fill="#00ffc8" font-size="11" font-weight="700" text-anchor="middle" opacity="0.5">流速沿管道方向的分布曲线</text>
+
+        <!-- 速度曲线 -->
+        <path id="curveFill" fill="#00ffc8" opacity="0.1"/>
+        <path id="curveLine" fill="none" stroke="#00ffc8" stroke-width="2" filter="url(#glowSm)"/>
+        <g id="curveMarks"></g>
+
+        <!-- 悬浮交互 -->
+        <rect id="hoverZone" fill="transparent" x="80" y="100" width="1040" height="200" cursor="crosshair"/>
+        <line id="hoverLine" stroke="rgba(0,255,200,0.25)" stroke-width="1" stroke-dasharray="4 3" visibility="hidden"/>
+    </svg>
+    <div class="tooltip" id="tip"></div>
+</div>
+
+<div class="controls">
+    <div class="ctrl">
+        <label><i class="fas fa-arrows-alt-h"></i> 窄口直径</label>
+        <div class="val" id="nVal">44</div>
+        <input type="range" id="nSlider" min="8" max="140" value="44" step="2">
+    </div>
+    <div class="ctrl">
+        <label><i class="fas fa-wind"></i> 基础风速</label>
+        <div class="val" id="sVal">3.0 m/s</div>
+        <input type="range" id="sSlider" min="40" max="260" value="120" step="10">
+    </div>
+</div>
+
+<div class="info-bar">
+    <div class="info-item"><div class="lbl">窄处最大流速</div><div class="num c1" id="dMaxV">9.1 m/s</div></div>
+    <div class="info-item"><div class="lbl">流速放大倍数</div><div class="num c1" id="dRatio">3.0x</div></div>
+    <div class="info-item"><div class="lbl">压力降幅</div><div class="num c2" id="dPres">-89%</div></div>
+</div>
+
+<script>
+/* ===== 常量 ===== */
+const NS = "http://www.w3.org/2000/svg";
+const PS = 80, PE = 1120, PL = PE - PS, CY = 200, WH = 80;
+let NH = 22;       // 窄处半高
+let BSP = 120;     // 基础像素速度
+const BSM = 3.0;   // 基础m/s
+
+/* ===== 截面函数 ===== */
+function ss(a, b, x) { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+function hh(t) {
+    if (t < .22) return WH;
+    if (t < .40) return WH + (NH - WH) * ss(.22, .40, t);
+    if (t < .60) return NH;
+    if (t < .78) return NH + (WH - NH) * ss(.60, .78, t);
+    return WH;
+}
+function spdPx(t) { return BSP * WH / Math.max(hh(t), 1); }
+function spdMs(t) { return (BSP / 120 * BSM) * WH / Math.max(hh(t), 1); }
+
+/* ===== 路径生成 ===== */
+function edgePath(top) {
+    let d = '';
+    for (let x = PS; x <= PE; x += 2) {
+        const h = hh((x - PS) / PL);
+        d += (x === PS ? 'M' : 'L') + x + ',' + (top ? CY - h : CY + h);
+    }
+    return d;
+}
+function closedPath() {
+    let d = edgePath(true);
+    for (let x = PE; x >= PS; x -= 2) {
+        const h = hh((x - PS) / PL);
+        d += 'L' + x + ',' + (CY + h);
+    }
+    return d + 'Z';
+}
+
+/* ===== 构建静态元素 ===== */
+function build() {
+    const ip = closedPath();
+    const ep = edgePath(true), eb = edgePath(false);
+    // 管道
+    $('pipeInterior').setAttribute('d', ip);
+    $('clipPath').setAttribute('d', ip);
+    $('pipeTop').setAttribute('d', ep);
+    $('pipeTopHL').setAttribute('d', ep);
+    $('pipeBot').setAttribute('d', eb);
+    $('pipeBotHL').setAttribute('d', eb);
+    const hL = hh(0), hR = hh(1);
+    $('edgeL').setAttribute('x1', PS); $('edgeL').setAttribute('y1', CY - hL);
+    $('edgeL').setAttribute('x2', PS); $('edgeL').setAttribute('y2', CY + hL);
+    $('edgeR').setAttribute('x1', PE); $('edgeR').setAttribute('y1', CY - hR);
+    $('edgeR').setAttribute('x2', PE); $('edgeR').setAttribute('y2', CY + hR);
+    // 窄处发光
+    const ng = $('narrowGlowEl');
+    ng.setAttribute('cx', PS + PL * .5); ng.setAttribute('cy', CY);
+    ng.setAttribute('rx', PL * .2); ng.setAttribute('ry', NH + 50);
+
+    // 流线
+    const sg = $('streamlines'); sg.innerHTML = '';
+    for (let i = 0; i < 8; i++) {
+        const f = (i + 1) / 9;
+        let d = '';
+        for (let x = PS; x <= PE; x += 3) {
+            const h = hh((x - PS) / PL);
+            d += (x === PS ? 'M' : 'L') + x + ',' + (CY + (f * 2 - 1) * h * .88);
+        }
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', d); p.setAttribute('fill', 'none');
+        p.setAttribute('stroke', '#00ffc8'); p.setAttribute('stroke-width', '.7');
+        sg.appendChild(p);
+    }
+
+    // 速度箭头
+    const ag = $('velArrows'), lg = $('velLabels'); ag.innerHTML = ''; lg.innerHTML = '';
+    const pts = [.11, .31, .50, .69, .89];
+    let mxS = 0; pts.forEach(t => mxS = Math.max(mxS, spdPx(t)));
+    pts.forEach(t => {
+        const x = PS + t * PL, h = hh(t), s = spdPx(t), r = s / mxS;
+        const len = 14 + r * 72, y = CY - h - 22;
+        const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', x - len / 2); ln.setAttribute('y1', y);
+        ln.setAttribute('x2', x + len / 2); ln.setAttribute('y2', y);
+        ln.setAttribute('stroke', '#00ffc8'); ln.setAttribute('stroke-width', '2');
+        ln.setAttribute('stroke-linecap', 'round'); ln.setAttribute('opacity', .4 + r * .5);
+        ag.appendChild(ln);
+        const hs = 4 + r * 5, tx = x + len / 2;
+        const hd = document.createElementNS(NS, 'polygon');
+        hd.setAttribute('points', `${tx},${y} ${tx - hs},${y - hs * .5} ${tx - hs},${y + hs * .5}`);
+        hd.setAttribute('fill', '#00ffc8'); hd.setAttribute('opacity', .4 + r * .5);
+        ag.appendChild(hd);
+        const tx2 = document.createElementNS(NS, 'text');
+        tx2.setAttribute('x', x); tx2.setAttribute('y', y - 7);
+        tx2.setAttribute('fill', '#00ffc8'); tx2.setAttribute('font-size', '10');
+        tx2.setAttribute('text-anchor', 'middle'); tx2.setAttribute('opacity', '.55');
+        tx2.textContent = spdMs(t).toFixed(1) + ' m/s';
+        lg.appendChild(tx2);
+    });
+
+    // 压力条
+    const pg = $('presBars'), plg = $('presLabels'); pg.innerHTML = ''; plg.innerHTML = '';
+    const mxBH = 28;
+    pts.forEach(t => {
+        const x = PS + t * PL, h = hh(t), s = spdPx(t), r = s / mxS;
+        const pr = 1 - r * r; // 压力比
+        const bh = Math.max(3, pr * mxBH), bw = 22, by = CY + h + 16;
+        const rv = Math.round(255 * pr), bv = Math.round(200 * (1 - pr));
+        const rect = document.createElementNS(NS, 'rect');
+        rect.setAttribute('x', x - bw / 2); rect.setAttribute('y', by + mxBH - bh);
+        rect.setAttribute('width', bw); rect.setAttribute('height', bh);
+        rect.setAttribute('rx', '3'); rect.setAttribute('fill', `rgb(${rv},60,${bv})`);
+        rect.setAttribute('opacity', '.65');
+        pg.appendChild(rect);
+        const txt = document.createElementNS(NS, 'text');
+        txt.setAttribute('x', x); txt.setAttribute('y', by + mxBH + 13);
+        txt.setAttribute('fill', `rgb(${rv},80,${bv})`); txt.setAttribute('font-size', '10');
+        txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('opacity', '.55');
+        txt.textContent = Math.round(pr * 100) + '%';
+        plg.appendChild(txt);
+    });
+
+    // 速度曲线
+    const yB = 500, yT = 408, cH = yB - yT;
+    let mx = 0;
+    for (let t = 0; t <= 1; t += .01) mx = Math.max(mx, spdPx(t));
+    let ld = '', fd = `M${PS},${yB} `;
+    for (let t = 0; t <= 1; t += .005) {
+        const x = PS + t * PL, y = yB - (spdPx(t) / mx) * cH;
+        ld += (t === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+        fd += 'L' + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    fd += `L${PE},${yB} Z`;
+    $('curveLine').setAttribute('d', ld);
+    $('curveFill').setAttribute('d', fd);
+    const mg = $('curveMarks'); mg.innerHTML = '';
+    // 峰值标记
+    const pkX = PS + .5 * PL, pkY = yB - (spdPx(.5) / mx) * cH;
+    const dot = document.createElementNS(NS, 'circle');
+    dot.setAttribute('cx', pkX); dot.setAttribute('cy', pkY);
+    dot.setAttribute('r', '3.5'); dot.setAttribute('fill', '#00ffc8');
+    mg.appendChild(dot);
+    const lbl = document.createElementNS(NS, 'text');
+    lbl.setAttribute('x', pkX); lbl.setAttribute('y', pkY - 9);
+    lbl.setAttribute('fill', '#00ffc8'); lbl.setAttribute('font-size', '10');
+    lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('opacity', '.75');
+    lbl.textContent = spdMs(.5).toFixed(1) + ' m/s (峰值)';
+    mg.appendChild(lbl);
+    // 基线标注
+    const bl = document.createElementNS(NS, 'text');
+    bl.setAttribute('x', PS + .11 * PL); bl.setAttribute('y', yB + 14);
+    bl.setAttribute('fill', '#4a5568'); bl.setAttribute('font-size', '9');
+    bl.setAttribute('text-anchor', 'middle');
+    bl.textContent = spdMs(.11).toFixed(1) + ' m/s';
+    mg.appendChild(bl);
+
+    // 信息栏
+    const ratio = WH / Math.max(NH, 1);
+    const ms = spdMs(.5);
+    const dp = -(1 - 1 / (ratio * ratio)) * 100;
+    $('dMaxV').textContent = ms.toFixed(1) + ' m/s';
+    $('dRatio').textContent = ratio.toFixed(1) + 'x';
+    $('dPres').textContent = dp.toFixed(0) + '%';
+}
+
+function $(id) { return document.getElementById(id); }
+
+/* ===== 粒子系统 ===== */
+const NL = 10, PPL = 8, parts = [];
+
+class P {
+    constructor(lane, idx) {
+        this.lf = (lane + .5) / NL;
+        this.t = idx / PPL + (Math.random() - .5) * .06;
+        if (this.t < 0) this.t += 1;
+        // 拖尾用 polyline
+        this.trail = document.createElementNS(NS, 'polyline');
+        this.trail.setAttribute('fill', 'none');
+        this.trail.setAttribute('stroke-linecap', 'round');
+        this.trail.setAttribute('stroke-linejoin', 'round');
+        $('trails').appendChild(this.trail);
+        // 粒子
+        this.el = document.createElementNS(NS, 'circle');
+        this.el.setAttribute('r', '3');
+        $('particles').appendChild(this.el);
+        // 历史点
+        this.hist = [];
+    }
+    y(t) { return CY + (this.lf * 2 - 1) * hh(t) * .88; }
+    update(dt) {
+        const s = spdPx(this.t);
+        this.t += (s * dt) / PL;
+        if (this.t > 1) this.t -= 1;
+        const x = PS + this.t * PL, y = this.y(this.t);
+        // 颜色：速度比
+        const r = s / BSP;
+        const hue = 175 - Math.min(r - 1, 3.5) / 3.5 * 140;
+        const lit = 55 + Math.min(r - 1, 3) / 3 * 25;
+        const col = `hsl(${hue},100%,${lit}%)`;
+        const tcol = `hsla(${hue},100%,${lit}%,0.25)`;
+        // 更新历史（最多8帧）
+        this.hist.unshift(x.toFixed(1) + ',' + y.toFixed(1));
+        if (this.hist.length > 8) this.hist.length = 8;
+        this.el.setAttribute('cx', x.toFixed(1));
+        this.el.setAttribute('cy', y.toFixed(1));
+        this.el.setAttribute('fill', col);
+        this.el.setAttribute('r', (2.5 + Math.min(r - 1, 2) * .6).toFixed(1));
+        this.trail.setAttribute('points', this.hist.join(' '));
+        this.trail.setAttribute('stroke', tcol);
+        this.trail.setAttribute('stroke-width', (2 + Math.min(r - 1, 2) * .5).toFixed(1));
+    }
+}
+
+function initParts() {
+    $('trails').innerHTML = ''; $('particles').innerHTML = '';
+    parts.length = 0;
+    for (let l = 0; l < NL; l++)
+        for (let i = 0; i < PPL; i++)
+            parts.push(new P(l, i));
+}
+
+/* ===== 鼠标悬浮 ===== */
+const hz = $('hoverZone'), hl = $('hoverLine'), tip = $('tip');
+hz.addEventListener('mousemove', e => {
+    const svg = $('main'), r = svg.getBoundingClientRect();
+    const sx = 1200 / r.width;
+    const mx = (e.clientX - r.left) * sx;
+    const t = (mx - PS) / PL;
+    if (t < 0 || t > 1) { hl.setAttribute('visibility', 'hidden'); tip.classList.remove('visible'); return; }
+    const h = hh(t);
+    hl.setAttribute('x1', mx); hl.setAttribute('y1', CY - h);
+    hl.setAttribute('x2', mx); hl.setAttribute('y2', CY + h);
+    hl.setAttribute('visibility', 'visible');
+    tip.innerHTML = `流速 <strong style="color:var(--accent)">${spdMs(t).toFixed(1)} m/s</strong> &nbsp;·&nbsp; 截面 <strong>${Math.round(h * 2)}</strong>`;
+    const wr = document.querySelector('.svg-wrap').getBoundingClientRect();
+    let left = e.clientX - wr.left - tip.offsetWidth / 2;
+    let top = e.clientY - wr.top - tip.offsetHeight - 14;
+    left = Math.max(0, Math.min(left, wr.width - tip.offsetWidth));
+    top = Math.max(0, top);
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    tip.classList.add('visible');
+});
+hz.addEventListener('mouseleave', () => { hl.setAttribute('visibility', 'hidden'); tip.classList.remove('visible'); });
+
+/* ===== 滑块 ===== */
+$('nSlider').addEventListener('input', function() {
+    NH = this.value / 2;
+    $('nVal').textContent = this.value;
+    build();
+});
+$('sSlider').addEventListener('input', function() {
+    BSP = +this.value;
+    $('sVal').textContent = (BSP / 120 * BSM).toFixed(1) + ' m/s';
+    build();
+});
+
+/* ===== 动画 ===== */
+let lt = 0;
+function loop(ts) {
+    if (!lt) lt = ts;
+    const dt = Math.min((ts - lt) / 1000, .04);
+    lt = ts;
+    for (const p of parts) p.update(dt);
+    requestAnimationFrame(loop);
+}
+
+/* ===== 启动 ===== */
+build();
+initParts();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
