@@ -613,5 +613,27 @@
     "updated": "2026-10-05",
     "featured": false,
     "type": "html"
+  },
+  {
+    "id": "nobel-2026",
+    "title": "两束蓝光：2026 诺贝尔奖专题",
+    "subtitle": "光遗传学、冰立方中微子天文台与六大奖项进度",
+    "file": "nobel-2026.html",
+    "categories": [
+      "science"
+    ],
+    "tags": [
+      "诺贝尔奖",
+      "2026",
+      "光遗传学",
+      "中微子",
+      "IceCube",
+      "科学"
+    ],
+    "summary": "2026 年诺贝尔奖专题，聚焦光遗传学与南极冰立方中微子天文台，并整理六大奖项进度与来源。",
+    "created": "2026-10-07",
+    "updated": "2026-10-07",
+    "featured": false,
+    "type": "html"
   }
 ]
