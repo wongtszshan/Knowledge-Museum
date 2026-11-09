@@ -635,5 +635,27 @@
     "updated": "2026-10-07",
     "featured": false,
     "type": "html"
+  },
+  {
+    "id": "metal-smell",
+    "title": "“金属味”其实是你自己的味道",
+    "subtitle": "铁器触碰皮肤后的气味：皮脂、铁离子与挥发性分子",
+    "file": "metal-smell.html",
+    "categories": [
+      "science"
+    ],
+    "tags": [
+      "金属味",
+      "嗅觉",
+      "皮肤化学",
+      "铁离子",
+      "1-辛烯-3-酮",
+      "科学科普"
+    ],
+    "summary": "解释触摸铁栏杆或硬币后产生的“金属味”，介绍皮肤脂质与铁离子反应形成气味分子的科学机制。",
+    "created": "2026-11-10",
+    "updated": "2026-11-10",
+    "featured": false,
+    "type": "html"
   }
 ]
