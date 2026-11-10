@@ -46,5 +46,13 @@
     "description": "咖啡萃取、器具、养豆、储存与风味研究",
     "accent": "#8B5E3C",
     "order": 6
+  },
+  {
+    "id": "gaming-tech",
+    "name": "游戏与技术",
+    "nameEn": "Gaming & Technology",
+    "description": "游戏、模拟器、硬件配置、画质与性能优化",
+    "accent": "#596DA8",
+    "order": 7
   }
 ]
