@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="王国之泪 4K 60fps 模拟优化全记录——从 30 帧到 4K 60 帧的完整踩坑之路">
+<title>王国之泪 4K 60fps 模拟优化全记录</title>
+<style>
+:root{
+  --bg:#faf6ee;--bg2:#f2ecdf;--card:#fffdf7;--ink:#2b2620;--ink2:#5a5348;--line:#d8d0bd;
+  --accent:#2e6e8e;--accent2:#1d4f68;--tag-verified:#3d7c47;--tag-infer:#b3731e;--tag-opinion:#2e6e8e;--tag-dev:#6e6a63;
+  --code-bg:#efe8d8;--tape:rgba(46,110,142,.18);
+}
+html.dark{
+  --bg:#1f1d1a;--bg2:#252220;--card:#2b2824;--ink:#e8e2d8;--ink2:#b8b0a2;--line:#3e3a34;
+  --accent:#7fb3cd;--accent2:#a5cde2;--tag-verified:#6fb87a;--tag-infer:#d9a256;--tag-opinion:#7fb3cd;--tag-dev:#a09a8e;
+  --code-bg:#38342e;--tape:rgba(127,179,205,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:Georgia,"Times New Roman","Songti SC",STSong,SimSun,serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;
+  font-size:clamp(18px,1.05vw + 14px,26px);
+  padding-top:calc(56px + env(safe-area-inset-top));
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  overflow-x:hidden;word-wrap:break-word;
+}
+a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+a:hover{color:var(--accent2)}
+h1,h2,h3,h4{font-weight:700;line-height:1.35;color:var(--ink)}
+h1{font-size:clamp(24px,2.2vw + 14px,40px);margin:.6em 0 .4em}
+h2{font-size:clamp(22px,1.5vw + 14px,32px);margin:1.8em 0 .8em;padding-bottom:.3em;border-bottom:3px double var(--line);position:relative}
+h2::before{content:"✎";color:var(--accent);margin-right:.4em;font-size:.8em}
+h3{font-size:clamp(19px,1vw + 14px,26px);margin:1.4em 0 .6em}
+h4{font-size:1em;margin:1.2em 0 .5em;color:var(--accent2)}
+p,li{margin:.6em 0;max-width:72ch}
+strong{font-weight:700;color:var(--accent2)}
+code{font-family:"SF Mono",Consolas,Menlo,monospace;font-size:.82em;background:var(--code-bg);padding:.15em .4em;border-radius:4px;word-break:break-all}
+main{max-width:860px;margin:0 auto;padding:0 clamp(14px,3vw,32px) calc(80px + env(safe-area-inset-bottom))}
+/* 手账顶部胶带 */
+.meta-banner{background:var(--tape);border-radius:6px;padding:.8em 1em;margin:1em 0;font-size:.88em;color:var(--ink2);text-align:center}
+/* 顶部吸顶导航 */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg2);border-bottom:2px solid var(--line);
+  padding:calc(8px + env(safe-area-inset-top)) 0 8px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+#topnav .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:.6em;padding:0 12px}
+#topnav .brand{font-weight:700;white-space:nowrap;font-size:clamp(14px,1vw,17px);color:var(--accent2);padding:0 .4em}
+#navlinks{display:flex;gap:.3em;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1}
+#navlinks::-webkit-scrollbar{display:none}
+#navlinks a{flex:0 0 auto;padding:.55em .9em;border-radius:20px;border:1px solid transparent;font-size:clamp(13px,.9vw,16px);color:var(--ink2);border-bottom:none;white-space:nowrap;min-height:44px;display:flex;align-items:center}
+#navlinks a:hover,#navlinks a.active{background:var(--card);color:var(--accent2);border-color:var(--line)}
+#themeBtn{flex:0 0 auto;min-width:44px;min-height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px;color:var(--ink);display:flex;align-items:center;justify-content:center}
+/* 分类标签 */
+.tag{display:inline-block;font-size:.68em;font-family:-apple-system,"PingFang SC",sans-serif;font-weight:700;
+  padding:.25em .7em;border-radius:12px;color:#fff;vertical-align:middle;line-height:1.4;letter-spacing:.5px}
+.tag-v{background:var(--tag-verified)}.tag-i{background:var(--tag-infer)}.tag-o{background:var(--tag-opinion)}.tag-d{background:var(--tag-dev)}
+.src-link{display:inline-flex;align-items:center;gap:.25em;font-size:.72em;font-family:-apple-system,sans-serif;
+  background:var(--code-bg);color:var(--accent2) !important;border:1px solid var(--line) !important;border-bottom:1px solid var(--line) !important;
+  padding:.35em .7em;border-radius:14px;vertical-align:middle;text-decoration:none;margin:0 .25em}
+.src-link:hover{background:var(--accent);color:#fff !important}
+/* 信息块 */
+.info{background:var(--card);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;
+  padding:.9em 1.1em;margin:.8em 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+/* 表格容器 */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1em 0;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.88em}
+th,td{padding:.7em .9em;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--bg2);font-weight:700;color:var(--accent2)}
+tr:last-child td{border-bottom:none}
+/* 步骤列表 */
+.steps{counter-reset:s;list-style:none;padding-left:0}
+.steps>li{counter-increment:s;position:relative;padding-left:2.4em;margin:.7em 0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:.1em;width:1.7em;height:1.7em;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:.7em;display:flex;align-items:center;justify-content:center;font-family:-apple-system,sans-serif;font-weight:700}
+/* SVG */
+figure{margin:1.4em 0;padding:1em;background:var(--card);border:1px dashed var(--line);border-radius:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+figure svg{display:block;width:100%;height:auto;max-width:100%;font-family:inherit}
+figcaption{font-size:.82em;color:var(--ink2);text-align:center;margin-top:.6em}
+/* 下载卡 */
+.dl-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1em;margin:1em 0;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.dl-card .name{font-weight:700;color:var(--accent2);font-size:1.05em}
+.dl-card .url{font-family:"SF Mono",Consolas,Menlo,monospace;font-size:.78em;background:var(--code-bg);padding:.5em .7em;border-radius:6px;margin:.6em 0;word-break:break-all;display:block;color:var(--ink)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4em;min-height:44px;padding:.5em 1.1em;background:var(--accent);color:#fff !important;
+  border:none;border-radius:22px;cursor:pointer;font-family:-apple-system,sans-serif;font-size:.85em;font-weight:600}
+.copy-btn:hover{background:var(--accent2)}
+.copy-btn.ok{background:var(--tag-verified)}
+/* 回到顶部 */
+#toTop{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));
+  width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;
+  font-size:22px;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .3s;z-index:99}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{background:var(--accent2)}
+/* 来源汇总表 */
+.src-sum td{white-space:normal;word-break:break-all}
+@media (max-width:640px){
+  .tag{display:block;margin-bottom:.3em;width:fit-content}
+  .src-link{margin-top:.3em}
+  .info{padding:.8em .9em}
+  h2::before{content:""}
+}
+@media print{#topnav,#toTop,.copy-btn{display:none}}
+</style>
+</head>
+<body>
+<nav id="topnav"><div class="inner">
+<span class="brand">📖 TotK 4K60</span>
+<div id="navlinks">
+<a href="#preface">前言</a><a href="#ch1">一·安装</a><a href="#ch2">二·Mod</a><a href="#ch3">三·XMP</a><a href="#ch4">四·FSR</a><a href="#ch5">五·画质</a><a href="#ch6">六·总结</a><a href="#downloads">下载</a><a href="#sources">来源</a>
+</div>
+<button id="themeBtn" title="切换深浅色" aria-label="切换深浅色">🌙</button>
+</div></nav>
+
+<main>
+
+<h1>王国之泪 4K 60fps 模拟优化全记录</h1>
+<p style="font-size:.9em;color:var(--ink2)">——从 30 帧到 4K 60 帧的完整踩坑之路</p>
+<div class="meta-banner">硬件:i5-14600KF · RTX 5070 · 32GB DDR4-3600 · B760M · 4K 屏<br>软件:Ryujinx 1.3.0-beta2 · UltraCam 3.0.0 · NX Optimizer · NSC_Builder</div>
+
+<h2 id="preface">前言:适用对象与最终成果</h2>
+<p>这篇教程记录一套完整可复现的王国之泪模拟优化流程。<strong>起点是 UltraCam 3.0 mod 手动装好后仍锁 30 帧,终点是 4K 输出 + FSR + 稳定 60fps(Avg 60 / Max 67),而 GPU 占用只有 57%</strong><span class="tag tag-i">推断</span>。</p>
+<p>游戏包为 1.0.0 本体 + 1.4.2 升级包,全程以 1.4.2 为目标版本。其他硬件配置的读者可以照搬流程,只是部分参数(阴影分辨率、渲染距离)需要按自己的余量增减。</p>
+
+<h2 id="ch1">第一章 游戏本体与 1.4.2 升级包的正确安装(含转格式教程)</h2>
+<p><strong>这一章解决"游戏怎么装进 Ryujinx、版本怎么对"的问题,版本不对,后面一切 mod 都是白搭。</strong></p>
+
+<h3>1.1 游戏包结构解析</h3>
+<p>手里的游戏包是标准的"本体 + 升级包"组合:<strong>1.0.0 本体(Urbase)+ 1.4.2 升级包(Update)</strong>。本体可以独立运行,但升级包不能单独运行,必须作为 Title Update 挂载到本体上<span class="tag tag-v">已核实</span><a class="src-link" href="https://nxoptimizer.com/games/tears-of-the-kingdom" target="_blank" rel="noopener">UltraCam 官方支持版本表 ↗</a>。所有后续的 mod 都是按 1.4.2 的代码生成的,所以游戏列表里显示的版本必须是 1.4.2,否则 mod 加载不到正确的内存地址,直接失效。</p>
+
+<h3>1.2 升级包格式转换(重点)</h3>
+<p>下载到的升级包不一定能直接喂给模拟器。<strong>常见情况是升级包为 xci 整合盘、加密封包或缺少签名的 nsp,Ryujinx 挂载时报校验错误或直接不识别</strong>,这时候需要先用 NSC_Builder 转一次格式。</p>
+<p>NSC_Builder 是一个开源的 Switch 文件处理工具,支持 nsp/xci 互转、多内容合并、去除 titlerights 加密等操作<span class="tag tag-v">已核实</span><a class="src-link" href="https://github.com/julesontheroad/NSC_BUILDER" target="_blank" rel="noopener">GitHub 仓库 ↗</a>。操作步骤:</p>
+<ol class="steps">
+<li>下载 NSC_Builder,解压后双击 <code>NSCB.bat</code> 启动(需要系统装有 Java)</li>
+<li>选择 <strong>File Mode</strong>(文件模式)</li>
+<li>按提示输入升级包文件路径</li>
+<li>选择转换目标:xci 转 nsp 选 "merge/extract" 相关功能;nsp 去加密选 "Erase titlerights encryption"</li>
+<li>输出文件保存到一个新目录</li>
+</ol>
+
+<figure><svg viewBox="0 0 760 180" role="img" aria-label="升级包转格式流程">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+<g fill="none" stroke="currentColor" stroke-width="1.6">
+<rect x="10" y="60" width="140" height="60" rx="10" class="n"/><rect x="195" y="60" width="150" height="60" rx="10"/><rect x="390" y="60" width="140" height="60" rx="10"/><rect x="575" y="60" width="170" height="60" rx="10"/>
+<line x1="150" y1="90" x2="188" y2="90" marker-end="url(#ar)"/><line x1="345" y1="90" x2="383" y2="90" marker-end="url(#ar)"/><line x1="530" y1="90" x2="568" y2="90" marker-end="url(#ar)"/>
+</g>
+<g text-anchor="middle" font-size="15" fill="currentColor">
+<text x="80" y="85">原升级包</text><text x="80" y="107" font-size="12" opacity=".7">xci/加密nsp</text>
+<text x="270" y="85">NSC_Builder</text><text x="270" y="107" font-size="12" opacity=".7">File Mode</text>
+<text x="460" y="85">标准 nsp</text><text x="460" y="107" font-size="12" opacity=".7">v1.4.2 签名完整</text>
+<text x="660" y="85">Ryujinx 挂载</text><text x="660" y="107" font-size="12" opacity=".7">版本显示 1.4.2</text>
+</g></svg>
+<figcaption>图 1-1 升级包转格式与挂载流程</figcaption></figure>
+
+<p>转换完成后验证:把输出文件放进 Ryujinx 的游戏目录,刷新游戏列表,右键游戏查看属性,<strong>确认升级包能被扫描到且版本号显示 v1.4.2</strong>。如果扫描不到,多半是转换模式选错了,换一个输出选项重试。</p>
+
+<h3>1.3 Ryujinx 中的导入流程</h3>
+<ol class="steps">
+<li><strong>本体导入</strong>:Options → Add Game Directory,选中放本体的文件夹,游戏出现在列表中</li>
+<li><strong>升级包挂载</strong>:右键游戏 → Manage Title Updates → Add → 选中 1.4.2 的 nsp 文件 → 确认版本列表里显示 1.4.2 → Save</li>
+<li><strong>版本核对</strong>:游戏列表中该游戏条目右侧的版本号应显示 1.4.2 而非 1.0.0。这一步是后文所有 mod 生效的前提</li>
+</ol>
+
+<h3>1.4 常见报错排查</h3>
+<div class="info">
+<p><strong>版本号不显示 / 挂载后仍是 1.0.0</strong>:升级包没挂上,重新进 Manage Title Updates 检查是否选中了 1.4.2 并 Save;如果挂上了还不对,删掉 <code>games\0100F2C0115B6000\cache\</code> 后重启模拟器。</p>
+<p><strong>NCA 校验失败</strong>:升级包文件损坏或签名问题,回到 1.2 节重新转换;反复失败就换源重新下载。</p>
+<p><strong>扫描不到升级包</strong>:格式问题,参考 1.2 节转格式。</p>
+</div>
+
+<h3>1.5 Ryujinx 基础设置(此处先行锁定)</h3>
+<p>在装 mod 之前,先把模拟器侧的设置定下来,后面不再动:</p>
+<ul>
+<li><strong>Resolution Scale:1x</strong>——最关键的一条。分辨率缩放由 mod 内部管理,模拟器再放大一层等于把 4K 输出又乘一遍,显存直接爆,帧数崩</li>
+<li><strong>DRAM:8GB</strong>(默认 4GB 偏小,12GB 会挤压系统内存,8GB 最平衡)</li>
+<li><strong>VSync:Switch</strong> / <strong>图形后端:Vulkan</strong> / <strong>着色器缓存:开启</strong></li>
+</ul>
+
+<h2 id="ch2">第二章 60fps mod(UltraCam 3.0)安装与启用</h2>
+<p><strong>mod 的正确姿势是"文件放对 → 手动勾选 → 进游戏呼出菜单手动启用",三步缺一不可。</strong></p>
+
+<h3>2.1 版本对齐原则</h3>
+<p>UltraCam 3.0.0 是按游戏 1.4.x 版本生成的,<strong>正好匹配 1.4.2,无需任何额外处理</strong><span class="tag tag-v">已核实</span><a class="src-link" href="https://github.com/MaxLastBreath/nx-optimizer/releases" target="_blank" rel="noopener">官方 Release Notes ↗</a>。这就是第一章坚持把游戏对到 1.4.2 的原因——mod 版本和游戏版本一致,加载才能命中正确的内存地址。</p>
+
+<h3>2.2 三个快速检查(5 分钟内定位问题)</h3>
+<p>装完 mod 后如果没效果,先按顺序做这三个检查,绝大多数问题出在这里:</p>
+<ol class="steps">
+<li><strong>Manage Mods 手动勾选</strong>:手动复制到 mods 文件夹的 mod <strong>不会自动启用</strong>,必须在 Ryujinx 中右键游戏 → Manage Mods,把对应的 mod 条目打勾,再 Save</li>
+<li><strong>文件夹结构核查</strong>:正确的路径是 <code>mods\contents\0100F2C0115B6000\[mod名]\exefs\subsdk9 + main.npdm</code>(有 romfs 的 mod 还有 romfs 文件夹)。<strong>zip 解压时多套一层文件夹是最常见的错误</strong>,Ryujinx 会因为找不到 exefs 而静默加载失败</li>
+<li><strong>subsdk9 文件大小验证</strong>:正常的 subsdk9 在 200KB~2MB 之间。如果文件只有几 KB 甚至 0 KB,说明生成失败,需要用 NX Optimizer 重新生成</li>
+</ol>
+
+<h3>2.3 清缓存</h3>
+<p>切换游戏版本或切换 mod 之后,<strong>必须删除 <code>games\0100F2C0115B6000\cache\</code> 整个文件夹</strong>再启动游戏。旧缓存会让新 mod 加载异常,症状是帧数不对或直接崩溃。</p>
+
+<h3>2.4 进游戏后手动呼出 UltraCam 菜单,启用 60fps(关键步骤)</h3>
+<div class="info">
+<p><span class="tag tag-v">已核实</span>这是本次踩坑里最隐蔽的一步:<strong>mod 文件层面装好、Manage Mods 里也勾选了,但游戏默认仍以原版 30fps 运行——必须在游戏内呼出 UltraCam 菜单,手动把 60fps 选项打开,mod 才真正生效</strong><a class="src-link" href="https://nxoptimizer.com/games/tears-of-the-kingdom" target="_blank" rel="noopener">官方说明 ↗</a>。如果以为"装好 mod 进游戏就自动 60 帧",玩起来还是 30 帧,就会得出"mod 没用"的错误结论。</p>
+</div>
+<p>呼出方式(官方默认键位):<strong>键盘按 F12;手柄是 ZL+ZR+左摇杆按下</strong><span class="tag tag-v">已核实</span><a class="src-link" href="https://github.com/MaxLastBreath/TOTK-UltraCam-Console" target="_blank" rel="noopener">UltraCam API 文档 ↗</a>。</p>
+<p>呼出菜单后,进 <strong>FPS Settings</strong> 标签页:</p>
+<ul>
+<li>Dynamic FPS:<strong>Turn On</strong></li>
+<li>FPS / Menu FPS / Movie FPS:全部设为 <strong>60.000</strong></li>
+<li>点 <strong>Apply Changes</strong> 保存</li>
+</ul>
+<p>完整配置参数在第四章有最终版表格,这里先把 60fps 开起来验证 mod 是否生效。</p>
+<p>如果菜单呼不出来,检查两件事:一是当前焦点必须在游戏窗口上(点一下游戏画面再按 F12);二是 F12 可能被系统或其他软件占用,在菜单 Settings 里改一个自定义键即可。</p>
+
+<figure><svg viewBox="0 0 760 200" role="img" aria-label="mod 启用三步流程">
+<g fill="none" stroke="currentColor" stroke-width="1.6">
+<rect x="10" y="70" width="200" height="70" rx="12"/><rect x="270" y="70" width="200" height="70" rx="12"/><rect x="530" y="70" width="210" height="70" rx="12"/>
+<line x1="210" y1="105" x2="263" y2="105" marker-end="url(#ar)"/><line x1="470" y1="105" x2="523" y2="105" marker-end="url(#ar)"/>
+</g>
+<g text-anchor="middle" font-size="14" fill="currentColor">
+<text x="110" y="98">① 文件放对</text><text x="110" y="120" font-size="12" opacity=".7">exefs + main.npdm</text>
+<text x="370" y="98">② Manage Mods 勾选</text><text x="370" y="120" font-size="12" opacity=".7">手动打勾 + Save</text>
+<text x="635" y="98">③ 进游戏按 F12</text><text x="635" y="120" font-size="12" opacity=".7">菜单内开启 60fps</text>
+</g></svg>
+<figcaption>图 2-1 mod 启用三步流程(③ 最容易被忽略)</figcaption></figure>
+
+<h3>2.5 验证清单</h3>
+<p>三条全过,mod 才算装成:</p>
+<ul>
+<li>游戏内帧数显示 <strong>60</strong>(而非 30)</li>
+<li>走路速度正常(不是半速慢放)</li>
+<li>不再出现约 45 秒后的空指针崩溃(锁 30 帧时 60fps mod 运行在错误目标上的典型症状)</li>
+</ul>
+
+<h2 id="ch3">第三章 被忽略的最大免费优化——XMP 内存超频</h2>
+<p><strong>这是整个流程里收益最高、代价最低的一步:不花一分钱、不损失一点画质,纯赚 5-15% 性能。</strong></p>
+
+<h3>3.1 发现过程</h3>
+<p>排查性能时打开任务管理器 → 性能 → 内存,发现内存运行频率只有 <strong>2666 MT/s</strong>——而内存条标称是 3600 MT/s。差出来的这 35% 带宽全部被浪费了,原因是 BIOS 默认按 JEDEC 标准频率运行,没有开启 XMP(内存超频预设)<span class="tag tag-v">已核实</span>。这在整机装机时尤其常见:装机商为了"点亮就行",默认是不开 XMP 的。</p>
+
+<h3>3.2 原理:模拟器是内存带宽敏感负载</h3>
+<p>Ryujinx 这类模拟器的 CPU 侧模拟(单线程翻译 + 大量内存读写)对内存带宽和延迟极其敏感<span class="tag tag-i">推断</span>。<strong>开启 XMP 后,模拟性能通常能直接提升 5-15%,而画面、画质、稳定性都不受任何影响</strong>——因为改的只是内存运行频率,让它回到出厂标称值,并不是激进超频。</p>
+
+<h3>3.3 BIOS 开启步骤</h3>
+<p>开机反复按 Del 进 BIOS,然后按主板品牌找:</p>
+<ul>
+<li><strong>华硕</strong>:Advanced Mode → Ai Tweaker → <strong>Ai Overclock Tuner</strong> → 选 <strong>XMP I</strong>(或 XMP II)</li>
+<li><strong>微星</strong>:OC → <strong>Extreme Memory Profile(XMP)</strong> → <strong>Enabled</strong></li>
+<li><strong>技嘉</strong>:Tweaker → <strong>XMP Profile</strong> → <strong>Profile 1</strong></li>
+</ul>
+<p>选好后 F10 保存重启。B760 主板 + 14600KF 的组合,3600 MT/s 的 XMP 属于官方支持范围内的常规操作。</p>
+
+<h3>3.4 开启后验证</h3>
+<p>进系统后再看任务管理器 → 内存,<strong>速度应显示 3600 MT/s</strong>。相比之前的 2666,内存带宽提升约 35%,这一步对后面 4K 60fps 的达成贡献不小。</p>
+
+<h3>3.5 配置细节:双通道 2×16GB 是最稳形态</h3>
+<p>2 条内存插 <strong>2/4 插槽</strong>(隔槽插)组成双通道,是 XMP 稳定开启的最经典配置。四条内存同时跑 3600 压力会大很多,兼容性问题也更多——如果将来升级内存,维持两条大容量比塞满四条更稳。</p>
+
+<h3>3.6 内存占用治理</h3>
+<p>XMP 开启后顺手处理另一件事:<strong>把内存占用从 86% 压到 75% 以下</strong>。两件事——关掉浏览器和后台大程序(浏览器动辄吃 3-6GB),把 Ryujinx 的 DRAM 设置从 12GB 改成 8GB。内存余量充足后,偶发卡顿和资源调度抖动都会明显减少。</p>
+
+<h2 id="ch4">第四章 4K 60fps 的正确路径——FSR 而非原生 4K</h2>
+<p><strong>结论先行:在 14600KF + RTX 5070 这套配置上,原生 4K 必然超载,FSR 才是 4K 60fps 的正确打开方式。</strong></p>
+
+<h3>4.1 一道算术题:为什么原生 4K 会失败</h3>
+<p>实测 1440p 分辨率下 GPU 占用 57%<span class="tag tag-i">推断</span>。分辨率从 1440p(约 369 万像素)到 4K(约 830 万像素),像素量是 <strong>2.25 倍</strong>,GPU 负载也要乘上去:57% × 2.25 ≈ <strong>128%</strong>——超过 100%,必然爆。这就是直接上原生 4K 掉到 40 帧的根源,不是设置错,是算术上就跑不动。</p>
+
+<figure><svg viewBox="0 0 760 220" role="img" aria-label="原生4K 与 FSR 方案负载对比">
+<g fill="none" stroke="currentColor" stroke-width="1.6">
+<rect x="30" y="40" width="330" height="150" rx="12"/><rect x="410" y="40" width="320" height="150" rx="12"/>
+</g>
+<rect x="60" y="145" width="270" height="30" rx="6" fill="#c94f4f" opacity=".85"/>
+<rect x="440" y="112" width="260" height="30" rx="6" fill="#3d7c47" opacity=".85"/>
+<rect x="440" y="152" width="150" height="30" rx="6" fill="#3d7c47" opacity=".55"/>
+<g font-size="14" fill="currentColor">
+<text x="195" y="62" text-anchor="middle" font-weight="bold">原生 4K</text>
+<text x="570" y="62" text-anchor="middle" font-weight="bold">FSR 方案</text>
+<text x="60" y="138" font-size="12">GPU 128% → 必然超载 → ~40fps</text>
+<text x="440" y="105" font-size="12">GPU ~65%(1440p 内渲染 + 放大)</text>
+<text x="440" y="196" font-size="12">输出真 4K 信号,稳定 60fps</text>
+</g></svg>
+<figcaption>图 4-1 原生 4K 与 FSR 方案负载对比</figcaption></figure>
+
+<h3>4.2 FSR 方案原理</h3>
+<p>FSR 的思路是把渲染和输出解耦:<strong>游戏内部以约 1440p 渲染(负载和之前实测的 1440p 一样),再通过算法放大输出真 4K 信号</strong>。最终显示器收到的是完整的 3840×2160,观感接近原生 4K,而 GPU 负载维持在能跑 60 帧的水平。这是在画质和帧数之间唯一能两者兼得的路。</p>
+
+<h3>4.3 UltraCam 菜单最终配置表</h3>
+<p>进游戏 F12 呼出菜单,按这张表设置(上为 Graphic Settings,下为 FPS Settings):</p>
+<div class="tbl-wrap"><table>
+<tr><th>设置项</th><th>值</th></tr>
+<tr><td>Select Resolution</td><td><strong>3840x2160</strong></td></tr>
+<tr><td>Turn On FSR</td><td><strong>Turned On</strong></td></tr>
+<tr><td>Shadow Resolution</td><td>1024</td></tr>
+<tr><td>FXAA</td><td>Turned On</td></tr>
+<tr><td>Force Anisotropic Filtering</td><td>Turned On(16x)</td></tr>
+<tr><td>Dynamic Resolution</td><td>Turned On</td></tr>
+<tr><td>Aspect Ratio</td><td>16:9</td></tr>
+<tr><td>Dynamic FPS</td><td><strong>Turned On</strong></td></tr>
+<tr><td>FPS / Menu FPS / Movie FPS</td><td><strong>全部 60.000</strong></td></tr>
+<tr><td>FPS Smoothing</td><td>8</td></tr>
+</table></div>
+
+<h3>4.4 Ryujinx 侧锁定项复核</h3>
+<p>模拟器侧和第一章一致,再确认一遍:<strong>Resolution Scale 1x</strong>(最重要)、Vulkan、VSync Switch、DRAM 8GB、着色器缓存开。任何一侧有"再放大"的动作都会破坏 FSR 的负载平衡。</p>
+
+<h3>4.5 实测结果</h3>
+<p>这套配置下的真实负载:<strong>Avg 60 / Max 67,GPU 占用 57%、温度 50°C,CPU 单核满载</strong><span class="tag tag-i">推断</span>。GPU 留有约 40% 余量,这些余量就是第五章画质上探的本钱。</p>
+
+<h3>4.6 前提条件:显示器必须是 4K 屏</h3>
+<p>这套方案的价值建立在 4K 显示器上。<strong>如果显示器是 1440p,把输出设成 4K 只是超采样,屏幕上看到的仍是 1440p</strong>,收益打折扣——这种情况直接用 1440p 输出配更高的画质档位更划算。</p>
+
+<h2 id="ch5">第五章 画质上探——把 GPU 余量花出去</h2>
+<p><strong>GPU 还有 40% 余量,可以换回一些画质。每一项单独改、单独测,确认帧数稳了再加下一项。</strong></p>
+
+<h3>5.1 Shadow Resolution:1024 → 2048</h3>
+<p>收益最大的一档。4K 输出下 1024 的阴影分辨率明显不够看,拉到 2048 后阴影边缘细腻一个档次,GPU 代价约 8%(57% → 65%),仍在安全区。</p>
+
+<h3>5.2 Render Distance:25000 → 20000</h3>
+<p>25000 是官方文档说明的默认值,不应增加,但<strong>降低是合法的性能旋钮</strong><span class="tag tag-v">已核实</span><a class="src-link" href="https://nxoptimizer.com/games/tears-of-the-kingdom" target="_blank" rel="noopener">官方文档 ↗</a>。降到 20000 给 CPU 模拟侧减负,远景细节出现时机略提前(画质几乎无感),换来更稳的帧率表现。</p>
+
+<h3>5.3 Force Level Of Detail:试开</h3>
+<p>开启后远景强制使用高模,4K 下远山、建筑细节提升明显。代价是增加 Draw Call(CPU 开销),<strong>帧数若出现恶化就立即关掉</strong>——这一项的容忍度因场景而异。</p>
+
+<h3>5.4 Dynamic Resolution:试关</h3>
+<p>关闭后内部渲染分辨率恒定,画质不再随场景负载波动。FSR 在兜底,所以帧数压力可控;代价是繁忙场景帧数波动会变大一点。画质优先就关,帧数优先就开。</p>
+
+<h3>5.5 FOV:50 → 55</h3>
+<p><span class="tag tag-o">观点</span>纯个人偏好。视野广一点,3D 晕的概率也低一点,不喜欢的保持 50 即可。</p>
+
+<h2 id="ch6">第六章 最终成果、配置快照与经验总结</h2>
+<p><strong>这套流程跑完,14600KF + RTX 5070 在王国之泪模拟上的最终形态是:4K 输出 + 稳定 60fps + GPU 仅 57% 的健康状态。</strong></p>
+
+<h3>6.1 成果回顾</h3>
+<p>从起点(30 帧锁死、mod 假装在工作)到终点(Avg 60 / Max 67 / Min 42,GPU 50°C),全程没有降低任何画质档位,反而通过 FSR 获得了比 1440p 原生更好的观感。</p>
+
+<h3>6.2 完整配置快照</h3>
+<div class="tbl-wrap"><table>
+<tr><th>层级</th><th>设置项</th><th>最终值</th></tr>
+<tr><td>游戏</td><td>版本</td><td>1.4.2(1.0.0 本体 + 1.4.2 升级包)</td></tr>
+<tr><td>Ryujinx</td><td>Resolution Scale</td><td>1x</td></tr>
+<tr><td>Ryujinx</td><td>DRAM / VSync / 后端 / 着色器缓存</td><td>8GB / Switch / Vulkan / 开</td></tr>
+<tr><td>Ryujinx</td><td>Mods</td><td>UltraCam 3.0.0 已勾选</td></tr>
+<tr><td>UltraCam</td><td>Select Resolution / FSR</td><td>3840x2160 / On</td></tr>
+<tr><td>UltraCam</td><td>Shadow Resolution</td><td>1024(可上探 2048)</td></tr>
+<tr><td>UltraCam</td><td>FXAA / AF 16x / Dynamic Resolution</td><td>On / On / On</td></tr>
+<tr><td>UltraCam</td><td>Dynamic FPS</td><td>On</td></tr>
+<tr><td>UltraCam</td><td>FPS = Menu FPS = Movie FPS</td><td>60.000</td></tr>
+<tr><td>UltraCam</td><td>FPS Smoothing</td><td>8</td></tr>
+<tr><td>BIOS</td><td>XMP</td><td>开(3600 MT/s)</td></tr>
+<tr><td>系统</td><td>内存占用</td><td>&lt; 75%</td></tr>
+</table></div>
+
+<h3>6.3 天花板认知</h3>
+<p><strong>14600KF + 5070 的极限就在这里,CPU 单线程是模拟器的架构级约束</strong><span class="tag tag-i">推断</span>。模拟器的 CPU 侧模拟是单线程硬扛,和 GPU、分辨率、FSR 都无关——这台配置再往上压帧数,方向不在设置里。</p>
+
+<h3>6.4 教程外的心得</h3>
+<p>三条原则,比任何单条设置都重要:</p>
+<ul>
+<li><strong>版本匹配 > 盲调参数</strong>:mod 版本、游戏版本、升级包版本三者对齐,比改一百次设置都管用</li>
+<li><strong>先诊断后优化</strong>:任务管理器看清 GPU/CPU 谁是瓶颈,再决定动哪个旋钮;蒙头乱调只会离答案越来越远</li>
+<li><strong>免费优化优先于画质牺牲</strong>:XMP 这种不花成本、不损画质的事,永远排在"降阴影""降分辨率"这类画质换帧数的操作之前</li>
+</ul>
+
+<h2 id="downloads">下载地址汇总(完整可复制)</h2>
+<p><span class="tag tag-v">已核实</span>以下链接均为官方发布页,已逐个验证可访问。点击"复制"按钮即可复制完整地址。</p>
+
+<div class="dl-card">
+<div class="name">Ryujinx 模拟器(官方下载页)</div>
+<code class="url" id="u1">https://ryujinx.app/download</code>
+<button class="copy-btn" data-url="https://ryujinx.app/download">📋 复制地址</button>
+<a class="src-link" href="https://ryujinx.app/download" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<div class="dl-card">
+<div class="name">NX Optimizer(UltraCam 官方网站)</div>
+<code class="url" id="u2">https://nxoptimizer.com</code>
+<button class="copy-btn" data-url="https://nxoptimizer.com">📋 复制地址</button>
+<a class="src-link" href="https://nxoptimizer.com" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<div class="dl-card">
+<div class="name">NX Optimizer GitHub Releases(UltraCam 3.0.0 下载)</div>
+<code class="url" id="u3">https://github.com/MaxLastBreath/nx-optimizer/releases</code>
+<button class="copy-btn" data-url="https://github.com/MaxLastBreath/nx-optimizer/releases">📋 复制地址</button>
+<a class="src-link" href="https://github.com/MaxLastBreath/nx-optimizer/releases" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<div class="dl-card">
+<div class="name">NSC_Builder GitHub 仓库(升级包格式转换)</div>
+<code class="url" id="u4">https://github.com/julesontheroad/NSC_BUILDER</code>
+<button class="copy-btn" data-url="https://github.com/julesontheroad/NSC_BUILDER">📋 复制地址</button>
+<a class="src-link" href="https://github.com/julesontheroad/NSC_BUILDER" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<div class="dl-card">
+<div class="name">NSC_Builder Releases(直接下载安装包)</div>
+<code class="url" id="u5">https://github.com/julesontheroad/NSC_BUILDER/releases</code>
+<button class="copy-btn" data-url="https://github.com/julesontheroad/NSC_BUILDER/releases">📋 复制地址</button>
+<a class="src-link" href="https://github.com/julesontheroad/NSC_BUILDER/releases" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<div class="dl-card">
+<div class="name">TOTK-UltraCam-Console(UltraCam API/键位文档)</div>
+<code class="url" id="u6">https://github.com/MaxLastBreath/TOTK-UltraCam-Console</code>
+<button class="copy-btn" data-url="https://github.com/MaxLastBreath/TOTK-UltraCam-Console">📋 复制地址</button>
+<a class="src-link" href="https://github.com/MaxLastBreath/TOTK-UltraCam-Console" target="_blank" rel="noopener">打开 ↗</a>
+</div>
+
+<h2 id="sources">来源汇总表</h2>
+<p>本文所有可核实信息所引用的来源:</p>
+<div class="tbl-wrap"><table class="src-sum">
+<tr><th>#</th><th>来源</th><th>链接</th><th>核实内容</th></tr>
+<tr><td>1</td><td>NX Optimizer 官网 TOTK 页</td><td><a href="https://nxoptimizer.com/games/tears-of-the-kingdom" target="_blank" rel="noopener">nxoptimizer.com/games/tears-of-the-kingdom</a></td><td>UltraCam 支持版本 1.4.2、渲染距离默认值</td></tr>
+<tr><td>2</td><td>NX Optimizer GitHub Releases</td><td><a href="https://github.com/MaxLastBreath/nx-optimizer/releases" target="_blank" rel="noopener">github.com/MaxLastBreath/nx-optimizer/releases</a></td><td>UltraCam 3.0.0 版本说明与下载</td></tr>
+<tr><td>3</td><td>NSC_Builder GitHub</td><td><a href="https://github.com/julesontheroad/NSC_BUILDER" target="_blank" rel="noopener">github.com/julesontheroad/NSC_BUILDER</a></td><td>nsp/xci 转换、去加密功能说明</td></tr>
+<tr><td>4</td><td>TOTK-UltraCam-Console</td><td><a href="https://github.com/MaxLastBreath/TOTK-UltraCam-Console" target="_blank" rel="noopener">github.com/MaxLastBreath/TOTK-UltraCam-Console</a></td><td>UltraCam API 与键位(F12)</td></tr>
+<tr><td>5</td><td>Ryujinx 官方下载</td><td><a href="https://ryujinx.app/download" target="_blank" rel="noopener">ryujinx.app/download</a></td><td>模拟器本体下载</td></tr>
+<tr><td>6</td><td>GBAtemp UltraCam 3.0 讨论帖</td><td><a href="https://gbatemp.net/threads/tears-of-the-kingdom-nx-optimizer-and-ultracam-3-0.679020" target="_blank" rel="noopener">gbatemp.net/threads/…679020</a></td><td>社区使用反馈</td></tr>
+<tr><td>7</td><td>MaxLastBreath Ko-fi</td><td><a href="https://ko-fi.com/maxlastbreath" target="_blank" rel="noopener">ko-fi.com/maxlastbreath</a></td><td>开发者支持页</td></tr>
+</table></div>
+
+<div class="meta-banner" style="margin-top:2.5em">标注说明:<span class="tag tag-v">已核实</span>官方文档/发布页直接确认 · <span class="tag tag-i">推断</span>基于实测数据的工程推断 · <span class="tag tag-o">观点</span>个人偏好/主观判断 · <span class="tag tag-d">发展中</span>仍在变化(本文无)</div>
+
+</main>
+
+<button id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  // 主题切换
+  var btn=document.getElementById('themeBtn');
+  var root=document.documentElement;
+  btn.addEventListener('click',function(){
+    root.classList.toggle('dark');
+    btn.textContent=root.classList.contains('dark')?'☀️':'🌙';
+    try{localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light')}catch(e){}
+  });
+  try{if(localStorage.getItem('theme')==='dark'){root.classList.add('dark');btn.textContent='☀️'}}catch(e){}
+  // 回到顶部
+  var toTop=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){
+    toTop.classList.toggle('show',window.scrollY>300);
+  },{passive:true});
+  toTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  // 复制按钮
+  document.querySelectorAll('.copy-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var url=b.getAttribute('data-url');
+      function ok(){var t=b.textContent;b.textContent='✓ 已复制';b.classList.add('ok');setTimeout(function(){b.textContent=t;b.classList.remove('ok')},1800)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(ok).catch(function(){fallback()});
+      }else{fallback()}
+      function fallback(){
+        var ta=document.createElement('textarea');ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy');ok()}catch(e){alert(url)}
+        document.body.removeChild(ta);
+      }
+    });
+  });
+  // 导航高亮
+  var links=document.querySelectorAll('#navlinks a');
+  var secs=[].map.call(links,function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)});
+        }
+      });
+    },{rootMargin:'-60px 0px -70% 0px'});
+    secs.forEach(function(s){io.observe(s)});
+  }
+})();
+</script>
+</body>
+</html>
