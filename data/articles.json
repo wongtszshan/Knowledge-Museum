@@ -657,5 +657,30 @@
     "updated": "2026-11-10",
     "featured": false,
     "type": "html"
+  },
+  {
+    "id": "ryujinx-totk",
+    "title": "王国之泪 4K 60fps 模拟优化全记录",
+    "subtitle": "Ryujinx 模拟器、UltraCam、XMP 与 FSR 画质性能调优",
+    "file": "ryujinx-totk.html",
+    "categories": [
+      "gaming-tech"
+    ],
+    "tags": [
+      "塞尔达传说",
+      "王国之泪",
+      "Ryujinx",
+      "模拟器",
+      "4K",
+      "60fps",
+      "FSR",
+      "UltraCam",
+      "性能优化"
+    ],
+    "summary": "记录《塞尔达传说：王国之泪》模拟运行的配置与优化过程，包括升级包、帧率模组、内存 XMP、FSR 和画质调校。",
+    "created": "2026-11-10",
+    "updated": "2026-11-10",
+    "featured": false,
+    "type": "html"
   }
 ]
