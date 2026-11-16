@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v11-sitewide-i18n';
+const CACHE_NAME = 'knowledge-museum-shell-v12-sitewide-i18n';
 const CORE = [
   './',
   './index.html',
