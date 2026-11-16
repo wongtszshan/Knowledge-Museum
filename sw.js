@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v6-mobile-spacing';
+const CACHE_NAME = 'knowledge-museum-shell-v7-yellow-pages';
 const CORE = [
   './',
   './index.html',
@@ -6,6 +6,8 @@ const CORE = [
   './pdf-viewer.html',
   './category.html',
   './archive.html',
+  './yellow-pages.html',
+  './data/yellow-pages.json',
   './assets/css/app.css?v=20261116-museum-r2',
   './assets/js/app.js?v=20261116-museum-r2',
   './manifest.webmanifest',
