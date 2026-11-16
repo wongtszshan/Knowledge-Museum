@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v14-yellow-pages-cleanup';
+const CACHE_NAME = 'knowledge-museum-shell-v15-audited-sites';
 const CORE = [
   './',
   './index.html',
