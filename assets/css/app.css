@@ -249,7 +249,7 @@ footer{font-size:11px;letter-spacing:.075em}
  .topbar{height:68px}.brand{font-size:17px}
  .hero.museum-home-hero{min-height:330px;margin-top:14px;grid-template-columns:1fr;padding:42px 32px}
  .museum-mark{display:none}
- .home-search-wrap{margin-top:-18px;margin-left:12px;margin-right:12px}
+ .home-search-wrap{margin-top:16px;margin-left:0;margin-right:0}
  .home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
  .home-category-card{min-height:145px}
  #featuredList{grid-template-columns:1fr 1fr}
@@ -268,7 +268,7 @@ footer{font-size:11px;letter-spacing:.075em}
  .museum-home-hero p{font-size:13px;line-height:1.8;margin-top:20px}
  .museum-home-hero .kicker{font-size:9px;margin-bottom:20px}
  .museum-home-hero::after{font-size:8px;right:23px;bottom:17px}
- .home-search-wrap{margin:-20px 10px 0;padding:12px 15px}
+ .home-search-wrap{margin:14px 0 0;padding:12px 15px}
  .home-search-label{font-size:9px;letter-spacing:.13em}
  .home-search-row{flex-direction:row;align-items:center;gap:7px}
  .home-search{font-size:13px;padding:10px 0;min-width:0;flex:1}
