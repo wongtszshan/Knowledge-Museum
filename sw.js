@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v4';
+const CACHE_NAME = 'knowledge-museum-shell-v5-editorial';
 const CORE = [
   './',
   './index.html',
@@ -6,8 +6,8 @@ const CORE = [
   './pdf-viewer.html',
   './category.html',
   './archive.html',
-  './assets/css/app.css?v=20261005-5',
-  './assets/js/app.js?v=20261005-5',
+  './assets/css/app.css?v=20261116-museum',
+  './assets/js/app.js?v=20261116-museum',
   './manifest.webmanifest',
   './assets/icons/app-icon-1024.png',
   './assets/splash/background.png',
