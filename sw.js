@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v7-yellow-pages';
+const CACHE_NAME = 'knowledge-museum-shell-v8-yellow-pages-navigation';
 const CORE = [
   './',
   './index.html',
