@@ -314,3 +314,35 @@ footer{font-size:11px;letter-spacing:.075em}
 /* Responsive bilingual section labels */
 .section-head h2 .heading-english{font:400 12px/1.4 Inter,"Noto Sans SC",sans-serif;color:#987c5b;letter-spacing:.05em;vertical-align:middle;margin-left:6px}
 @media(max-width:600px){.section-head h2 .heading-english{display:block;margin:4px 0 0;font-size:10px}}
+
+
+/* Shared 3-language switch: navigation and reader toolbars */
+.km-language-switch{display:inline-flex;gap:3px;align-items:center;padding:3px;border:1px solid rgba(98,135,123,.23);border-radius:99px;background:rgba(233,242,236,.94);flex:0 0 auto}
+.km-language-switch button{font:750 11px/1.25 Inter,system-ui,-apple-system,sans-serif;border:0;border-radius:99px;padding:8px 10px;min-width:34px;min-height:32px;color:#45645e;background:transparent;cursor:pointer}
+.km-language-switch button.active{background:#1a665b;color:white;box-shadow:0 2px 7px #15463e26}
+.km-language-switch button:focus-visible{outline:2px solid #15a69b;outline-offset:2px}
+.viewer-right,.pdf-viewer-actions{display:flex;align-items:center;gap:8px}
+.viewer-right .km-language-switch,.pdf-viewer-actions .km-language-switch{background:#e7ebe9}
+.top-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:nowrap;gap:7px;min-width:0}
+.museum-home-hero h1[data-i18n]{white-space:pre-line}
+.museum-home-hero p[data-i18n]{white-space:pre-line}
+@media(max-width:700px){
+ .topbar{gap:7px}
+ .topbar .brand{min-width:0;flex:0 1 auto}
+ .topbar .top-actions{gap:5px;flex:0 0 auto}
+ .topbar .top-actions .icon-btn{font-size:11px;white-space:nowrap;padding:8px 9px}
+ .topbar .km-language-switch{padding:2px}
+ .topbar .km-language-switch button{padding:7px;min-width:30px;min-height:30px}
+ .viewer-bar,.pdf-viewer-bar{gap:6px}
+ .viewer-right,.pdf-viewer-actions{gap:5px}
+ .viewer-right .km-language-switch button,.pdf-viewer-actions .km-language-switch button{padding:6px;min-width:28px;min-height:30px}
+}
+@media(max-width:400px){
+ .topbar .brand{font-size:11px;letter-spacing:0}
+ .topbar .brand small{display:none}
+ .topbar .top-actions .icon-btn{font-size:10px;padding:7px}
+ .topbar .km-language-switch button{min-width:28px;padding:7px 5px}
+ .viewer-left .viewer-btn,.pdf-viewer-left .pdf-viewer-btn,.viewer-right .viewer-btn,.pdf-viewer-actions .pdf-viewer-btn{font-size:10px;padding:7px}
+ .viewer-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
+ .pdf-viewer-title{min-width:0;max-width:35vw;overflow:hidden;text-overflow:ellipsis}
+}
