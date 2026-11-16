@@ -32,13 +32,13 @@
 <script>
 (() => {
 const by=id=>document.getElementById(id);
-let all=[],current="全部领域",sub="全部",count=24,query="";
+let all=[],current="全部领域",sub="全部",count=24,query="",restoreY=0;
 const symbols=["✺","◈","✦","◎","✳","◉","⌘","✿","◌","◆","✧","◐","⌁","⬡","◍","❖","✵","♧","◬","✴","◓"];
 const nice=s=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const safely=url=>/^https?:\/\//i.test(url||"")?url:"#";
 const domains=url=>{try{return new URL(url).hostname.replace(/^www\./,"")}catch{return "web resource"}};
 const key="km-yellow-pages-state-v1";
-try {let saved=JSON.parse(sessionStorage.getItem(key)||"{}");current=saved.current||current;sub=saved.sub||sub;query=saved.query||"";by("q").value=query;if(saved.scroll)history.scrollRestoration="manual"}catch{}
+try {let saved=JSON.parse(sessionStorage.getItem(key)||"{}");current=saved.current||current;sub=saved.sub||sub;query=saved.query||"";by("q").value=query;if(saved.scroll){restoreY=saved.scroll;history.scrollRestoration="manual"}}catch{}
 function persist(){try{sessionStorage.setItem(key,JSON.stringify({current,sub,query,scroll:window.scrollY}))}catch{}}
 function cats(){return [...new Set(all.map(x=>x.c))].map(name=>({name,items:all.filter(x=>x.c===name)})).sort((a,b)=>b.items.length-a.items.length)}
 function choose(name){current=name;sub="全部";count=24;persist();render();by("results").scrollIntoView({behavior:"smooth",block:"start"})}
@@ -65,6 +65,6 @@ by("sort").addEventListener("change",()=>{count=24;renderList()});by("clear").ad
 by("more").addEventListener("click",()=>{count+=24;renderList()});
 document.querySelectorAll("[data-query]").forEach(b=>b.addEventListener("click",()=>{query=b.dataset.query;by("q").value=query;current="全部领域";sub="全部";persist();render();by("results").scrollIntoView({behavior:"smooth"})}));
 addEventListener("pagehide",persist);
-fetch("data/yellow-pages.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(r=>{all=(r.sites||[]).filter(x=>/^https?:\/\//i.test(x.u));by("totalHero").textContent=all.length.toLocaleString("zh-CN");if(current!=="全部领域"&&!all.some(x=>x.c===current))current="全部领域";render();}).catch(e=>{by("resultCount").textContent="加载失败，请检查网络并刷新重试";by("sites").innerHTML='<div class="empty">暂时无法载入黄页数据。请稍后重试。</div>';console.error(e)});
+fetch("data/yellow-pages.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(r=>{all=(r.sites||[]).filter(x=>/^https?:\/\//i.test(x.u));by("totalHero").textContent=all.length.toLocaleString("zh-CN");if(current!=="全部领域"&&!all.some(x=>x.c===current))current="全部领域";render();if(restoreY)requestAnimationFrame(()=>window.scrollTo(0,restoreY));}).catch(e=>{by("resultCount").textContent="加载失败，请检查网络并刷新重试";by("sites").innerHTML='<div class="empty">暂时无法载入黄页数据。请稍后重试。</div>';console.error(e)});
 })();
 </script></body></html>
