@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
   <link rel="apple-touch-startup-image" href="assets/splash/startup-image.png">
   <link rel="icon" type="image/png" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css?v=20261116-museum-r2">
+  <link rel="stylesheet" href="assets/css/app.css?v=20261116-museum-i18n">
   <style>
     #app-splash{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#f7f3ea url('assets/splash/background.png') center/cover no-repeat;opacity:1;visibility:visible;transition:opacity .38s ease,visibility .38s ease}
     #app-splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -28,77 +28,77 @@
   <div class="shell">
     <header class="topbar">
       <a class="brand" href="index.html">KNOWLEDGE MUSEUM<small>PERSONAL ARCHIVE</small></a>
-      <div class="top-actions"><a class="icon-btn yellow-pages-toplink" href="yellow-pages.html" aria-label="进入知识黄页">✦ 知识黄页</a><a class="icon-btn" href="archive.html">全部馆藏</a><button class="icon-btn" id="randomBtn">随机漫游 ↗</button></div>
+      <div class="top-actions"><a class="icon-btn yellow-pages-toplink" href="yellow-pages.html" aria-label="进入知识黄页">✦ 知识黄页</a><a class="icon-btn" href="archive.html" data-i18n="archive">全部馆藏</a><button class="icon-btn" id="randomBtn" data-i18n="random">随机漫游 ↗</button></div>
     </header>
 
     <main>
       <section class="hero museum-home-hero">
         <div>
-          <div class="kicker">A personal collection of ideas · 私人知识博物馆</div>
-          <h1>知识，自有其<br>收藏的价值。</h1>
-          <p>一座关于好奇心、发现与思考的私人博物馆。<br>收藏值得反复阅读的知识，探索不同领域的精彩。</p>
+          <div class="kicker" data-i18n="homeKicker">A personal collection of ideas · 私人知识博物馆</div>
+          <h1 data-i18n="heroTitle">知识，自有其<br>收藏的价值。</h1>
+          <p data-i18n="heroDesc">一座关于好奇心、发现与思考的私人博物馆。<br>收藏值得反复阅读的知识，探索不同领域的精彩。</p>
         </div>
         <div class="museum-mark">M</div>
       </section>
 
       <section class="home-search-wrap">
-        <label class="home-search-label" for="homeSearch">SEARCH THE MUSEUM</label>
+        <label class="home-search-label" for="homeSearch" data-i18n="searchLabel">SEARCH THE MUSEUM</label>
         <div class="home-search-row">
-          <input class="search home-search" id="homeSearch" placeholder="探索标题、主题或关键词…">
-          <button class="icon-btn" id="homeSearchBtn">搜索</button>
+          <input class="search home-search" id="homeSearch" data-i18n-placeholder="homeSearch" placeholder="探索标题、主题或关键词…">
+          <button class="icon-btn" id="homeSearchBtn" data-i18n="search">搜索</button>
         </div>
       </section>
 
       <section class="section compact-section collections-section">
         <div class="section-head">
           <div>
-            <h2>探索展厅 <span class="heading-english">/ Collections</span></h2>
-            <span>选择一个展厅</span>
+            <h2><span data-i18n="collections">探索展厅</span> <span class="heading-english">/ Collections</span></h2>
+            <span data-i18n="chooseCollection">选择一个展厅</span>
           </div>
-          <button class="section-link-btn" id="allCollectionsBtn">全部分类 →</button>
+          <button class="section-link-btn" id="allCollectionsBtn" data-i18n="allCategories">全部分类 →</button>
         </div>
         <div class="category-grid home-category-grid" id="categoryGrid"></div>
       </section>
 
       <section class="section compact-section">
-        <div class="section-head"><h2>最近新增 <span class="heading-english">/ Recently Added</span></h2><span>最近新增 · 最多 6 篇</span></div>
+        <div class="section-head"><h2><span data-i18n="recent">最近新增</span> <span class="heading-english">/ Recently Added</span></h2><span data-i18n="recentNote">最近新增 · 最多 6 篇</span></div>
         <div class="article-list" id="recentList"></div>
       </section>
 
       <section class="section compact-section">
-        <div class="section-head"><h2>馆藏精选 <span class="heading-english">/ Featured</span></h2><span>精选馆藏 · 最多 6 篇</span></div>
+        <div class="section-head"><h2><span data-i18n="featured">馆藏精选</span> <span class="heading-english">/ Featured</span></h2><span data-i18n="featuredNote">精选馆藏 · 最多 6 篇</span></div>
         <div class="article-list" id="featuredList"></div>
       </section>
 
       <section class="museum-cta">
         <div>
           <div class="kicker">Explore everything</div>
-          <h2>走进完整馆藏</h2>
-          <p>继续探索每一份值得收藏的知识与研究。</p>
+          <h2 data-i18n="exploreAll">走进完整馆藏</h2>
+          <p data-i18n="exploreDesc">继续探索每一份值得收藏的知识与研究。</p>
         </div>
-        <a class="archive-link" href="archive.html">浏览全部馆藏 →</a>
+        <a class="archive-link" href="archive.html" data-i18n="browseAll">浏览全部馆藏 →</a>
       </section>
     </main>
 
-    <footer>KNOWLEDGE MUSEUM · Curated by you · GitHub Pages ready</footer>
+    <footer data-i18n="indexFooter">KNOWLEDGE MUSEUM · Curated by you · GitHub Pages ready</footer>
   </div>
 
   <div class="collections-modal" id="collectionsModal" aria-hidden="true">
-    <button class="collections-backdrop" id="collectionsBackdrop" aria-label="关闭全部分类"></button>
+    <button class="collections-backdrop" id="collectionsBackdrop" data-i18n-aria="close" aria-label="关闭全部分类"></button>
     <section class="collections-panel" role="dialog" aria-modal="true" aria-labelledby="collectionsPanelTitle">
       <div class="collections-panel-head">
         <div>
           <div class="kicker">All Collections</div>
-          <h2 id="collectionsPanelTitle">全部分类</h2>
+          <h2 id="collectionsPanelTitle" data-i18n="allCollections">全部分类</h2>
         </div>
-        <button class="collections-close" id="collectionsClose" aria-label="关闭">×</button>
+        <button class="collections-close" id="collectionsClose" data-i18n-aria="close" aria-label="关闭">×</button>
       </div>
-      <input class="search collections-search" id="collectionsSearch" placeholder="搜索分类…">
+      <input class="search collections-search" id="collectionsSearch" data-i18n-placeholder="searchCollections" placeholder="搜索分类…">
       <div class="collections-list" id="collectionsList"></div>
     </section>
   </div>
 
-  <script src="assets/js/app.js?v=20261116-museum-r2"></script>
+  <script defer src="assets/js/i18n.js?v=20261116-1"></script><script defer src="assets/js/app.js?v=20261116-museum-i18n"></script>
   <script>
     (()=>{const s=document.getElementById('app-splash');const hide=()=>{if(!s)return;s.classList.add('is-hidden');setTimeout(()=>s.remove(),450)};if(sessionStorage.getItem('km-splash-shown'))s?.remove();else{sessionStorage.setItem('km-splash-shown','1');addEventListener('load',()=>setTimeout(hide,650),{once:true});setTimeout(hide,1800)}})();
     if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
