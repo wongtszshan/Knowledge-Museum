@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v12-sitewide-i18n';
+const CACHE_NAME = 'knowledge-museum-shell-v13-home-search-spacing';
 const CORE = [
   './',
   './index.html',
@@ -8,7 +8,7 @@ const CORE = [
   './archive.html',
   './yellow-pages.html',
   './data/yellow-pages.json',
-  './assets/css/app.css?v=20261116-museum-i18n',
+  './assets/css/app.css?v=20261116-search-spacing-fix',
   './assets/js/i18n.js?v=20261116-1',
   './assets/js/app.js?v=20261116-museum-i18n',
   './manifest.webmanifest',
