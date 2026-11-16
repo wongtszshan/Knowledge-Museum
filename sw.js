@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v10-yellow-pages-i18n';
+const CACHE_NAME = 'knowledge-museum-shell-v11-sitewide-i18n';
 const CORE = [
   './',
   './index.html',
@@ -8,8 +8,9 @@ const CORE = [
   './archive.html',
   './yellow-pages.html',
   './data/yellow-pages.json',
-  './assets/css/app.css?v=20261116-museum-r2',
-  './assets/js/app.js?v=20261116-museum-r2',
+  './assets/css/app.css?v=20261116-museum-i18n',
+  './assets/js/i18n.js?v=20261116-1',
+  './assets/js/app.js?v=20261116-museum-i18n',
   './manifest.webmanifest',
   './assets/icons/app-icon-1024.png',
   './assets/splash/background.png',
@@ -82,6 +83,7 @@ self.addEventListener('fetch', event => {
 
   if (
     url.pathname.endsWith('/assets/js/app.js') ||
+    url.pathname.endsWith('/assets/js/i18n.js') ||
     url.pathname.endsWith('/assets/css/app.css') ||
     url.pathname.endsWith('/manifest.webmanifest')
   ) {
