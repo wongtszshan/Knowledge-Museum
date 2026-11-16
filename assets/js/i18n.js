@@ -84,7 +84,7 @@ try{const stored=localStorage.getItem(KEY);if(LANGS.includes(stored))current=sto
 function t(key){return original[current][key]||original["zh-CN"][key]||key}
 function categoryName(c){if(!c)return "";const e=categories[c.id];if(current==="en")return e?.en||c.nameEn||c.name;if(current==="zh-TW")return e?.trad||c.name;return c.name}
 function categoryDescription(c){if(!c)return "";const e=categories[c.id];if(current==="en")return e?.descriptionEn||c.description||"";if(current==="zh-TW")return e?.descriptionTrad||c.description||"";return c.description||""}
-function categorySubname(c){if(!c)return "";return current==="en"?(c.name||""):current==="zh-TW"?(categories[c.id]?.trad||c.name):(c.nameEn||"")}
+function categorySubname(c){if(!c)return "";return current==="en"?(c.name||""):(c.nameEn||"")}
 function apply(){
  document.documentElement.lang=current;
  document.querySelectorAll("[data-i18n]").forEach(el=>{const value=t(el.dataset.i18n);if(el.dataset.i18n==="heroTitle"||el.dataset.i18n==="heroDesc")el.textContent=value;else el.textContent=value;});
