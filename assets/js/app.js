@@ -93,7 +93,7 @@ function renderHome(){
   const categoryCount=c=>state.articles.filter(a=>(a.categories||[]).includes(c.id)).length;
   const tintById={history:'#eee1d1',science:'#dcebe7',nature:'#e3ecdb',finance:'#e9e3d1','museum-guides':'#ece1d4',coffee:'#eee1d6','gaming-tech':'#e2e6f1'};
   const symbolById={history:'H',science:'S',nature:'N',finance:'F','museum-guides':'M',coffee:'C','gaming-tech':'G'};
-  const homeCard=(c,i)=>`<a class="category home-category-card" style="--category-accent:${c.accent||'#193d36'};--category-tint:${tintById[c.id]||'#eee8de'}" data-symbol="${symbolById[c.id]||'K'}" href="${categoryUrl(c.id)}">`
+  const homeCard=(c,i)=>`<a class="category home-category-card" style="--category-accent:${c.accent||'#193d36'};--category-tint:${tintById[c.id]||'#eee8de'}" data-symbol="${symbolById[c.id]||'K'}" href="${categoryUrl(c.id)}">
     <div class="num">${String(i+1).padStart(2,'0')} · ${categoryCount(c)} EXHIBITS</div>
     <h3>${c.name}</h3>
     <p>${c.nameEn}</p>
