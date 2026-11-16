@@ -1,4 +1,4 @@
-const CACHE_NAME = 'knowledge-museum-shell-v13-home-search-spacing';
+const CACHE_NAME = 'knowledge-museum-shell-v14-yellow-pages-cleanup';
 const CORE = [
   './',
   './index.html',
