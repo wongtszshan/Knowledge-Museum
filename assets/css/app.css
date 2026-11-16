@@ -346,3 +346,11 @@ footer{font-size:11px;letter-spacing:.075em}
  .viewer-title{min-width:0;overflow:hidden;text-overflow:ellipsis}
  .pdf-viewer-title{min-width:0;max-width:35vw;overflow:hidden;text-overflow:ellipsis}
 }
+
+/* Keep museum navigation usable after adding the shared switch on narrow phones. */
+@media(max-width:560px){
+ body:not(.viewer-body):not(.pdf-viewer-body) .topbar{height:auto;min-height:83px;flex-wrap:wrap;align-content:center;align-items:center;row-gap:7px;padding:9px 0 10px}
+ body:not(.viewer-body):not(.pdf-viewer-body) .topbar .brand{flex:0 0 100%;width:100%;line-height:1.2}
+ body:not(.viewer-body):not(.pdf-viewer-body) .topbar .top-actions{width:100%;flex:1 1 100%;justify-content:flex-end;flex-wrap:wrap}
+ body:not(.viewer-body):not(.pdf-viewer-body) .topbar .top-actions .km-language-switch{margin-right:auto}
+}
