@@ -7,22 +7,23 @@
   <title>PDF · Knowledge Museum</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css?v=20261005-5">
+  <link rel="stylesheet" href="assets/css/app.css?v=20261116-museum-i18n">
+  <script defer src="assets/js/i18n.js?v=20261116-1"></script>
 </head>
 <body class="pdf-viewer-body">
   <header class="pdf-viewer-bar">
     <div class="pdf-viewer-left">
-      <button class="pdf-viewer-btn" id="backBtn">← 返回</button>
+      <button class="pdf-viewer-btn" id="backBtn" data-i18n="back">← 返回</button>
       <a class="pdf-viewer-btn" href="index.html">Museum</a>
       <span class="pdf-viewer-title" id="pdfTitle">PDF</span>
     </div>
     <div class="pdf-viewer-actions">
-      <a class="pdf-viewer-btn" id="openPdf" href="#" target="_blank" rel="noopener">原始 PDF ↗</a>
+      <a class="pdf-viewer-btn" id="openPdf" href="#" target="_blank" rel="noopener" data-i18n="originalPdf">原始 PDF ↗</a>
     </div>
   </header>
 
   <main class="pdf-stage">
-    <div class="pdf-fallback" id="pdfFallback">正在载入 PDF…</div>
+    <div class="pdf-fallback" id="pdfFallback" data-i18n="loadingPdf">正在载入 PDF…</div>
     <iframe class="pdf-frame" id="pdfFrame" title="PDF 阅读器"></iframe>
   </main>
 
@@ -33,6 +34,7 @@
     const frame=document.getElementById('pdfFrame');
     const fallback=document.getElementById('pdfFallback');
     const openPdf=document.getElementById('openPdf');
+    document.addEventListener('km-language-change',()=>{if(fallback.style.display!=='none'&&!frame.src)fallback.textContent=KM_I18N.t('loadingPdf')});
 
     document.getElementById('backBtn').addEventListener('click',()=>{
       if(history.length>1) history.back();
@@ -55,12 +57,12 @@
         frame.addEventListener('load',()=>{fallback.style.display='none'},{once:true});
         setTimeout(()=>{
           if(fallback.style.display!=='none'){
-            fallback.innerHTML='如果当前设备没有内嵌显示 PDF，<a href="'+openPdf.href+'" target="_blank">点这里打开原始 PDF</a>。';
+            fallback.innerHTML=KM_I18N.t('pdfFallbackPrefix')+'<a href="'+openPdf.href+'" target="_blank" rel="noopener">'+KM_I18N.t('pdfFallbackLink')+'</a>。';
           }
         },2500);
       })
       .catch(()=>{
-        fallback.innerHTML='找不到这份 PDF。<br><a href="index.html">返回 Knowledge Museum</a>';
+        fallback.innerHTML=KM_I18N.t('pdfMissing')+'<br><a href="index.html">'+KM_I18N.t('backMuseum')+'</a>';
         openPdf.style.display='none';
       });
   </script>
