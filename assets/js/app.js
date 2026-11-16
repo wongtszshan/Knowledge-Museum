@@ -1,4 +1,11 @@
 const state={articles:[],categories:[]};
+const km=()=>window.KM_I18N;
+const tr=k=>km()?.t(k)||k;
+const catName=c=>km()?.categoryName(c)||c?.name||"";
+const catDescription=c=>km()?.categoryDescription(c)||c?.description||"";
+const catSubtitle=c=>km()?.categorySubname(c)||c?.nameEn||"";
+let museumRefresh=null;
+document.addEventListener("km-language-change",()=>{if(typeof museumRefresh==="function")museumRefresh()});
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 
@@ -34,7 +41,7 @@ function articleRow(a,i=0){
 }
 function articleCard(a,i=0){
   const accent=state.categories.find(c=>(a.categories||[]).includes(c.id))?.accent||'#193d36';
-  const catNames=(a.categories||[]).map(id=>state.categories.find(c=>c.id===id)?.nameEn||id).join(' · ');
+  const catNames=(a.categories||[]).map(id=>{const c=state.categories.find(c=>c.id===id);return c?catName(c):id}).join(' · ');
   return `<a class="exhibit-card" style="--exhibit-accent:${accent}" href="${articleUrl(a)}">
     <div class="exhibit-card-top">
       <span class="exhibit-no">${String(i+1).padStart(2,'0')}</span>
@@ -47,7 +54,8 @@ function articleCard(a,i=0){
     <div class="exhibit-date">${a.updated||a.created||''}</div>
   </a>`;
 }
-function renderRows(target,items,empty='没有找到匹配的展品。'){
+function renderRows(target,items,empty){
+  empty=empty||tr('noExhibits');
   const el=$(target);
   if(!el)return;
   const mode=el.dataset.view||'list';
@@ -94,9 +102,9 @@ function renderHome(){
   const tintById={history:'#eee1d1',science:'#dcebe7',nature:'#e3ecdb',finance:'#e9e3d1','museum-guides':'#ece1d4',coffee:'#eee1d6','gaming-tech':'#e2e6f1'};
   const symbolById={history:'H',science:'S',nature:'N',finance:'F','museum-guides':'M',coffee:'C','gaming-tech':'G'};
   const homeCard=(c,i)=>`<a class="category home-category-card" style="--category-accent:${c.accent||'#193d36'};--category-tint:${tintById[c.id]||'#eee8de'}" data-symbol="${symbolById[c.id]||'K'}" href="${categoryUrl(c.id)}">
-    <div class="num">${String(i+1).padStart(2,'0')} · ${categoryCount(c)} EXHIBITS</div>
-    <h3>${c.name}</h3>
-    <p>${c.nameEn}</p>
+    <div class="num">${String(i+1).padStart(2,'0')} · ${categoryCount(c)} ${tr("exhibitsCard")}</div>
+    <h3>${catName(c)}</h3>
+    <p>${catSubtitle(c)}</p>
   </a>`;
 
   if(grid){
@@ -111,17 +119,17 @@ function renderHome(){
     if(!list)return;
     const q=(modalSearch?.value||'').trim().toLowerCase();
     const filtered=cats.filter(c=>
-      !q || [c.name,c.nameEn,c.description,c.id].join(' ').toLowerCase().includes(q)
+      !q || [c.name,c.nameEn,c.description,catName(c),catDescription(c),c.id].join(' ').toLowerCase().includes(q)
     );
     list.innerHTML=filtered.length
       ? filtered.map(c=>`<a class="collection-list-item" href="${categoryUrl(c.id)}">
           <div>
-            <strong>${c.name}</strong>
-            <span>${c.nameEn}</span>
+            <strong>${catName(c)}</strong>
+            <span>${catSubtitle(c)}</span>
           </div>
           <em>${categoryCount(c)}</em>
         </a>`).join('')
-      : '<div class="empty">没有找到匹配的分类。</div>';
+      : `<div class="empty">${tr('noCategories')}</div>`;
   };
 
   const openCollections=()=>{
@@ -146,7 +154,8 @@ function renderHome(){
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal?.classList.contains('open'))closeCollections()});
 
   renderRows('#recentList',sortRecent(state.articles).slice(0,6));
-  renderRows('#featuredList',state.articles.filter(a=>a.featured).slice(0,6),'暂时还没有精选展品。');
+  renderRows('#featuredList',state.articles.filter(a=>a.featured).slice(0,6),tr('noFeatured'));
+  museumRefresh=()=>{if(grid)grid.innerHTML=cats.slice(0,6).map(homeCard).join('');renderAllCollections();renderRows('#recentList',sortRecent(state.articles).slice(0,6));renderRows('#featuredList',state.articles.filter(a=>a.featured).slice(0,6),tr('noFeatured'));};
 
   const search=$('#homeSearch');
   const go=()=>{
@@ -162,16 +171,16 @@ function renderCategory(){
   const id=new URLSearchParams(location.search).get('id');
   const cat=state.categories.find(c=>c.id===id);
   if(!cat){
-    $('#categoryTitle').textContent='找不到这个展厅';
-    $('#categoryDesc').textContent='分类可能已被删除或链接不正确。';
+    $('#categoryTitle').textContent=tr('missingCategory');
+    $('#categoryDesc').textContent=tr('missingCategoryDesc');
     return;
   }
-  document.title=`${cat.name} · Knowledge Museum`;
-  $('#categoryKicker').textContent=cat.nameEn||'Collection';
-  $('#categoryTitle').textContent=cat.name;
-  $('#categoryDesc').textContent=cat.description||'';
+  document.title=`${catName(cat)} · Knowledge Museum`;
+  $('#categoryKicker').textContent=catSubtitle(cat)||tr('category.legacy');
+  $('#categoryTitle').textContent=catName(cat);
+  $('#categoryDesc').textContent=catDescription(cat);
   const all=state.articles.filter(a=>(a.categories||[]).includes(id));
-  $('#categoryCount').textContent=`${all.length} Exhibits`;
+  $('#categoryCount').textContent=`${all.length} ${tr('exhibits')}`;
   const input=$('#categorySearch');
   const target=$('#categoryArticleList');
   setupViewToggle('#categoryArticleList');
@@ -183,6 +192,7 @@ function renderCategory(){
   input.addEventListener('input',update);
   $$('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   update();
+  museumRefresh=()=>{document.title=`${catName(cat)} · Knowledge Museum`;$('#categoryKicker').textContent=catSubtitle(cat)||tr('category.legacy');$('#categoryTitle').textContent=catName(cat);$('#categoryDesc').textContent=catDescription(cat);$('#categoryCount').textContent=`${all.length} ${tr('exhibits')}`;update();};
 }
 
 function renderArchive(){
@@ -195,8 +205,8 @@ function renderArchive(){
   const filters=$('#archiveFilters');
   const cats=[...state.categories].sort((a,b)=>(a.order||999)-(b.order||999));
   filters.innerHTML=
-    `<button class="chip active" data-filter="all">全部</button>`+
-    cats.map(c=>`<button class="chip" data-filter="${c.id}">${c.name}</button>`).join('');
+    `<button class="chip active" data-filter="all">${tr("all")}</button>`+
+    cats.map(c=>`<button class="chip" data-filter="${c.id}">${catName(c)}</button>`).join('');
 
   setupViewToggle('#archiveList');
   const update=()=>{
@@ -205,7 +215,7 @@ function renderArchive(){
       (active==='all'||(a.categories||[]).includes(active)) &&
       (!q||searchableText(a).includes(q))
     );
-    $('#archiveCount').textContent=`${items.length} / ${state.articles.length} Exhibits`;
+    $('#archiveCount').textContent=`${items.length} / ${state.articles.length} ${tr('exhibits')}`;
     renderRows('#archiveList',items);
   };
 
@@ -218,6 +228,7 @@ function renderArchive(){
   $$('.view-btn').forEach(btn=>btn.addEventListener('click',update));
   bindRandom();
   update();
+  museumRefresh=()=>{filters.querySelectorAll('.chip').forEach(btn=>{const cat=cats.find(c=>c.id===btn.dataset.filter);btn.textContent=btn.dataset.filter==='all'?tr('all'):cat?catName(cat):btn.textContent});update()};
 }
 
 async function init(){
@@ -232,7 +243,7 @@ async function init(){
     else if(page==='archive')renderArchive();
   }catch(e){
     const target=$('#recentList')||$('#categoryArticleList')||$('#archiveList');
-    if(target)target.innerHTML='<div class="empty">目录加载失败，请通过 GitHub Pages 访问，而不是直接双击本地文件。</div>';
+    if(target)target.innerHTML=`<div class="empty">${tr('loadError')}</div>`;
   }
 }
 init();
