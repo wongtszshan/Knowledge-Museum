@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#faf8f4">
+<title>情绪和理性，在大脑的哪里相遇？｜科普</title>
+<meta name="description" content="科普：杏仁核、VMPFC、海马、伏隔核如何连接情绪与理性；快路与慢路、恐惧消退、多巴胺与“想要”，以及边缘系统概念之争。">
+<style>
+:root{
+  --bg:#faf8f4;
+  --paper:#ffffff;
+  --ink:#1d1b18;
+  --ink-2:#45413b;
+  --muted:#857e74;
+  --rule:#e6e0d6;
+  --rule-strong:#1d1b18;
+  --accent:#a8132b;
+  --accent-tint:#f5e6e4;
+  --sand:#f2ede4;
+  --rose:#f7ecea;
+  --ochre:#f6efdf;
+  --c-src:#3b3833; --c-src-bg:#ebe7df;
+  --c-ver:#9b1a2e; --c-ver-bg:#f6e3e3;
+  --c-inf:#8a5a00; --c-inf-bg:#f5ecd6;
+  --c-dev:#5c3f8a; --c-dev-bg:#ece5f5;
+  --svg-box:#ffffff;
+  --svg-line:#3a3733;
+  --fs-body:clamp(18px, calc(14px + 0.85vw), 26px);
+  --fs-sm:clamp(14px, calc(11.5px + 0.5vw), 19px);
+  --fs-xs:clamp(12px, calc(10.5px + 0.35vw), 16px);
+  --fs-h1:clamp(26px, calc(18px + 1.5vw), 42px);
+  --fs-h2:clamp(22px, calc(16px + 1vw), 33px);
+  --fs-h3:clamp(19px, calc(15px + 0.7vw), 26px);
+  --serif:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","SimSun",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",Roboto,sans-serif;
+  --wrap:1040px;
+}
+html[data-theme="dark"]{
+  --bg:#151413;
+  --paper:#1d1c1a;
+  --ink:#ece7df;
+  --ink-2:#c8c1b6;
+  --muted:#968f85;
+  --rule:#34312c;
+  --rule-strong:#ece7df;
+  --accent:#e8667a;
+  --accent-tint:#3a2327;
+  --sand:#221f1c;
+  --rose:#2a2122;
+  --ochre:#29241a;
+  --c-src:#d8d2c8; --c-src-bg:#2c2925;
+  --c-ver:#f08797; --c-ver-bg:#3a2327;
+  --c-inf:#e3b155; --c-inf-bg:#352b17;
+  --c-dev:#bfa3ec; --c-dev-bg:#2e2540;
+  --svg-box:#1d1c1a;
+  --svg-line:#cfc8bd;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:var(--fs-body);line-height:1.78;
+  overflow-x:hidden;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent)}
+p{margin:0 0 .7em}
+p:last-child{margin-bottom:0}
+strong{font-weight:700}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+
+/* ================= 导航 ================= */
+.nav{
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb, var(--bg) 90%, transparent);
+  -webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--rule);
+  padding-top:env(safe-area-inset-top);
+}
+.nav .wrap{display:flex;align-items:center;gap:6px;padding-right:12px}
+.nav-brand{
+  font-family:var(--serif);font-weight:700;font-size:var(--fs-sm);color:var(--accent);
+  white-space:nowrap;padding-right:10px;margin-right:2px;border-right:1px solid var(--rule);line-height:1.2;
+}
+.nav-links{display:flex;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  position:relative;display:inline-flex;align-items:center;min-height:48px;padding:0 10px;
+  color:var(--muted);text-decoration:none;font-size:var(--fs-sm);white-space:nowrap;transition:color .2s;
+}
+.nav-links a::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.active{color:var(--ink)}
+.nav-links a.active::after{transform:scaleX(1)}
+@media (min-width:900px){.nav-links{-webkit-mask-image:none;mask-image:none}}
+.theme-btn{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);color:var(--ink);cursor:pointer;padding:0;
+}
+.theme-btn svg{width:20px;height:20px}
+.theme-btn .sun{display:none}
+html[data-theme="dark"] .theme-btn .sun{display:block}
+html[data-theme="dark"] .theme-btn .moon{display:none}
+
+/* ================= 题头 ================= */
+.hero{padding:clamp(36px,6vw,84px) 0 clamp(24px,3vw,40px);border-bottom:1px solid var(--rule)}
+.eyebrow{font-size:var(--fs-xs);letter-spacing:.14em;font-weight:700;color:var(--accent);margin:0 0 14px}
+.hero h1{font-family:var(--serif);font-size:var(--fs-h1);line-height:1.28;margin:0 0 .45em;font-weight:700;letter-spacing:.01em}
+.hero h1 .num{color:var(--accent);margin-right:.35em}
+.deck{font-family:var(--serif);color:var(--ink-2);max-width:34em;margin:0 0 1.1em;line-height:1.7}
+.byline{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:var(--fs-xs);color:var(--muted);padding-top:14px;border-top:1px solid var(--rule)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:18px;font-size:var(--fs-xs);color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+/* ================= 标签 & 来源按钮 ================= */
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:var(--fs-xs);font-weight:700;line-height:1;letter-spacing:.04em;
+  padding:6px 9px 6px 8px;border-radius:999px;white-space:nowrap;
+}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.tag.src{color:var(--c-src);background:var(--c-src-bg)}
+.tag.ver{color:var(--c-ver);background:var(--c-ver-bg)}
+.tag.inf{color:var(--c-inf);background:var(--c-inf-bg)}
+.tag.dev{color:var(--c-dev);background:var(--c-dev-bg)}
+.src-link{
+  display:inline-flex;align-items:center;justify-content:center;gap:3px;
+  min-width:44px;min-height:44px;padding:0 6px;margin:-10px -6px;
+  font-size:var(--fs-xs);font-weight:700;color:var(--muted);text-decoration:none;border-radius:8px;transition:color .2s,background .2s;
+}
+.src-link .ar{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--rule);color:var(--accent);font-size:13px;background:var(--paper)}
+.src-link:hover,.src-link:focus-visible{color:var(--accent)}
+.src-link:hover .ar{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* 条目：手机标签在上方；桌面在左侧 */
+.item{display:grid;grid-template-columns:1fr;gap:8px;padding:18px 0;border-top:1px solid var(--rule)}
+.item:first-child{border-top:none;padding-top:4px}
+.item .side{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:32px}
+@media (min-width:900px){
+  .item{grid-template-columns:7.2em 1fr;gap:28px;padding:22px 0}
+  .item .side{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:12px;padding-top:.35em}
+}
+
+/* ================= 分节 ================= */
+section{padding:clamp(40px,6vw,88px) 0 0}
+.sec-head{margin-bottom:clamp(18px,2.4vw,30px);padding-top:14px;border-top:2px solid var(--rule-strong);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.sec-no{font-size:var(--fs-xs);font-weight:700;letter-spacing:.14em;color:var(--accent)}
+.sec-head h2{font-family:var(--serif);font-size:var(--fs-h2);line-height:1.35;margin:0;font-weight:700}
+h3{font-family:var(--serif);font-size:var(--fs-h3);line-height:1.4;margin:0 0 .25em;font-weight:700}
+
+/* 一句话总结：引文式 */
+.pull{
+  position:relative;font-family:var(--serif);font-size:calc(var(--fs-body)*1.08);line-height:1.75;
+  padding:clamp(20px,3vw,36px) clamp(20px,3vw,40px);background:var(--paper);border:1px solid var(--rule);border-radius:4px;
+}
+.pull::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);border-radius:4px 0 0 4px}
+.pull .foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--sans)}
+
+/* 脑区：定义列表式 */
+.roles{border-top:1px solid var(--rule)}
+.role{display:grid;grid-template-columns:1fr;gap:10px;padding:clamp(18px,2.4vw,28px) 0;border-bottom:1px solid var(--rule)}
+.role-head{display:flex;flex-direction:column;gap:6px}
+.role-name{display:flex;align-items:baseline;gap:10px}
+.role-idx{font-family:var(--serif);font-size:var(--fs-sm);color:var(--accent);font-weight:700;min-width:1.4em}
+.role-head h3{margin:0}
+.role-sub{font-size:var(--fs-xs);color:var(--muted);letter-spacing:.04em}
+.role-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.role.key .role-idx{color:var(--accent)}
+.role.key h3{color:var(--accent)}
+@media (min-width:900px){
+  .role{grid-template-columns:12.5em 1fr;gap:36px}
+  .role-meta{justify-content:flex-start;gap:14px}
+}
+.callout{margin-top:clamp(18px,2.4vw,28px);padding:clamp(16px,2.2vw,24px) clamp(18px,2.6vw,28px);background:var(--sand);border-radius:4px}
+.callout .lbl{display:block;font-size:var(--fs-xs);font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:6px}
+
+/* 图 */
+figure{margin:clamp(20px,3vw,36px) 0;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:clamp(14px,2.4vw,32px) clamp(10px,2vw,28px) clamp(14px,2vw,22px)}
+.fig-label{display:flex;gap:12px;align-items:baseline;font-size:var(--fs-xs);margin:0 0 12px 4px}
+.fig-label b{color:var(--accent);letter-spacing:.12em}
+.fig-label span{color:var(--ink-2);font-weight:700}
+figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+figcaption{font-size:var(--fs-xs);color:var(--muted);margin:14px 4px 0;padding-top:10px;border-top:1px solid var(--rule);line-height:1.6}
+.memo{display:flex;gap:14px;align-items:flex-start;padding:clamp(16px,2.2vw,24px) clamp(18px,2.6vw,28px);background:var(--ochre);border-radius:4px}
+.memo .ico{flex-shrink:0;font-family:var(--serif);font-weight:700;color:var(--c-inf);font-size:var(--fs-sm);padding-top:.15em}
+
+/* 例子 */
+.example{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:clamp(18px,2.6vw,32px);margin-bottom:18px}
+.ex-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.ex-no{font-family:var(--serif);font-size:var(--fs-h2);font-weight:700;color:var(--accent);line-height:1}
+.ex-head h3{margin:0}
+.map{display:grid;grid-template-columns:1fr;gap:6px 18px;margin:0;padding:0;list-style:none}
+.map li{display:flex;gap:10px;align-items:baseline}
+.map li b{flex-shrink:0;font-size:var(--fs-sm);color:var(--accent);min-width:4.5em}
+.ex-head + .item{border-top:none}
+.example.ai{background:var(--sand);border-color:transparent}
+
+/* 误区 */
+.fixes{counter-reset:fx}
+.fx{padding:clamp(18px,2.4vw,28px) 0;border-top:1px solid var(--rule)}
+.fx:first-child{border-top:none;padding-top:0}
+.fx h3{display:flex;gap:12px;align-items:baseline}
+.fx h3::before{counter-increment:fx;content:counter(fx);display:inline-grid;place-items:center;flex-shrink:0;width:1.6em;height:1.6em;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--sans);font-size:.62em;transform:translateY(-.15em)}
+html[data-theme="dark"] .fx h3::before{color:#1d1b18}
+.fx-pair{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.fx-pair > div{padding:12px 16px;border-radius:4px}
+.fx-was{background:var(--sand);color:var(--ink-2)}
+.fx-now{background:var(--rose)}
+.fx-pair .lbl{display:block;font-size:var(--fs-xs);font-weight:700;letter-spacing:.12em;margin-bottom:2px}
+.fx-was .lbl{color:var(--muted)}
+.fx-now .lbl{color:var(--accent)}
+.fx-arrow{display:none}
+@media (min-width:900px){
+  .fx-pair{grid-template-columns:1fr auto 1fr;align-items:stretch;gap:0}
+  .fx-arrow{display:grid;place-items:center;width:52px;color:var(--accent);font-size:var(--fs-sm)}
+}
+
+/* 复习 */
+.question{background:var(--ink);color:var(--bg);border-radius:4px;padding:clamp(22px,3.4vw,44px)}
+.question .lbl{display:block;font-size:var(--fs-xs);letter-spacing:.14em;font-weight:700;color:color-mix(in srgb,var(--bg) 70%,var(--accent));margin-bottom:12px}
+.question p{font-family:var(--serif);font-size:calc(var(--fs-body)*1.06);line-height:1.8}
+details{margin-top:16px;border:1px solid var(--rule);border-radius:4px;background:var(--paper)}
+summary{cursor:pointer;min-height:48px;display:flex;align-items:center;gap:8px;padding:6px 16px;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";color:var(--accent);font-size:1.2em;width:1em}
+details[open] summary::before{content:"−"}
+details .inner{padding:0 18px 16px;font-size:var(--fs-sm);color:var(--ink-2)}
+.answer-label{display:block;margin:22px 0 8px;font-size:var(--fs-xs);color:var(--muted);letter-spacing:.04em}
+textarea{
+  width:100%;min-height:9em;padding:14px 16px;font:inherit;font-size:var(--fs-sm);line-height:1.7;
+  color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:4px;resize:vertical;
+}
+textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+
+/* 来源表 */
+.swipe-hint{font-size:var(--fs-xs);color:var(--muted);margin:0 0 8px}
+@media (min-width:900px){.swipe-hint{display:none}}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:var(--fs-xs);line-height:1.6}
+th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--rule)}
+th{font-weight:700;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-family:var(--serif);color:var(--accent);font-weight:700}
+tr:target td{background:var(--accent-tint)}
+td a{display:inline-flex;min-height:44px;align-items:center;word-break:break-all}
+
+/* 回到顶部 */
+#toTop{
+  position:fixed;right:calc(16px + env(safe-area-inset-right));bottom:calc(22px + env(safe-area-inset-bottom));
+  width:48px;height:48px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.12);
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s;z-index:30;
+}
+#toTop svg{width:20px;height:20px}
+#toTop.show{opacity:1;visibility:visible;transform:none}
+
+footer{margin-top:clamp(48px,7vw,96px);border-top:1px solid var(--rule)}
+footer .wrap{padding-top:22px;padding-bottom:calc(48px + env(safe-area-inset-bottom));font-size:var(--fs-xs);color:var(--muted)}
+
+/* SVG */
+.s-box{fill:var(--svg-box);stroke:var(--svg-line);stroke-width:1.2}
+.s-line{stroke:var(--svg-line);stroke-width:1.4;fill:none}
+.s-dash{stroke:var(--svg-line);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.s-text{fill:var(--ink);font-family:var(--sans);font-size:16px}
+.s-small{fill:var(--muted);font-family:var(--sans);font-size:13px}
+.s-bold{font-weight:700}
+.s-accent{fill:var(--accent)}
+.s-vm{fill:var(--accent-tint);stroke:var(--accent);stroke-width:1.8}
+.s-sand{fill:var(--sand);stroke:none}
+.s-rose{fill:var(--rose);stroke:none}
+.s-arrow{fill:var(--svg-line)}
+.s-arrow-acc{fill:var(--accent)}
+
+
+.b-cortex{fill:var(--sand);stroke:var(--svg-line);stroke-width:1.4}
+.b-deep{fill:var(--rule);stroke:var(--svg-line);stroke-width:1.1;stroke-opacity:.45}
+.b-fold{stroke:var(--svg-line);stroke-opacity:.2;fill:none;stroke-width:1.3;stroke-linecap:round}
+.b-cc{fill:var(--paper);stroke:var(--svg-line);stroke-opacity:.35;stroke-width:1}
+.b-lead{stroke:var(--svg-line);stroke-width:1;fill:none}
+.b-lbl{fill:var(--ink);font-family:var(--sans);font-size:16px;font-weight:700}
+.b-sub{fill:var(--muted);font-family:var(--sans);font-size:13px}
+
+/* ===== 插图 v3 ===== */
+.brain-wrap{max-width:640px;margin:0 auto}
+#brainSvg .reg{transition:opacity .35s}
+#brainSvg[data-focus] .reg{opacity:.12}
+#brainSvg[data-focus="vm"] .reg[data-r="vm"],#brainSvg[data-focus="na"] .reg[data-r="na"],
+#brainSvg[data-focus="am"] .reg[data-r="am"],#brainSvg[data-focus="hi"] .reg[data-r="hi"]{opacity:1}
+#brainSvg[data-focus] .reg:not(.mk){animation:none}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+#brainSvg[data-focus="na"] #r-na,#brainSvg[data-focus="am"] #r-am{transform-box:fill-box;transform-origin:center;animation:pulse 1.6s ease-in-out infinite}
+html[data-theme="dark"] .fig-brain svg .b-out{fill:#b9b0a5}
+.fig-brain svg .b-ref{fill:#7a5a4d}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 6px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 8px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:var(--fs-sm);font-weight:700;cursor:pointer;transition:border-color .2s,background .2s}
+.chip i{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;color:#fff;font-style:normal;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--sand)}
+.chip-info{min-height:3.4em;margin:8px auto 0;max-width:34em;text-align:center;font-size:var(--fs-sm);color:var(--ink-2);line-height:1.7}
+.rd-path{fill:none;stroke:var(--rule);stroke-width:6;stroke-linecap:round}
+html[data-theme="dark"] .rd-path{stroke:#3d3934}
+.rd-low{stroke:#f0c4c9}
+html[data-theme="dark"] .rd-low{stroke:#5a2a31}
+.rd-dash{stroke:var(--svg-line);stroke-width:1.4;stroke-dasharray:4 4;opacity:.7}
+.rd-arrow{fill:var(--rule)}
+.rd-node circle,.rd-node rect{fill:var(--paper);stroke:var(--svg-line);stroke-width:1.2}
+.rd-cortex rect{fill:var(--sand)}
+.rd-body rect{fill:var(--rose);stroke:none}
+.rd-vm rect{fill:var(--accent-tint);stroke:var(--accent);stroke-width:1.6}
+.rd-t{fill:var(--ink);font-family:var(--sans);font-size:16px;font-weight:700}
+.rd-s{fill:var(--muted);font-family:var(--sans);font-size:13px}
+.rd-lbl{fill:var(--ink-2);font-family:var(--sans);font-size:14px;font-weight:700}
+.rd-cap{fill:var(--ink);font-family:var(--serif);font-size:17px;font-weight:700}
+.rd-dot-in{fill:var(--ink-2)}
+.rd-dot-high{fill:#7d8592}
+.play-btn{display:flex;margin:10px auto 0;min-height:44px;align-items:center;gap:6px;padding:0 18px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);font:inherit;font-size:var(--fs-xs);font-weight:700;cursor:pointer}
+.mx-card rect{fill:var(--paper);stroke:var(--rule);stroke-width:1.2}
+.mx-ico{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mx-t{fill:var(--ink);font-family:var(--sans);font-size:15px;font-weight:700}
+.mx-s{fill:var(--muted);font-family:var(--sans);font-size:14px}
+.mx-flow{stroke-dasharray:6 8;animation:flow 1.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.ex-panel rect{fill:var(--paper);stroke:var(--rule)}
+.ex-h{fill:var(--ink);font-family:var(--serif);font-size:17px;font-weight:700}
+.ex-s{fill:var(--ink-2);font-family:var(--sans);font-size:14px}
+.ex-tag{font-family:var(--sans);font-size:14px;font-weight:700}
+.ex-track{fill:var(--sand)}
+.dd{margin:.6em 0 1em;border:1px solid var(--rule);border-radius:6px;overflow:hidden;font-size:var(--fs-sm)}
+.dd-row{display:grid;grid-template-columns:1.25fr 1fr 1fr;align-items:center}
+.dd-row > span{padding:12px 10px;border-top:1px solid var(--rule);text-align:center}
+.dd-row > span:first-child{text-align:left;font-weight:700;display:flex;align-items:center;gap:8px}
+.dd-row > span:first-child i{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.dd-head > span{border-top:none;background:var(--sand);font-weight:700;line-height:1.3}
+.dd-head small{display:block;font-weight:400;color:var(--muted);font-size:.85em;margin-top:2px}
+.dd .yes{color:#2f6b3a;font-size:1.3em;font-weight:700}
+.dd .no{color:var(--accent);font-size:1.2em;font-weight:700}
+html[data-theme="dark"] .dd .yes{color:#8fcf98}
+@media (prefers-reduced-motion:reduce){.mx-flow{animation:none}#brainSvg .reg{animation:none!important}}
+/* ===== 科普版新增 ===== */
+.qs{margin:0 0 1.2em;padding:clamp(14px,2vw,20px) clamp(16px,2.4vw,24px);background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:4px;max-width:36em}
+.qs-lbl{display:block;font-size:var(--fs-xs);font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:6px}
+.qs ol{margin:0;padding-left:1.4em;font-size:var(--fs-sm);line-height:1.8}
+.exp{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:clamp(18px,2.6vw,32px);margin:clamp(18px,2.4vw,28px) 0}
+.exp-head{display:flex;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.exp-head .yr{flex-shrink:0;font-family:var(--serif);font-weight:700;color:var(--accent);font-size:var(--fs-h3);letter-spacing:.02em}
+.exp-head h3{margin:0}
+.exp-head + .item{border-top:none}
+.map{display:grid;grid-template-columns:1fr;gap:8px;margin:.4em 0 .9em;padding:0;list-style:none}
+.map li{display:flex;gap:12px;align-items:baseline;padding:10px 14px;background:var(--sand);border-radius:4px}
+.map li b{flex-shrink:0;font-size:var(--fs-sm);color:var(--accent);min-width:5.2em}
+.memo em{font-style:normal;color:var(--muted);font-size:var(--fs-sm)}
+.sum{margin:0;padding:0;list-style:none;font-family:var(--sans);font-size:var(--fs-body)}
+.sum li{padding:10px 0;border-top:1px solid var(--rule)}
+.sum li:first-child{border-top:none;padding-top:0}
+.sum li b{color:var(--accent);margin-right:4px}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="页面导航">
+  <div class="wrap">
+    <a class="nav-brand" href="#top" style="text-decoration:none">情绪脑</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#cast">主角</a>
+      <a href="#roads">快路慢路</a>
+      <a href="#amygdala">杏仁核</a>
+      <a href="#vmpfc">VMPFC</a>
+      <a href="#nacc">伏隔核</a>
+      <a href="#limbic">边缘系统</a>
+      <a href="#wrap">小结</a>
+      <a href="#sources">来源</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="切换深色/浅色模式">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <header class="hero" id="top">
+    <div class="wrap">
+      <p class="eyebrow">科普 · 延伸阅读《津巴多普通心理学》9.10.4</p>
+      <h1>情绪和理性，在大脑的哪里相遇？</h1>
+      <p class="deck">还没看清地上那条弯弯的东西，你已经跳开了；看清是根绳子，心跳才慢慢平复。这短短一两秒里，大脑的几个区域接力完成了一场“先保命、再判断”的配合。</p>
+      <div class="qs">
+        <span class="qs-lbl">读完这篇，你可以回答</span>
+        <ol>
+          <li>为什么身体常常比“意识”先一步害怕？</li>
+          <li>恐惧是怎么被“解除”的？它真的被抹掉了吗？</li>
+          <li>伏隔核和多巴胺，真的等于“快乐”吗？</li>
+        </ol>
+      </div>
+      <div class="byline">
+        <span>阅读约 12 分钟</span>
+        <span>资料核对日期　2026-11-25</span>
+      </div>
+      <div class="legend" aria-label="标签说明">
+        <span><b class="tag src">观点</b>教材作者的观点与表述</span>
+        <span><b class="tag ver">已核实</b>有原始研究或权威资料支持</span>
+        <span><b class="tag inf">推断</b>合理推断，非研究直接结论</span>
+        <span><b class="tag dev">发展中</b>学界仍有分歧、证据尚未定论</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+  <!-- ========== 01 主角 ========== -->
+  <section id="cast">
+    <div class="sec-head"><span class="sec-no">01</span><h2>先认识四位主角</h2></div>
+    <div class="item">
+      <div class="side"><b class="tag src">观点</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>教材把这一节的核心概括为：神经科学家认为，他们已经找到了情绪和理性在大脑中的“相遇之处”——有意识的情绪处理途径与边缘系统连接的地方。下面四个结构，是理解这场“相遇”的关键。</p></div>
+    </div>
+
+    <figure class="fig-brain">
+      <div class="fig-label"><b>图 1</b><span>四位主角在哪里 · 点下方标签查看</span></div>
+      <div class="brain-wrap"><svg id="brainSvg" viewBox="0 0 480 370" role="img" aria-labelledby="bT bD"><title id="bT">大脑正中矢状面插图</title><desc id="bD">从正中剖开、面朝左的大脑。额叶底部是腹内侧前额叶皮层（1），胼胝体前下方是伏隔核（2），颞叶内侧深处是杏仁核（3），其后方弯向上方的是海马（4）。图中还标出胼胝体、丘脑、小脑和脑干作为参照。</desc>
+<defs>
+  <linearGradient id="gCtx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e7e0"/><stop offset="1" stop-color="#e9cfc5"/></linearGradient>
+  <linearGradient id="gStem" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ead6ca"/><stop offset="1" stop-color="#dcc2b4"/></linearGradient>
+  <radialGradient id="gCb" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#efdbd1"/><stop offset="1" stop-color="#dcbfb2"/></radialGradient>
+  <linearGradient id="gCC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf6"/><stop offset="1" stop-color="#efe3dc"/></linearGradient>
+  <radialGradient id="gVM" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c8283f" stop-opacity=".75"/><stop offset=".7" stop-color="#c8283f" stop-opacity=".25"/><stop offset="1" stop-color="#c8283f" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gNA" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#f2b049"/><stop offset="1" stop-color="#b8740f"/></radialGradient>
+  <radialGradient id="gAM" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#e2475c"/><stop offset="1" stop-color="#8f0f24"/></radialGradient>
+  <linearGradient id="gHI" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f74c9"/><stop offset="1" stop-color="#5a3f92"/></linearGradient>
+  <filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#5a3a2c" flood-opacity=".18"/></filter>
+  <clipPath id="cCtx"><path id="pCtx" d="M42 196 C30 146 52 88 112 58 C164 32 248 22 318 38 C384 54 432 104 442 166 C448 204 440 234 420 248 C398 252 372 242 344 240 C326 240 312 238 300 240 L258 244 C238 252 218 256 200 254 C160 250 112 242 80 234 C58 228 46 214 42 196 Z"/></clipPath>
+</defs>
+
+<g filter="url(#sh)">
+  <!-- cerebellum -->
+  <path id="pCb" d="M304 258 C318 236 376 230 418 248 C452 262 456 306 422 324 C384 342 330 332 310 304 C302 290 300 272 304 258 Z" fill="url(#gCb)" stroke="#a27e70" stroke-width="1.2"/>
+  <!-- brainstem -->
+  <path d="M262 240 L306 240 C306 262 300 282 304 300 C306 322 300 344 298 368 L268 368 C268 346 262 326 258 312 C248 296 248 276 258 262 Z" fill="url(#gStem)" stroke="#a27e70" stroke-width="1.2"/>
+  <!-- cerebrum -->
+  <use href="#pCtx" fill="url(#gCtx)" stroke="#9c7668" stroke-width="1.5"/>
+</g>
+<!-- cerebellum foliation -->
+<g fill="none" stroke="#a27e70" stroke-opacity=".45" stroke-width="1.1" stroke-linecap="round">
+  <path d="M322 262 C350 250 392 252 420 266"/><path d="M318 276 C350 266 396 270 432 284"/>
+  <path d="M318 290 C350 284 396 290 432 302"/><path d="M324 304 C352 302 390 308 418 318"/>
+  <path d="M312 284 C300 282 296 276 300 268" />
+</g>
+<!-- pons bulge line -->
+<path d="M258 272 C252 286 252 300 262 312" fill="none" stroke="#a27e70" stroke-opacity=".5"/>
+
+<g clip-path="url(#cCtx)">
+  <!-- medial sulci -->
+  <g fill="none" stroke="#b48b7d" stroke-width="1.6" stroke-linecap="round" stroke-opacity=".7">
+    <!-- cingulate sulcus -->
+    <path d="M118 214 C100 150 150 88 236 80 C312 74 372 104 384 150"/>
+    <path d="M384 150 C388 120 378 96 360 80"/>
+    <!-- parieto-occipital -->
+    <path d="M404 92 C394 130 384 160 372 196"/>
+    <!-- calcarine -->
+    <path d="M370 198 C392 202 414 210 440 214"/>
+    <!-- central sulcus notch -->
+    <path d="M286 34 C284 46 292 56 288 68"/>
+    <!-- frontal medial -->
+    <path d="M86 120 C104 124 112 140 104 160"/><path d="M130 70 C140 88 132 104 146 116"/>
+    <path d="M196 42 C196 56 186 64 196 74"/><path d="M340 50 C334 64 344 72 338 84"/>
+    <!-- orbital -->
+    <path d="M64 214 C86 210 112 216 132 226"/>
+    <!-- cuneus/precuneus -->
+    <path d="M410 150 C420 168 426 180 438 186"/><path d="M350 116 C342 128 348 140 340 150"/>
+  </g>
+  <!-- VMPFC glow -->
+  <ellipse cx="96" cy="212" rx="62" ry="36" fill="url(#gVM)"/>
+</g>
+
+<!-- corpus callosum -->
+<path d="M152 168 C150 124 212 104 266 106 C318 108 356 126 358 162 C360 180 344 188 332 180 C326 160 300 130 262 128 C214 128 182 142 178 164 C176 176 182 186 180 194 C166 202 152 188 152 168 Z" fill="url(#gCC)" stroke="#a88475" stroke-width="1.2"/>
+<!-- fornix -->
+<path d="M330 182 C300 196 250 186 214 182 C204 190 204 206 210 220" fill="none" stroke="#c4a093" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+<!-- thalamus -->
+<ellipse cx="262" cy="206" rx="36" ry="22" fill="#e4c6b8" stroke="#a88475" stroke-width="1"/>
+<!-- hypothalamus -->
+<path d="M206 222 C214 214 232 216 236 230 C232 242 216 244 208 236 Z" fill="#e6cabd" stroke="#a88475" stroke-width=".8" opacity=".9"/>
+
+<!-- regions -->
+<g id="r-vm" class="reg" data-r="vm"><path d="M54 214 C60 190 90 182 116 190 C134 198 142 214 134 232 C112 238 82 232 62 226 Z" fill="none" stroke="#c8283f" stroke-width="2.2" stroke-dasharray="4 3"/></g>
+<g id="r-na" class="reg" data-r="na"><circle cx="186" cy="214" r="10" fill="url(#gNA)" stroke="#fff" stroke-width="1.5"/></g>
+<g id="r-hi" class="reg" data-r="hi" opacity=".92"><path d="M236 252 C258 258 286 252 304 236 C318 222 326 206 320 192" fill="none" stroke="url(#gHI)" stroke-width="12" stroke-linecap="round"/><path d="M236 252 C258 258 286 252 304 236 C318 222 326 206 320 192" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round"/></g>
+<g id="r-am" class="reg" data-r="am"><ellipse cx="226" cy="250" rx="13" ry="9.5" transform="rotate(-18 226 250)" fill="url(#gAM)" stroke="#fff" stroke-width="1.5"/></g>
+
+<!-- number markers -->
+<g font-family="-apple-system,PingFang SC,sans-serif" font-size="15" font-weight="700" text-anchor="middle">
+<g class="mk reg" data-r="vm"><line x1="92" y1="210" x2="70" y2="292" stroke="#c8283f" stroke-width="1.3"/><circle cx="70" cy="304" r="14" fill="#c8283f"/><text x="70" y="309" fill="#fff">1</text></g>
+<g class="mk reg" data-r="na"><line x1="186" y1="214" x2="150" y2="292" stroke="#b8740f" stroke-width="1.3"/><circle cx="150" cy="304" r="14" fill="#b8740f"/><text x="150" y="309" fill="#fff">2</text></g>
+<g class="mk reg" data-r="am"><line x1="222" y1="256" x2="212" y2="322" stroke="#8f0f24" stroke-width="1.3"/><circle cx="212" cy="334" r="14" fill="#8f0f24"/><text x="212" y="339" fill="#fff">3</text></g>
+<g class="mk reg" data-r="hi"><line x1="300" y1="238" x2="352" y2="352" stroke="#5a3f92" stroke-width="1.3"/><circle cx="352" cy="352" r="14" fill="#5a3f92" transform="translate(0,0)"/><text x="352" y="357" fill="#fff">4</text></g>
+</g>
+<!-- small reference labels -->
+<g font-family="-apple-system,PingFang SC,sans-serif" font-size="15" fill="#857e74" class="b-ref">
+  <text x="232" y="152">胼胝体</text>
+  <text x="246" y="210" fill="#7a5a4d">丘脑</text>
+  <text x="400" y="296" text-anchor="middle">小脑</text>
+  <text x="284" y="364" text-anchor="end">脑干</text>
+  <text x="14" y="26" class="b-out" style="fill:var(--muted)">← 前（面部）</text>
+</g>
+</svg></div>
+      <div class="chips" role="group" aria-label="选择脑区">
+        <button type="button" class="chip" data-r="vm"><i style="background:#c8283f">1</i>VMPFC</button>
+        <button type="button" class="chip" data-r="na"><i style="background:#b8740f">2</i>伏隔核</button>
+        <button type="button" class="chip" data-r="am"><i style="background:#8f0f24">3</i>杏仁核</button>
+        <button type="button" class="chip" data-r="hi"><i style="background:#5a3f92">4</i>海马</button>
+      </div>
+      <p class="chip-info" id="chipInfo" aria-live="polite">点一个标签，看看它在哪、负责什么。</p>
+      <figcaption>自绘插图，用于示意大致位置，并非精确解剖图。杏仁核和海马实际藏在颞叶内侧，在正中剖面上看不到，这里以投影方式画出；左右脑各有一个。</figcaption>
+    </figure>
+
+    <div class="roles">
+      <div class="role key">
+        <div class="role-head">
+          <div class="role-name"><span class="role-idx">A</span><h3>VMPFC</h3></div>
+          <span class="role-sub">腹内侧前额叶皮层 · 整合者</span>
+          <div class="role-meta"><b class="tag src">观点</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+        </div>
+        <div class="role-body"><p>位于额叶底部、眼睛后方，与杏仁核、海马都有广泛联系。教材打了个比方：它像录音师，把外部刺激、有意识的记忆和身体的“内脏”反应混成一条音轨，决定这段经历是积极的还是消极的。</p></div>
+      </div>
+      <div class="role">
+        <div class="role-head">
+          <div class="role-name"><span class="role-idx">B</span><h3>杏仁核</h3></div>
+          <span class="role-sub">杏仁大小 · 威胁探测器</span>
+          <div class="role-meta"><b class="tag src">观点</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+        </div>
+        <div class="role-body"><p>像看门狗一样对危险保持警惕，在恐惧中作用突出。它同时接收两条线路的信息：一条快而粗糙，一条慢而精细。</p></div>
+      </div>
+      <div class="role">
+        <div class="role-head">
+          <div class="role-name"><span class="role-idx">C</span><h3>海马</h3></div>
+          <span class="role-sub">记录“发生了什么、在哪里”</span>
+          <div class="role-meta"><b class="tag ver">已核实</b><a class="src-link" href="https://iro.uiowa.edu/esploro/outputs/journalArticle/Double-dissociation-of-conditioning-and-declarative/9984002406702771" target="_blank" rel="noopener" aria-label="来源：Bechara 等 1995">来源<span class="ar">↗</span></a></div>
+        </div>
+        <div class="role-body"><p>负责可以用语言说出来的“事实记忆”。它和杏仁核分工不同：一个记住“发生过什么”，一个让身体“记住害怕”——第 03 节有个经典实验专门证明了这一点。</p></div>
+      </div>
+      <div class="role">
+        <div class="role-head">
+          <div class="role-name"><span class="role-idx">D</span><h3>伏隔核</h3></div>
+          <span class="role-sub">奖赏回路的枢纽</span>
+          <div class="role-meta"><b class="tag src">观点</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+        </div>
+        <div class="role-body"><p>位于 VMPFC 后方。教材说它主要负责积极的感受：获得奖励、听喜欢的音乐、见到喜欢的人时，它会活跃并释放多巴胺。不过，后来的研究让这个说法变得更微妙（见第 05 节）。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 02 快路慢路 ========== -->
+  <section id="roads">
+    <div class="sec-head"><span class="sec-no">02</span><h2>快路与慢路：为什么身体先害怕</h2></div>
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.open.edu/openlearn/health-sports-psychology/health/emotions-and-emotional-disorders/content-section-2.4" target="_blank" rel="noopener" aria-label="来源：OpenLearn">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>神经科学家约瑟夫·勒杜（Joseph LeDoux）在大鼠身上发现，声音信号到达杏仁核有两条路。<strong>“低路”</strong>：耳朵 → 丘脑 → 杏仁核，不经过大脑皮层，粗糙但极快，约 20 毫秒就能触发反应，你还没意识到是什么就已经吓一跳。<strong>“高路”</strong>：耳朵 → 丘脑 → 皮层 → 杏仁核，绕远路，约 200 毫秒，但带来细节，让你能有意识地判断。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pubmed.ncbi.nlm.nih.gov/10845062/" target="_blank" rel="noopener" aria-label="来源：LeDoux 2000">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>这套研究建立在“恐惧条件反射”之上：把一个无害的声音和一次轻微电击配对几次，动物就学会怕这个声音。正是靠这个简单而定义清楚的实验范式，研究者才把杏仁核确认为习得、储存和表达恐惧记忆的重要部件。</p></div>
+    </div>
+
+    <figure class="fig-roads">
+      <div class="fig-label"><b>图 2</b><span>同一个刺激，兵分两路（动画）</span></div>
+      <svg id="roadSvg" viewBox="0 0 400 320" role="img" aria-labelledby="rT rD">
+        <title id="rT">低路与高路动画示意</title>
+        <desc id="rD">刺激先到丘脑，然后分两路：红色信号沿低路直达杏仁核，很快到达，引发身体反应；灰色信号绕经感觉皮层，较晚到达杏仁核，带来细节。VMPFC 与杏仁核双向联系。</desc>
+        <defs>
+          <radialGradient id="gAm2" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#e2475c"/><stop offset="1" stop-color="#8f0f24"/></radialGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- paths -->
+        <path id="pIn" d="M66 160 H116" class="rd-path"/>
+        <path id="pLow" d="M150 160 H262" class="rd-path rd-low"/>
+        <path id="pHigh" d="M140 132 C150 70 186 52 210 52 C236 52 270 70 290 128" class="rd-path rd-high"/>
+        <path d="M290 194 V238" class="rd-path" marker-end="url(#ah)"/>
+        <path d="M266 186 C246 222 210 244 168 249" class="rd-path rd-dash"/>
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="rd-arrow"/></marker></defs>
+        <!-- nodes -->
+        <g class="rd-node"><circle cx="40" cy="160" r="26"/><text x="40" y="156" text-anchor="middle" class="rd-t">刺激</text><text x="40" y="174" text-anchor="middle" class="rd-s">眼/耳</text></g>
+        <g class="rd-node"><rect x="104" y="136" width="58" height="48" rx="24"/><text x="133" y="165" text-anchor="middle" class="rd-t">丘脑</text></g>
+        <g class="rd-node rd-cortex"><rect x="166" y="26" width="90" height="44" rx="22"/><text x="211" y="54" text-anchor="middle" class="rd-t">感觉皮层</text></g>
+        <g><circle id="amRing" cx="290" cy="160" r="34" fill="none" stroke="#c8283f" stroke-width="3" opacity="0"/><circle cx="290" cy="160" r="34" fill="url(#gAm2)"/><text x="290" y="165" text-anchor="middle" class="rd-t" style="fill:#fff">杏仁核</text></g>
+        <g class="rd-node rd-body"><rect x="236" y="242" width="108" height="46" rx="10"/><text x="290" y="262" text-anchor="middle" class="rd-t">身体反应</text><text x="290" y="279" text-anchor="middle" class="rd-s">心跳加快、僵住</text></g>
+        <g class="rd-node rd-vm"><rect x="56" y="226" width="112" height="46" rx="10"/><text x="112" y="248" text-anchor="middle" class="rd-t" style="fill:var(--accent)">VMPFC</text><text x="112" y="265" text-anchor="middle" class="rd-s">整合 · 调节</text></g>
+        <!-- labels -->
+        <text x="206" y="192" text-anchor="middle" class="rd-lbl" style="fill:#c8283f">低路</text><text x="206" y="209" text-anchor="middle" class="rd-s" style="fill:#c8283f">约 20ms · 粗略</text>
+        <text x="330" y="96" text-anchor="middle" class="rd-lbl">高路</text>
+        <text x="330" y="114" text-anchor="middle" class="rd-s">约 200ms · 精细</text>
+        <!-- pulses -->
+        <circle r="7" class="rd-dot-in" filter="url(#glow)"><animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.02;0.12;1" calcMode="linear"><mpath href="#pIn"/></animateMotion><animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.02;0.12;0.13;1"/></circle>
+        <circle r="7" fill="#e2475c" filter="url(#glow)"><animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.13;0.2;1" calcMode="linear"><mpath href="#pLow"/></animateMotion><animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.129;0.13;0.2;0.21;1"/></circle>
+        <circle r="7" class="rd-dot-high" filter="url(#glow)"><animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.13;0.62;1" calcMode="linear"><mpath href="#pHigh"/></animateMotion><animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.129;0.13;0.62;0.63;1"/></circle>
+        <animate href="#amRing" attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;0;1;0;0;.8;0;0" keyTimes="0;0.2;0.21;0.35;0.62;0.63;0.78;1"/>
+        <animate href="#amRing" attributeName="r" dur="5s" repeatCount="indefinite" values="34;34;34;54;34;34;50;34" keyTimes="0;0.2;0.21;0.35;0.62;0.63;0.78;1"/>
+        <!-- status captions -->
+        <text x="200" y="312" text-anchor="middle" class="rd-cap"><tspan>①</tspan> 先吓一跳<animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.2;0.21;0.6;0.62;1"/></text>
+        <text x="200" y="312" text-anchor="middle" class="rd-cap" opacity="0"><tspan>②</tspan> 再看清：原来是绳子<animate attributeName="opacity" dur="5s" repeatCount="indefinite" values="0;0;1;1;0" keyTimes="0;0.62;0.63;0.95;1"/></text>
+      </svg>
+      <button type="button" class="play-btn" id="roadPlay" aria-pressed="false">❚❚ 暂停动画</button>
+      <figcaption>依据勒杜的大鼠听觉研究及教学资料绘制。毫秒数为教学资料中的近似值；动画为了看清楚而大幅放慢，两条路的快慢比例只作示意。虚线表示 VMPFC 与杏仁核之间的双向联系。</figcaption>
+    </figure>
+
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.sciengine.com/doi/pdf/53DF52ABB39D4212802FA7CF51BAB7D7" target="_blank" rel="noopener" aria-label="来源：中文综述（无意识恐惧加工）">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>人身上也有类似现象。1994 年，Öhman 等人用“后向掩蔽”让蛇或蜘蛛的图片一闪而过、被试根本没意识到看见了什么，可他们的皮肤电反应仍然更强——说明恐惧加工不只发生在意识层面。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag dev">发展中</b><a class="src-link" href="https://www.biorxiv.org/content/10.64898/2025.12.24.690990.full.pdf" target="_blank" rel="noopener" aria-label="来源：2025 预印本">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>“低路”的直接解剖证据主要来自动物。人类视觉上有较多证据支持存在快速预警通路，但人类<strong>听觉</strong>是否也有同样的捷径，至今仍未定论（这一判断来自 2025 年的一篇预印本，尚未经同行评审）。</p></div>
+    </div>
+    <div class="memo">
+      <span class="ico">要点</span>
+      <p>低路宁可错杀、不可放过——把绳子当成蛇，代价只是虚惊一场；把蛇当成绳子，代价可能是性命。<em>（这是对其适应意义的常见解释，属推断。）</em></p>
+    </div>
+  </section>
+
+  <!-- ========== 03 杏仁核 ========== -->
+  <section id="amygdala">
+    <div class="sec-head"><span class="sec-no">03</span><h2>杏仁核：三个经典发现</h2></div>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">1937</span><h3>拿掉颞叶的猴子，变“乖”了</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pubmed.ncbi.nlm.nih.gov/29145186/" target="_blank" rel="noopener" aria-label="来源：Klüver-Bucy 综述">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>克吕弗和布西切除了猴子双侧颞叶（包括杏仁核），几周内猴子出现一组戏剧性变化：变得温顺平静、什么都往嘴里放、饮食和性行为改变、认不出熟悉的物体。这被称为“克吕弗-布西综合征”，也是最早把杏仁核和情绪联系起来的证据之一。教材说“被驯服的动物可能成为杀手，猎物也可能变成友好同伴”，说的就是这类损伤实验。</p></div>
+      </div>
+    </article>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">1995</span><h3>记得“发生了什么”，身体却不害怕</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://iro.uiowa.edu/esploro/outputs/journalArticle/Double-dissociation-of-conditioning-and-declarative/9984002406702771" target="_blank" rel="noopener" aria-label="来源：Bechara 等 1995">来源<span class="ar">↗</span></a></div>
+        <div class="body">
+          <p>研究者让三位脑损伤病人做恐惧条件反射：某个图像或声音之后，总会跟着一个令人不适的强刺激。</p>
+          <div class="dd" role="table" aria-label="双重分离实验结果">
+            <div class="dd-row dd-head" role="row"><span role="columnheader"></span><span role="columnheader">说得出规律<small>事实记忆</small></span><span role="columnheader">身体学会紧张<small>条件反射</small></span></div>
+            <div class="dd-row" role="row"><span role="rowheader"><i style="background:#8f0f24"></i>杏仁核受损</span><span class="yes" role="cell">✓</span><span class="no" role="cell">✕</span></div>
+            <div class="dd-row" role="row"><span role="rowheader"><i style="background:#5a3f92"></i>海马受损</span><span class="no" role="cell">✕</span><span class="yes" role="cell">✓</span></div>
+            <div class="dd-row" role="row"><span role="rowheader"><i style="background:linear-gradient(90deg,#8f0f24 50%,#5a3f92 50%)"></i>两者都受损</span><span class="no" role="cell">✕</span><span class="no" role="cell">✕</span></div>
+          </div>
+          <p>这叫“双重分离”：<strong>杏仁核负责情绪性的条件反射，海马负责可陈述的事实记忆</strong>，两套系统可以各自独立工作。</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">2011</span><h3>一位“不知恐惧”的女性</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3030206" target="_blank" rel="noopener" aria-label="来源：Feinstein 等 2011">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>病人 SM 因一种罕见的遗传病（Urbach-Wiethe 病），双侧杏仁核受到破坏。研究者带她接触活蛇和蜘蛛、逛鬼屋、看恐怖片，她一次都没有表现出恐惧，自评的恐惧感也几乎为零；三个月的日常记录和充满创伤事件的人生经历，也显示她几乎体验不到恐惧。研究者据此认为，杏仁核在<strong>触发</strong>恐惧状态中起关键作用。</p></div>
+      </div>
+      <div class="item">
+        <div class="side"><b class="tag inf">推断</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3030206" target="_blank" rel="noopener" aria-label="来源：Feinstein 等 2011">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>这是单一个案，结论需要谨慎推广；而且“没有恐惧”并不等于“更好”——它也意味着失去了对危险的天然防护。</p></div>
+      </div>
+    </article>
+
+    <div class="item">
+      <div class="side"><b class="tag dev">发展中</b><a class="src-link" href="https://ajp.psychiatryonline.org/doi/full/10.1176/appi.ajp.2016.16030353" target="_blank" rel="noopener" aria-label="来源：LeDoux & Pine 2016">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p><strong>杏仁核是“恐惧中枢”吗？</strong>连勒杜本人也提出了反对。2016 年他和派恩提出“双系统”框架：杏仁核等皮层下结构主要控制对威胁的<strong>行为和生理反应</strong>，而“我感到害怕”这种有意识的感受，主要依赖皮层网络。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag dev">发展中</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5794606" target="_blank" rel="noopener" aria-label="来源：Fanselow & Pennington 2018">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>这个框架也遭到反驳：反对者认为，主观恐惧和身体反应高度相关、是一个整合的反应，把二者拆开反而会阻碍治疗研究。目前两种观点仍在争论中。</p></div>
+    </div>
+  </section>
+
+  <!-- ========== 04 VMPFC ========== -->
+  <section id="vmpfc">
+    <div class="sec-head"><span class="sec-no">04</span><h2>VMPFC：混音师，也是“解除警报”的人</h2></div>
+
+    <figure class="fig-mixer">
+      <div class="fig-label"><b>图 3</b><span>VMPFC 的“混音台”</span></div>
+      <svg viewBox="0 0 400 370" role="img" aria-labelledby="mT mD">
+        <title id="mT">VMPFC 混音台示意</title>
+        <desc id="mD">三条输入：外部刺激、海马提供的记忆、身体内脏反应，像音轨一样汇入 VMPFC 混音旋钮，输出一个从消极到积极的整体基调；VMPFC 与杏仁核双向联系。</desc>
+        <defs>
+          <linearGradient id="gFlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--muted)" stop-opacity=".5"/><stop offset="1" stop-color="var(--accent)"/></linearGradient>
+          <radialGradient id="gKnob" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff4f2"/><stop offset="1" stop-color="#f1cfcf"/></radialGradient>
+          <linearGradient id="gGauge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5d6470"/><stop offset=".5" stop-color="#cfc6ba"/><stop offset="1" stop-color="#d0901f"/></linearGradient>
+        </defs>
+        <!-- inputs -->
+        <g class="mx-card"><rect x="10" y="12" width="118" height="78" rx="12"/>
+          <g transform="translate(69 38)" class="mx-ico"><path d="M-16 0 C-8 -10 8 -10 16 0 C8 10 -8 10 -16 0 Z"/><circle r="4.5"/></g>
+          <text x="69" y="74" text-anchor="middle" class="mx-t">外部刺激</text></g>
+        <g class="mx-card"><rect x="141" y="12" width="118" height="78" rx="12"/>
+          <g transform="translate(200 38)" class="mx-ico"><path d="M-6 -12 C6 -14 12 -4 8 4 C5 10 -2 10 -2 4 C-2 0 3 -1 4 2"/><path d="M-6 -12 C-14 -8 -14 6 -6 12"/></g>
+          <text x="200" y="74" text-anchor="middle" class="mx-t">记忆 · 海马</text></g>
+        <g class="mx-card"><rect x="272" y="12" width="118" height="78" rx="12"/>
+          <g transform="translate(331 38)" class="mx-ico"><path d="M0 12 C-14 2 -16 -6 -10 -11 C-5 -14 -1 -11 0 -7 C1 -11 5 -14 10 -11 C16 -6 14 2 0 12 Z"/></g>
+          <text x="331" y="74" text-anchor="middle" class="mx-t">内脏反应</text></g>
+        <!-- flows -->
+        <g fill="none" stroke="url(#gFlow)" stroke-width="3" stroke-linecap="round">
+          <path d="M69 90 C69 130 150 130 180 160" class="mx-flow"/>
+          <path d="M200 90 V156" class="mx-flow"/>
+          <path d="M331 90 C331 130 250 130 220 160" class="mx-flow"/>
+        </g>
+        <!-- knob -->
+        <g transform="translate(200 200)">
+          <circle r="46" fill="url(#gKnob)" stroke="var(--accent)" stroke-width="2.5"/>
+          <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity=".6">
+            <line x1="0" y1="-56" x2="0" y2="-62"/><line x1="40" y1="-40" x2="44" y2="-44"/><line x1="-40" y1="-40" x2="-44" y2="-44"/><line x1="56" y1="0" x2="62" y2="0"/><line x1="-56" y1="0" x2="-62" y2="0"/>
+          </g>
+          <text y="-4" text-anchor="middle" class="mx-t" style="fill:var(--accent);font-size:18px">VMPFC</text>
+          <text y="16" text-anchor="middle" class="mx-s">混音 · 整合</text>
+        </g>
+        <!-- amygdala link -->
+        <path d="M262 200 H318" fill="none" stroke="var(--svg-line)" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <circle cx="348" cy="200" r="28" fill="#a8132b"/><text x="348" y="205" text-anchor="middle" class="mx-s" style="fill:#fff;font-weight:700">杏仁核</text>
+        <!-- output gauge -->
+        <path d="M200 246 V266" stroke="var(--accent)" stroke-width="3"/>
+        <path d="M110 340 A90 90 0 0 1 290 340" fill="none" stroke="url(#gGauge)" stroke-width="14" stroke-linecap="round"/>
+        <g transform="translate(200 340)"><g class="mx-needle"><line x1="0" y1="0" x2="0" y2="-70" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><animateTransform attributeName="transform" type="rotate" values="-55;-55;48;48;-55" keyTimes="0;.15;.5;.85;1" dur="6s" repeatCount="indefinite"/></g><circle r="7" fill="var(--ink)"/></g>
+        <text x="96" y="364" text-anchor="middle" class="mx-s">消极</text>
+        <text x="304" y="364" text-anchor="middle" class="mx-s">积极</text>
+        <text x="200" y="366" text-anchor="middle" class="mx-s" style="font-weight:700;fill:var(--ink-2)">整体基调</text>
+      </svg>
+      <figcaption>依据教材的“录音师”比喻绘制：VMPFC 把几条“音轨”混成一个积极或消极的整体判断，所以记忆常常和“内脏感觉”绑在一起。真实脑区之间是多重、双向的连接，这里只画出主线。</figcaption>
+    </figure>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">1848</span><h3>铁棍穿颅的铁路工头</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pubmed.ncbi.nlm.nih.gov/8178168/" target="_blank" rel="noopener" aria-label="来源：Damasio 等 1994">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>菲尼亚斯·盖奇在一次爆破事故中被铁棍贯穿头颅，活了下来，性格却大变。他死后没有尸检，但头骨被保存下来。1994 年，汉娜·达马西奥等人用头骨测量和现代神经影像重建了事故，推断损伤累及左右两侧前额叶，这种损伤模式在现代病人身上会导致理性决策和情绪加工的缺陷。</p></div>
+      </div>
+    </article>
+
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6782338" target="_blank" rel="noopener" aria-label="来源：Bechara 等 1999">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p><strong>情绪帮人做决定。</strong>安东尼奥·达马西奥提出“躯体标记假说”：决策依赖情绪信号。研究发现，VMPFC 受损的病人无法利用这些来自身体的情绪信号，把决策引向有利的方向。教材里“你的大部分记忆都可能跟内脏关联在一起”，与这个思路相通。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag dev">发展中</b><a class="src-link" href="https://www.mrc-cbu.cam.ac.uk/personal/tim.dalgleish/dunnsmhreview.pdf" target="_blank" rel="noopener" aria-label="来源：Dunn 等 2006">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>不过，2006 年一篇系统评述认为，躯体标记假说虽然巧妙，但还需要更多实证支持；它的主要证据“爱荷华赌博任务”存在其他解释。</p></div>
+    </div>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">2002</span><h3>恐惧没有被擦掉，而是被“盖住”了</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.nature.com/articles/nature01138" target="_blank" rel="noopener" aria-label="来源：Milad & Quirk 2002">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>如果一个曾和电击配对的声音反复出现、却不再有电击，动物的恐惧会逐渐减弱，这叫“消退”。从巴甫洛夫起就有人猜测：消退不是删除旧记忆，而是形成了一条新记忆。米拉德和奎尔克发现，大鼠内侧前额叶的神经元只在第二天<strong>回忆消退</strong>时才对声音放电。</p></div>
+      </div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.apa.org/monitor/jan03/brain" target="_blank" rel="noopener" aria-label="来源：APA Monitor 2003">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>更妙的是，直接刺激这些神经元，就能让从未经历消退的大鼠听到声音时不再僵住。研究者形容，这像是模拟了内侧前额叶在认出威胁其实无害时发出的“解除警报”信号，而这个信号的主要目标很可能就是杏仁核。</p></div>
+      </div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://jps.ecnu.edu.cn/CN/10.16719/j.cnki.1671-6981.20240405" target="_blank" rel="noopener" aria-label="来源：心理科学 2024">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>中文研究综述也给出了同样的结论：恐惧消退并没有消除原来的恐惧记忆，而是形成新的消退记忆与之竞争；杏仁核、前额叶、海马和中脑多巴胺系统在不同阶段各有作用。这也解释了为什么暴露疗法后，恐惧有时会“死灰复燃”。</p></div>
+      </div>
+      <div class="item">
+        <div class="side"><b class="tag inf">推断</b><a class="src-link" href="https://www.pibb.ac.cn/pibbcn/article/pdf/20180251" target="_blank" rel="noopener" aria-label="来源：生物化学与生物物理进展 2019">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>大鼠的内侧前额叶与人类 VMPFC 并不完全等同，把动物结果直接套到人身上需要谨慎。中国科学院心理研究所的综述指出，与恐惧记忆消退相关的脑区主要涉及杏仁核、内侧前额叶和海马。</p></div>
+      </div>
+    </article>
+
+    <figure class="fig-ext">
+      <div class="fig-label"><b>图 4</b><span>消退：新记忆压住旧记忆</span></div>
+      <svg viewBox="0 0 360 330" role="img" aria-labelledby="eT eD">
+        <title id="eT">恐惧消退与复发示意</title>
+        <desc id="eD">上半部分：在接受消退训练的熟悉情境里，新的“安全”记忆占上风，压住旧的“危险”记忆，恐惧降低。下半部分：换到新情境时，新记忆的约束变弱，旧的恐惧记忆可能重新冒出来。</desc>
+        <g class="ex-panel"><rect x="8" y="8" width="344" height="150" rx="14"/></g>
+        <text x="24" y="36" class="ex-h">在熟悉的情境里</text>
+        <text x="24" y="70" class="ex-s">旧记忆：声音 = 危险</text>
+        <rect x="24" y="80" width="312" height="14" rx="7" class="ex-track"/>
+        <rect x="24" y="80" width="250" height="14" rx="7" fill="#c8283f" opacity=".35"/>
+        <text x="24" y="120" class="ex-s">新记忆：声音 = 安全</text>
+        <rect x="24" y="130" width="312" height="14" rx="7" class="ex-track"/>
+        <rect x="24" y="130" width="290" height="14" rx="7" fill="var(--ink)"/>
+        <text x="336" y="36" text-anchor="end" class="ex-tag" style="fill:var(--ink)">新记忆胜出 → 不怕</text>
+
+        <g class="ex-panel"><rect x="8" y="172" width="344" height="150" rx="14"/></g>
+        <text x="24" y="200" class="ex-h">换到新的情境</text>
+        <text x="24" y="234" class="ex-s">旧记忆：声音 = 危险</text>
+        <rect x="24" y="244" width="312" height="14" rx="7" class="ex-track"/>
+        <rect x="24" y="244" width="250" height="14" rx="7" fill="#c8283f"/>
+        <text x="24" y="284" class="ex-s">新记忆：声音 = 安全</text>
+        <rect x="24" y="294" width="312" height="14" rx="7" class="ex-track"/>
+        <rect x="24" y="294" width="110" height="14" rx="7" fill="var(--ink)" opacity=".35"/>
+        <text x="336" y="200" text-anchor="end" class="ex-tag" style="fill:#c8283f">旧恐惧可能复燃</text>
+      </svg>
+      <figcaption>示意图，条形长度表示哪条记忆“占上风”，不是测量数据。旧记忆在消退后依然存在，所以换了环境、隔了一段时间，恐惧都可能回来。</figcaption>
+    </figure>
+  </section>
+
+  <!-- ========== 05 伏隔核 ========== -->
+  <section id="nacc">
+    <div class="sec-head"><span class="sec-no">05</span><h2>伏隔核：是“快乐”，还是“想要”？</h2></div>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">1954</span><h3>不停按杠杆的老鼠</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pubmed.ncbi.nlm.nih.gov/13233369/" target="_blank" rel="noopener" aria-label="来源：Olds & Milner 1954">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>奥尔兹和米尔纳发现，电刺激大鼠大脑的隔区等部位会产生“正强化”：老鼠会主动回到被刺激的地方，甚至学会按杠杆来给自己刺激。这项研究第一次把“奖赏”定位到了大脑里，也让“快乐中枢”的说法流行开来。</p></div>
+      </div>
+    </article>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">2011</span><h3>音乐让人起鸡皮疙瘩时，大脑在做什么</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.zlab.mcgill.ca/publications/docs/salimpoor_2011_nn.pdf" target="_blank" rel="noopener" aria-label="来源：Salimpoor 等 2011">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>萨利姆普尔等人用 PET 扫描发现，听音乐达到情绪高峰时，纹状体会释放多巴胺。再用功能磁共振看时间进程：<strong>期待高潮</strong>时尾状核更活跃，<strong>高潮到来</strong>时伏隔核更活跃。这印证了教材说的“听喜欢的音乐时伏隔核会活跃并释放多巴胺”，还多了一层：期待本身就会带来多巴胺。</p></div>
+      </div>
+    </article>
+
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4425246/" target="_blank" rel="noopener" aria-label="来源：Berridge & Kringelbach 2015">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p><strong>多巴胺≠快乐。</strong>贝里奇等人把奖赏拆成三部分：喜欢（快感本身）、想要（动机）和学习。他们发现，真正产生“喜欢”的是伏隔核、腹侧苍白球里几个很小的“享乐热点”；而教科书里经典的“快乐电极”和中脑边缘多巴胺系统，可能根本不产生快感，更多是驱动“想要”。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://english.ion.ac.cn/News/ResearchNews/2015year/201409/t20140922_216681.html" target="_blank" rel="noopener" aria-label="来源：中科院神经科学研究所 2014">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p><strong>伏隔核也处理“不好”的事。</strong>中国科学院神经科学研究所胡海岚团队 2014 年在《自然·神经科学》发表研究：他们在小鼠前脑边缘区域同时标记对吗啡（愉悦）和足底电击（厌恶）起反应的神经元，发现在伏隔核里，这两群神经元相互交错混杂。贝里奇的综述也指出，伏隔核的“键盘式”组织不只管奖赏，也延伸到恐惧和厌恶。</p></div>
+    </div>
+    <div class="memo">
+      <span class="ico">要点</span>
+      <p>教材说伏隔核“主要负责积极的感受”，是入门层面的简化。更准确的说法是：它是奖赏与动机的重要枢纽，和“想要”关系最密切，同时也参与厌恶体验的处理。</p>
+    </div>
+  </section>
+
+  <!-- ========== 06 边缘系统 ========== -->
+  <section id="limbic">
+    <div class="sec-head"><span class="sec-no">06</span><h2>“边缘系统”这个词还靠谱吗？</h2></div>
+    <div class="item">
+      <div class="side"><b class="tag src">观点</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>教材说，位于脑干上方的边缘结构进化成了掌控攻击、防御和撤退——即“战斗或逃跑”——的系统，证据来自对它的损伤或电刺激研究。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3600914" target="_blank" rel="noopener" aria-label="来源：LeDoux 2012">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>“边缘系统”由神经科学家麦克林在 20 世纪 50 年代提出，指大脑内侧较“原始”的皮层及相连的皮层下核团（包括杏仁核、隔区），并被他视为早期哺乳动物演化出的“情绪脑”。勒杜在 2012 年的综述中反驳说：没有证据表明边缘系统（无论怎么定义）作为一个整体系统负责情绪；比如被视为核心的海马，主要与陈述性记忆、空间认知等认知功能有关，它参与情绪的证据要弱得多。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag dev">发展中</b><a class="src-link" href="https://thebrain.lecerveau.ca/flash/capsules/histoire_bleu09.html" target="_blank" rel="noopener" aria-label="来源：McGill The Brain">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>加拿大麦吉尔大学的科普网站总结道：神经解剖学家对边缘系统包括哪些结构并没有共识；但他们几乎一致认为，把边缘系统当作“情绪脑”的解剖学理论应该被放弃。</p></div>
+    </div>
+    <div class="item">
+      <div class="side"><b class="tag inf">推断</b><a class="src-link" href="#src-book" aria-label="来源：教材">来源<span class="ar">↗</span></a></div>
+      <div class="body"><p>所以，读教材时可以把“边缘系统”当作一个方便的统称，而不是一个界限清楚、专管情绪的独立系统。</p></div>
+    </div>
+
+    <article class="exp">
+      <div class="exp-head"><span class="yr">1963</span><h3>用遥控器叫停一头斗牛</h3></div>
+      <div class="item">
+        <div class="side"><b class="tag ver">已核实</b><a class="src-link" href="https://www.pubmed.gov/28690447/" target="_blank" rel="noopener" aria-label="来源：Marzullo 2017">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>教材引用的德尔加多，是脑刺激研究的先驱。他最出名的演示是在斗牛场里，通过无线电刺激植入牛脑的电极，让冲锋中的公牛停下来。不过，这些刺激的部位是基底节和丘脑结构（如尾状核），而不是典型的边缘区域；相关的技术记录也出了名地难找。</p></div>
+      </div>
+      <div class="item">
+        <div class="side"><b class="tag inf">推断</b><a class="src-link" href="https://www.pubmed.gov/28690447/" target="_blank" rel="noopener" aria-label="来源：Marzullo 2017">来源<span class="ar">↗</span></a></div>
+        <div class="body"><p>牛停下来，未必代表“攻击欲消失”，也可能只是运动被打断。这个案例常被用来讨论如何正确解读行为数据。</p></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ========== 07 小结 ========== -->
+  <section id="wrap">
+    <div class="sec-head"><span class="sec-no">07</span><h2>一分钟小结</h2></div>
+    <div class="pull">
+      <ul class="sum">
+        <li><b>快路先保命</b>：信号经丘脑直达杏仁核，你还没看清，身体已经警觉。</li>
+        <li><b>慢路再判断</b>：经过皮层加工的细节随后到达，让你知道“只是绳子”。</li>
+        <li><b>VMPFC 来整合</b>：把刺激、记忆和身体感受混成一个“好或坏”的判断，并能向杏仁核发出“解除警报”。</li>
+        <li><b>消退不是删除</b>：被“解除”的恐惧仍在，只是被一条新记忆压住了。</li>
+        <li><b>伏隔核管“想要”</b>：它是奖赏与动机的枢纽，多巴胺更多驱动渴望，而不是快感本身。</li>
+        <li><b>概念在更新</b>：“恐惧中枢”“边缘系统”都是有用的简化，但学界正在修正它们。</li>
+      </ul>
+    </div>
+    <div class="question" style="margin-top:24px">
+      <span class="lbl">想一想</span>
+      <p>暴露疗法能让怕狗的人慢慢不怕狗，但几年后在陌生的地方被狗吓到，恐惧可能突然回来。结合“消退”的原理，你会怎么解释？</p>
+    </div>
+    <details>
+      <summary>提示（不含答案）</summary>
+      <div class="inner"><p>想想消退学到的到底是“狗不危险”，还是“在这里、这种情况下狗不危险”；再想想旧记忆去哪儿了。</p></div>
+    </details>
+  </section>
+
+  <!-- ========== 来源 ========== -->
+  <section id="sources">
+    <div class="sec-head"><span class="sec-no">08</span><h2>来源汇总</h2></div>
+    <p class="swipe-hint">← 左右滑动查看完整表格 →</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>来源</th><th>类型</th><th>本文用于</th><th>链接</th></tr></thead>
+        <tbody>
+          <tr id="src-book"><td>1</td><td>《津巴多普通心理学》9.10.4「大脑皮层与边缘系统的连接」及图 9-10</td><td>教材</td><td>四个脑区的教材表述、混音比喻、战斗或逃跑</td><td>无在线链接</td></tr>
+          <tr><td>2</td><td>LeDoux, J. E. (2000). Emotion circuits in the brain. <i>Annu Rev Neurosci</i>, 23, 155–184.</td><td>综述</td><td>恐惧条件反射与杏仁核</td><td><a href="https://pubmed.ncbi.nlm.nih.gov/10845062/" target="_blank" rel="noopener">PubMed</a></td></tr>
+          <tr><td>3</td><td>The Open University, OpenLearn：Emotions and emotional disorders, 2.4</td><td>大学教学资料</td><td>低路 / 高路及其近似时长</td><td><a href="https://www.open.edu/openlearn/health-sports-psychology/health/emotions-and-emotional-disorders/content-section-2.4" target="_blank" rel="noopener">open.edu</a></td></tr>
+          <tr><td>4</td><td>无意识恐惧加工的神经机制（中文综述，SciEngine）</td><td>中文综述</td><td>Öhman 后向掩蔽实验</td><td><a href="https://www.sciengine.com/doi/pdf/53DF52ABB39D4212802FA7CF51BAB7D7" target="_blank" rel="noopener">sciengine.com</a></td></tr>
+          <tr><td>5</td><td>An auditory “low road” for threat in humans sensitive to fast temporal cues (2025)</td><td>预印本（未经同行评审）</td><td>人类听觉低路尚无定论</td><td><a href="https://www.biorxiv.org/content/10.64898/2025.12.24.690990.full.pdf" target="_blank" rel="noopener">bioRxiv</a></td></tr>
+          <tr><td>6</td><td>The Klüver-Bucy Syndrome. <i>Front Neurol Neurosci</i> (2018), 41, 77–89.</td><td>综述</td><td>克吕弗-布西综合征</td><td><a href="https://pubmed.ncbi.nlm.nih.gov/29145186/" target="_blank" rel="noopener">PubMed</a></td></tr>
+          <tr><td>7</td><td>Bechara, A. et al. (1995). Double dissociation of conditioning and declarative knowledge relative to the amygdala and hippocampus in humans. <i>Science</i>, 269, 1115–1118.</td><td>原始研究</td><td>杏仁核 / 海马双重分离</td><td><a href="https://iro.uiowa.edu/esploro/outputs/journalArticle/Double-dissociation-of-conditioning-and-declarative/9984002406702771" target="_blank" rel="noopener">爱荷华大学</a></td></tr>
+          <tr><td>8</td><td>Feinstein, J. S. et al. (2011). The human amygdala and the induction and experience of fear. <i>Curr Biol</i>, 21, 34–38.</td><td>原始研究</td><td>病人 SM</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3030206" target="_blank" rel="noopener">PMC</a></td></tr>
+          <tr><td>9</td><td>LeDoux, J. E. &amp; Pine, D. S. (2016). Using neuroscience to help understand fear and anxiety: a two-system framework. <i>Am J Psychiatry</i>.</td><td>综述</td><td>“恐惧中枢”之争</td><td><a href="https://ajp.psychiatryonline.org/doi/full/10.1176/appi.ajp.2016.16030353" target="_blank" rel="noopener">AJP</a></td></tr>
+          <tr><td>10</td><td>Fanselow, M. S. &amp; Pennington, Z. T. (2018). A return to the psychiatric dark ages with a two-system framework for fear.</td><td>评论</td><td>对双系统框架的反驳</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5794606" target="_blank" rel="noopener">PMC</a></td></tr>
+          <tr><td>11</td><td>Damasio, H. et al. (1994). The return of Phineas Gage. <i>Science</i>, 264, 1102–1105.</td><td>原始研究</td><td>盖奇案例</td><td><a href="https://pubmed.ncbi.nlm.nih.gov/8178168/" target="_blank" rel="noopener">PubMed</a></td></tr>
+          <tr><td>12</td><td>Bechara, A. et al. (1999). Different contributions of the human amygdala and ventromedial prefrontal cortex to decision-making. <i>J Neurosci</i>.</td><td>原始研究</td><td>躯体标记假说</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6782338" target="_blank" rel="noopener">PMC</a></td></tr>
+          <tr><td>13</td><td>Dunn, B. D. et al. (2006). The somatic marker hypothesis: a critical evaluation. <i>Neurosci Biobehav Rev</i>, 30, 239–271.</td><td>批判性综述</td><td>躯体标记假说的争议</td><td><a href="https://www.mrc-cbu.cam.ac.uk/personal/tim.dalgleish/dunnsmhreview.pdf" target="_blank" rel="noopener">剑桥 MRC（PDF）</a></td></tr>
+          <tr><td>14</td><td>Milad, M. R. &amp; Quirk, G. J. (2002). Neurons in medial prefrontal cortex signal memory for fear extinction. <i>Nature</i>, 420, 70–74.</td><td>原始研究</td><td>恐惧消退</td><td><a href="https://www.nature.com/articles/nature01138" target="_blank" rel="noopener">Nature</a></td></tr>
+          <tr><td>15</td><td>APA Monitor (2003). 关于 Milad &amp; Quirk 研究的报道</td><td>专业学会报道</td><td>刺激前额叶减少僵住、“解除警报”</td><td><a href="https://www.apa.org/monitor/jan03/brain" target="_blank" rel="noopener">apa.org</a></td></tr>
+          <tr><td>16</td><td>黄益霞, 王金霞, 雷怡 (2024). 条件性恐惧消退记忆的编码、巩固、提取及其干预. 《心理科学》47(4), 803–811.</td><td>中文综述</td><td>消退形成新记忆</td><td><a href="https://jps.ecnu.edu.cn/CN/10.16719/j.cnki.1671-6981.20240405" target="_blank" rel="noopener">心理科学</a></td></tr>
+          <tr><td>17</td><td>夏文然, 陈思, 王亮 (2019). 条件化恐惧记忆消退的神经振荡机制. 《生物化学与生物物理进展》46(3), 276–286.</td><td>中文综述（中科院心理所）</td><td>消退相关脑区</td><td><a href="https://www.pibb.ac.cn/pibbcn/article/pdf/20180251" target="_blank" rel="noopener">PIBB（PDF）</a></td></tr>
+          <tr><td>18</td><td>Olds, J. &amp; Milner, P. (1954). Positive reinforcement produced by electrical stimulation of septal area and other regions of rat brain.</td><td>原始研究</td><td>脑刺激奖赏</td><td><a href="https://pubmed.ncbi.nlm.nih.gov/13233369/" target="_blank" rel="noopener">PubMed</a></td></tr>
+          <tr><td>19</td><td>Salimpoor, V. N. et al. (2011). Anatomically distinct dopamine release during anticipation and experience of peak emotion to music. <i>Nat Neurosci</i>, 14, 257–262.</td><td>原始研究</td><td>音乐与多巴胺</td><td><a href="https://www.zlab.mcgill.ca/publications/docs/salimpoor_2011_nn.pdf" target="_blank" rel="noopener">麦吉尔 Zatorre 实验室（PDF）</a></td></tr>
+          <tr><td>20</td><td>Berridge, K. C. &amp; Kringelbach, M. L. (2015). Pleasure systems in the brain. <i>Neuron</i>.</td><td>综述</td><td>喜欢 / 想要，享乐热点</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4425246/" target="_blank" rel="noopener">PMC</a></td></tr>
+          <tr><td>21</td><td>中国科学院神经科学研究所新闻：胡海岚团队 2014 年《自然·神经科学》情绪效价图谱研究</td><td>研究机构官方发布</td><td>伏隔核中愉悦 / 厌恶神经元交错</td><td><a href="https://english.ion.ac.cn/News/ResearchNews/2015year/201409/t20140922_216681.html" target="_blank" rel="noopener">ion.ac.cn</a></td></tr>
+          <tr><td>22</td><td>LeDoux, J. E. (2012). Evolution of human emotion: a view through fear. <i>Prog Brain Res</i>.</td><td>综述</td><td>边缘系统概念史</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3600914" target="_blank" rel="noopener">PMC</a></td></tr>
+          <tr><td>23</td><td>McGill University, The Brain from Top to Bottom：The Triune Brain / Limbic System Model</td><td>大学科普</td><td>对边缘系统概念的批评</td><td><a href="https://thebrain.lecerveau.ca/flash/capsules/histoire_bleu09.html" target="_blank" rel="noopener">lecerveau.ca</a></td></tr>
+          <tr><td>24</td><td>Marzullo, T. C. (2017). The missing manuscript of Dr. Jose Delgado's radio controlled bulls. <i>J Undergrad Neurosci Educ</i>.</td><td>文献评述</td><td>德尔加多斗牛实验</td><td><a href="https://www.pubmed.gov/28690447/" target="_blank" rel="noopener">PubMed</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<footer><div class="wrap">科普 · 延伸阅读《津巴多普通心理学》9.10.4　·　文中示意图均为自绘简化图</div></footer>
+
+<button id="toTop" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  function get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+  function set(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  if(get('emo-theme')==='dark') root.setAttribute('data-theme','dark');
+  btn.addEventListener('click',function(){
+    if(root.getAttribute('data-theme')==='dark'){root.removeAttribute('data-theme');set('emo-theme','light');}
+    else{root.setAttribute('data-theme','dark');set('emo-theme','dark');}
+  });
+
+  var top=document.getElementById('toTop');
+  var lastY=window.scrollY;
+  function onScroll(){
+    var y=window.scrollY, phone=window.innerWidth<900;
+    var nearEnd=(window.innerHeight+y)>=document.documentElement.scrollHeight-80;
+    var show=y>300 && (!phone || y<lastY || nearEnd);
+    top.classList.toggle('show',show); lastY=y;
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  // 导航高亮当前分节
+  var links=[].slice.call(document.querySelectorAll('#navLinks a'));
+  var map={}; links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.remove('active');});
+          var a=map[e.target.id]; if(a){a.classList.add('active');
+            var box=a.parentNode; var l=a.offsetLeft-box.clientWidth/2+a.clientWidth/2; box.scrollTo({left:l,behavior:'smooth'});}
+        }
+      });
+    },{rootMargin:'-40% 0px -55% 0px'});
+    Object.keys(map).forEach(function(id){var s=document.getElementById(id); if(s) io.observe(s);});
+  }
+
+
+  // 脑区标签
+  var info={vm:'<b>VMPFC · 腹内侧前额叶皮层</b>：额叶底部、眼睛后方。整合刺激、记忆和身体感受，并能向杏仁核发出“解除警报”。',
+            na:'<b>伏隔核</b>：VMPFC 后方深处，奖赏与动机的枢纽，和“想要”关系最密切。',
+            am:'<b>杏仁核</b>：颞叶内侧深处，杏仁大小。快速探测威胁，触发心跳加快、僵住等反应。',
+            hi:'<b>海马</b>：紧挨杏仁核向后弯，记录“发生了什么、在哪里”这类事实记忆。'};
+  var bs=document.getElementById('brainSvg'), ci=document.getElementById('chipInfo');
+  [].forEach.call(document.querySelectorAll('.chip'),function(c){
+    c.setAttribute('aria-pressed','false');
+    c.addEventListener('click',function(){
+      var r=c.dataset.r, on=bs.getAttribute('data-focus')===r;
+      [].forEach.call(document.querySelectorAll('.chip'),function(x){x.setAttribute('aria-pressed','false');});
+      if(on){bs.removeAttribute('data-focus');ci.textContent='点一个标签，看看它在哪、负责什么。';}
+      else{bs.setAttribute('data-focus',r);c.setAttribute('aria-pressed','true');ci.innerHTML=info[r];}
+    });
+  });
+  // 动画暂停
+  var rs=document.getElementById('roadSvg'), pb=document.getElementById('roadPlay');
+  function setPlay(play){ if(play){rs.unpauseAnimations();pb.textContent='❚❚ 暂停动画';pb.setAttribute('aria-pressed','false');}
+    else{rs.pauseAnimations();pb.textContent='▶ 播放动画';pb.setAttribute('aria-pressed','true');} }
+  pb.addEventListener('click',function(){ setPlay(pb.getAttribute('aria-pressed')==='true'); });
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ setTimeout(function(){setPlay(false);},50); }
+})();
+</script>
+</body>
+</html>
