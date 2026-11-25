@@ -682,5 +682,30 @@
     "updated": "2026-11-10",
     "featured": false,
     "type": "html"
+  },
+  {
+    "id": "emotion-brain-9-10-4",
+    "title": "情绪和理性，在大脑的哪里相遇？",
+    "subtitle": "《津巴多普通心理学》9.10.4 延伸阅读｜情绪脑、恐惧消退与奖赏机制",
+    "file": "emotion-brain-9-10-4.html",
+    "categories": [
+      "science"
+    ],
+    "tags": [
+      "神经科学",
+      "心理学",
+      "情绪",
+      "VMPFC",
+      "杏仁核",
+      "海马",
+      "伏隔核",
+      "多巴胺",
+      "恐惧消退"
+    ],
+    "summary": "从杏仁核、海马、腹内侧前额叶与伏隔核的功能出发，结合经典实验和互动图解，解释情绪与理性、恐惧学习和奖赏动机的联系。",
+    "created": "2026-11-25",
+    "updated": "2026-11-25",
+    "featured": false,
+    "type": "html"
   }
 ]
