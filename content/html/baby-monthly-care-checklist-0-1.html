@@ -13255,7 +13255,7 @@ body{margin:0;background:var(--bg);font-family:'DotFix','Microsoft YaHei','微�
 </g>
 </svg>
 </section>
-<button id="top" aria-label="回到顶部" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="top" aria-label="回到顶部">↑</button>
 <script>
-const t=document.getElementById('top');addEventListener('scroll',()=>t.classList.toggle('show',scrollY>300),{passive:true});
+const t=document.getElementById('top');t.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});addEventListener('scroll',()=>t.classList.toggle('show',scrollY>300),{passive:true});
 </script></body></html>
