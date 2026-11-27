@@ -54,5 +54,13 @@
     "description": "游戏、模拟器、硬件配置、画质与性能优化",
     "accent": "#596DA8",
     "order": 7
+  },
+  {
+    "id": "parenting",
+    "name": "育儿与成长",
+    "nameEn": "Parenting & Child Development",
+    "description": "婴幼儿照护、喂养、发育里程碑与科学育儿",
+    "accent": "#3E9A78",
+    "order": 8
   }
 ]

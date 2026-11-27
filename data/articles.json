@@ -707,5 +707,30 @@
     "updated": "2026-11-25",
     "featured": false,
     "type": "html"
+  },
+  {
+    "id": "baby-monthly-care-checklist-0-1",
+    "title": "0~1岁宝宝月度养育清单",
+    "subtitle": "12 个月 × 10 个方面，一本「可抄作业」的照护清单",
+    "file": "baby-monthly-care-checklist-0-1.html",
+    "categories": [
+      "parenting"
+    ],
+    "tags": [
+      "育儿",
+      "婴儿",
+      "喂养",
+      "辅食",
+      "疫苗",
+      "发育里程碑",
+      "身长体重",
+      "睡眠",
+      "体检"
+    ],
+    "summary": "把宝宝第一年拆成 12 站，每月讲喂养、排便、户外、身高体重、玩耍、教育、生病、睡觉、疫苗与发育里程碑，附疫苗、生长、体检总表。",
+    "created": "2026-11-27",
+    "updated": "2026-11-27",
+    "featured": false,
+    "type": "html"
   }
 ]
