@@ -1,0 +1,59 @@
+# Knowledge Atlas (知识黄页) maintenance — runs on GitHub's servers, which can reach the sites.
+#  • When data/yellow-pages.json is pushed: tidy names/URLs and fetch description + preview image
+#    for any new site (just add {"n","u","c","s"}; everything else is filled in).
+#  • On the 1st of every month: re-check every link and mark dead ones.
+#  • Can also be run by hand: Actions → "Yellow pages" → Run workflow.
+name: Yellow pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/yellow-pages.json"
+      - "tools/yellow_pages.py"
+  schedule:
+    - cron: "17 3 1 * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "enrich = only fill what is missing · check = re-check every link"
+        required: true
+        default: enrich
+        type: choice
+        options: [enrich, check]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: yellow-pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pillow
+        run: pip install --quiet pillow
+
+      - name: Update yellow pages
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then MODE=check; fi
+          python3 tools/yellow_pages.py "${MODE:-enrich}"
+
+      - name: Commit changes
+        run: |
+          git add data/yellow-pages.json assets/yp-thumbs 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nothing to update."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Yellow pages: update descriptions, previews and link status"
+          git pull --rebase origin main
+          git push origin HEAD:main
