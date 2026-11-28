@@ -52,7 +52,7 @@ SECTION = {"overview", "paintings", "painting", "artists", "artist", "works", "w
 FIXED_SUFFIXES = [r"_哔哩哔哩_bilibili$", r"_哔哩哔哩 \(゜-゜\)つロ 干杯~-bilibili$", r"_bilibili$", r" - YouTube$",
                   r" - 知乎$", r"_知乎$", r" - 维基百科，自由的百科全书$", r" - Wikipedia$", r" – 世界上最大的电子图书馆。.*$",
                   r" - Powered by Discuz!$"]
-SEP = re.compile(r"\s*[|｜]\s*|\s+[–—·•»:]{1,2}\s+|\s+-\s+|\s+_\s+|(?<=[^\x00-\x7f])_|_(?=[^\x00-\x7f])")
+SEP = re.compile(r"\s*[|｜]\s*|\s+[–—·•»:]{1,2}\s+|\s+-\s+|\s+_\s+|(?<=[^\x00-\x7f])[_\-—]|[_\-—](?=[^\x00-\x7f])")
 CJK = r"[\u3040-\u30ff\u3400-\u9fff\uf900-\ufaff]"
 
 
@@ -68,7 +68,8 @@ def clean_url(u):
 
 def norm_url(u):
     p = urllib.parse.urlsplit(u.lower())
-    return (p.netloc.removeprefix("www.") + p.path.rstrip("/") + ("?" + p.query if p.query else ""))
+    path = re.sub(r"/(index|default)\.(html?|php|shtml|aspx?)$", "", p.path).rstrip("/")
+    return (p.netloc.removeprefix("www.") + path + ("?" + p.query if p.query else ""))
 
 
 def clean_name(title):
@@ -183,17 +184,24 @@ def decode(body, ctype):
     enc = m.group(1) if m else "utf-8"
     if isinstance(enc, bytes):
         enc = enc.decode("ascii", "ignore")
-    if enc.lower() in ("gb2312", "gbk"):
-        enc = "gb18030"
+    enc = {"gb2312": "gb18030", "gbk": "gb18030", "big5": "big5hkscs"}.get(enc.lower(), enc)
     try:
-        return body.decode(enc, "replace")
+        text = body.decode(enc, "replace")
     except LookupError:
-        return body.decode("utf-8", "replace")
+        text = body.decode("utf-8", "replace")
+    if text.count("\ufffd") > max(20, len(text) // 200):  # wrong charset declared: try the usual suspects
+        for alt in ("utf-8", "gb18030", "big5hkscs", "shift_jis"):
+            t = body.decode(alt, "replace")
+            if t.count("\ufffd") < text.count("\ufffd"):
+                text = t
+    return text
 
 
-def classify_error(e):
+def classify_error(e, url=""):
     if isinstance(e, urllib.error.HTTPError):
-        return ("dead" if e.code in (404, 410) else "unknown"), e.code
+        # Many sites answer bots with 404 on their home page; only trust 404/410 for deep links.
+        path = urllib.parse.urlsplit(url).path.strip("/")
+        return ("dead" if e.code in (404, 410) and path and path not in ("index.html", "index.php", "index.shtml") else "unknown"), e.code
     reason = getattr(e, "reason", e)
     if isinstance(reason, socket.gaierror) and reason.errno in (socket.EAI_NONAME, getattr(socket, "EAI_NODATA", -5)):
         return "dead", "dns"
@@ -217,7 +225,7 @@ def fetch_page(url):
             except urllib.error.URLError as e:
                 if isinstance(getattr(e, "reason", None), ssl.SSLError) and not loose:
                     continue
-                last = classify_error(e)
+                last = classify_error(e, u)
                 break
             except Exception as e:
                 last = ("unknown", type(e).__name__)
@@ -275,6 +283,9 @@ def process(site, want_meta):
     except Exception:
         pass
     desc = first(p.meta, "og:description", "description", "twitter:description")
+    if desc and (re.search(r"[\[\]{}<>\ufffd]|\$\{|undefined", desc) or len(desc) < 12
+                 or desc.lower() in (site.get("n", "").lower(), (site.get("o") or "").lower())):
+        desc = ""
     if desc:
         out["d"] = desc[:180] + ("…" if len(desc) > 180 else "")
     img = first(p.meta, "og:image", "og:image:url", "og:image:secure_url", "twitter:image", "twitter:image:src", "image")

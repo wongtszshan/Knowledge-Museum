@@ -1,181 +1,531 @@
 <!doctype html>
-<html lang="zh-CN"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f6f5f1"><title>知识坐标 · Knowledge Atlas | Knowledge Museum</title>
-<link rel="icon" href="assets/icons/app-icon-1024.png">
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f5f1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>知识坐标 · Knowledge Atlas | Knowledge Museum</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<script src="assets/js/theme.js"></script>
 <style>
-:root{--bg:#f6f5f1;--ink:#152d34;--muted:#627278;--line:#e3e8e6;--teal:#087e76;--shadow:0 14px 40px #203c3a14}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft Yahei",sans-serif}button,input{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.shell{max-width:1260px;margin:auto;padding:0 clamp(16px,4vw,54px) 80px}
-.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d8e2df;gap:12px}.brand{font-family:Georgia,serif;font-size:12px;font-weight:700;letter-spacing:.16em}.brand small{display:block;font:10px -apple-system,sans-serif;letter-spacing:.1em;color:var(--muted);margin-top:5px}.back{padding:11px 15px;border:1px solid #d3dfdc;border-radius:99px;font-size:12px;background:white;font-weight:700}
-.hero{min-height:450px;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(270px,.82fr);align-items:center;gap:20px;padding:34px 0 46px;position:relative}
-.kicker{display:flex;align-items:center;gap:10px;color:#087b75;text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.15em}.kicker:before{content:"";width:25px;height:2px;background:#e9a25c}h1{font-size:clamp(44px,5.6vw,81px);font-weight:800;letter-spacing:-.06em;line-height:1.09;margin:21px 0 22px}h1 span{background:linear-gradient(94deg,#07867d 0%,#1478b4 48%,#bb72a9 100%);color:transparent;background-clip:text;-webkit-background-clip:text}.hero p{max-width:520px;color:#5b7072;font-size:15px;line-height:1.9;margin:0}.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}.pill{background:#fff;border:1px solid #dfe8e5;border-radius:50px;padding:9px 13px;color:#426368;font-size:12px}.pill b{font-size:15px;color:#154248}.orbit{width:min(100%,470px);justify-self:center;filter:drop-shadow(0 17px 26px #2e726522)}.orbit .ring{transform-origin:center;animation:spin 85s linear infinite}.orbit .ring2{animation:spin 65s linear infinite reverse;transform-origin:center}@keyframes spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.orbit .ring,.orbit .ring2{animation:none}}
-.searchpanel{border-radius:24px;background:#fff;box-shadow:var(--shadow);padding:16px;position:relative;margin-top:-8px;z-index:2;border:1px solid #e5eae7}.searchrow{display:flex;align-items:center;gap:10px}.searchicon{width:23px;flex:none;stroke:#287a78}.searchrow input{border:0;outline:0;min-width:0;flex:1;padding:14px 2px;font-size:16px;background:transparent;color:var(--ink)}.clear{border:0;background:#eef4f2;border-radius:12px;padding:10px 14px;color:#266c69;font-weight:700}.bar{height:1px;background:#eef0ee;margin:7px 0 13px}.quick{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.quick button{background:#f0f5f2;border:0;border-radius:99px;padding:9px 12px;color:#547077;font-size:12px}.quick button:hover{background:#dcf1ea;color:#086860}.quick span{font-size:12px;color:#88999b;margin-right:6px}
-.section{margin-top:46px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:22px}.eyebrow{font-family:Georgia,serif;font-size:11px;letter-spacing:.16em;color:#0d857e;text-transform:uppercase;font-weight:700}.section h2{margin:8px 0 0;font-size:clamp(24px,3vw,33px);letter-spacing:-.035em}.subtle{color:#82918f;font-size:12px}
-.catgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.cat{position:relative;text-align:left;display:flex;flex-direction:column;justify-content:space-between;min-height:156px;overflow:hidden;border:1px solid #e3e9e4;border-radius:21px;padding:20px;background:#fff;transition:transform .18s,box-shadow .18s,border-color .18s}.cat:hover{transform:translateY(-3px);box-shadow:0 14px 32px #2346421c}.cat.active{border-color:#037c75;box-shadow:0 0 0 2px #087e7629}.cat .num{font:12px Georgia,serif;color:#436366}.cat .mark{position:absolute;right:-10px;top:-14px;width:100px;height:100px;border-radius:35% 65% 60% 40%;transform:rotate(-25deg);opacity:.68}.cat .glyph{position:relative;font-size:25px;line-height:1;margin-bottom:12px}.cat strong{position:relative;font-size:15px;display:block;line-height:1.5}.cat small{position:relative;color:#687a7c;font-size:11px;margin-top:5px;display:block}.cat:nth-child(5n+1){background:#e5f5ef}.cat:nth-child(5n+1) .mark{background:#b4e9d9}.cat:nth-child(5n+2){background:#edf0ff}.cat:nth-child(5n+2) .mark{background:#ccd7ff}.cat:nth-child(5n+3){background:#fff1e1}.cat:nth-child(5n+3) .mark{background:#ffd7a5}.cat:nth-child(5n+4){background:#fbeaf2}.cat:nth-child(5n+4) .mark{background:#f9c4dc}.cat:nth-child(5n){background:#eef2ec}.cat:nth-child(5n) .mark{background:#c7e4c5}
-.catalogue{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;align-items:start}.side{position:sticky;top:12px;background:#fff;border-radius:20px;padding:16px;box-shadow:0 6px 22px #2f40360a;border:1px solid var(--line)}.sidehead{font-size:12px;color:#809393;font-weight:700;letter-spacing:.1em;margin:5px 7px 11px}.filter{display:block;width:100%;text-align:left;background:transparent;border:0;border-radius:11px;padding:11px;color:#446067;font-size:12px;line-height:1.4}.filter.active{background:#e3f4f0;color:#036d67;font-weight:800}.filter b{float:right;font-weight:500;color:#849a98}.resulttools{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}.resulttools strong{font-size:17px}.resulttools p{margin:6px 0 0;color:#79908e;font-size:12px}.sort{border:1px solid #d9e4e0;background:#fff;border-radius:10px;padding:10px;color:#40666c}.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;scrollbar-width:thin}.chip{white-space:nowrap;border:1px solid #dbe6e1;background:#fff;border-radius:22px;padding:9px 13px;font-size:12px;color:#52716e}.chip.active{color:#fff;background:#126e6a;border-color:#126e6a}
-.sites{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.site{background:#fff;border:1px solid #e1e8e3;border-radius:19px;padding:19px;min-width:0;display:flex;flex-direction:column;gap:10px;transition:transform .18s,border-color .18s}.site:hover{transform:translateY(-2px);border-color:#b4d1c9}.site-top{display:flex;gap:12px;align-items:start}.favicon{width:39px;height:39px;background:#eff4f0;border-radius:12px;display:grid;place-items:center;font-size:18px;flex:none;color:#2a7974}.site-content{min-width:0;flex:1}.site h3{font-size:14px;line-height:1.5;margin:0 0 6px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.domain{font:11px Georgia,serif;color:#829494;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{border-radius:6px;background:#eff5f2;color:#4b7772;font-size:10px;padding:5px 7px}.tag.data{background:#edf0ff;color:#5e69a3}.actions{display:flex;gap:8px;margin-top:auto}.actions a,.actions button{border:1px solid #dce7e3;border-radius:9px;background:#fff;padding:10px 12px;font-size:12px;white-space:nowrap}.actions a{background:#126e69;border-color:#126e69;color:white;flex:1;text-align:center;font-weight:700}.actions button:hover{background:#eef7f3}.empty{text-align:center;padding:50px 20px;background:white;border-radius:20px;color:#768b89}.loadmore{display:block;margin:24px auto;background:#fff;border:1px solid #d4e1db;padding:14px 24px;border-radius:99px;font-weight:700;color:#23635f}.note{margin-top:55px;background:#eaf0ed;border-radius:22px;padding:22px 26px;display:flex;justify-content:space-between;gap:20px;align-items:center}.note strong{font-size:15px}.note p{font-size:12px;line-height:1.8;color:#657d7a;margin:7px 0 0}.footer{margin-top:28px;color:#93a3a0;font-size:11px;text-align:center}
-@media(max-width:940px){.catgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.catalogue{grid-template-columns:195px minmax(0,1fr)}.sites{grid-template-columns:1fr}}
-@media(max-width:680px){.shell{padding:0 16px 48px}.topbar{height:66px}.brand{font-size:10px;letter-spacing:.1em}.back{font-size:11px;padding:9px}.hero{grid-template-columns:1fr;min-height:0;padding:38px 2px 25px}.hero p{font-size:13px}.orbit{width:195px;position:absolute;right:-35px;top:6px;opacity:.25;pointer-events:none}.hero h1{font-size:45px;position:relative}.hero .pill-row{position:relative}.searchpanel{margin-top:0;padding:12px}.catgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{min-height:138px;padding:15px}.cat .mark{width:78px;height:78px}.cat strong{font-size:13px}.catalogue{display:block}.side{display:none}.sites{grid-template-columns:1fr}.site{padding:16px}.section{margin-top:35px}.section-head{margin-bottom:17px}.note{align-items:start;display:block}.note .back{display:inline-block;margin-top:13px}}
+:root{--bg:#f6f5f1;--paper:#fff;--ink:#152d34;--muted:#627278;--soft:#8a9a98;--line:#e3e8e6;--line2:#d3dfdc;--teal:#087e76;--teal-ink:#0b6d67;--teal-soft:#e5f5ef;--gold:#e9a25c;--pink:#c45f8f;--shadow:0 14px 40px #203c3a14;--shadow-s:0 4px 16px #203c3a0d;
+ --fs-body:clamp(15px,.35vw + 13.6px,17px);--fs-title:clamp(16.5px,.4vw + 15px,19px);--radius:20px;--safe-b:env(safe-area-inset-bottom,0px)}
+[data-theme="dark"]{color-scheme:dark;--bg:#111816;--paper:#18211f;--ink:#e3ece9;--muted:#9aaba8;--soft:#788a87;--line:#26322f;--line2:#33433f;--teal:#3fb5a8;--teal-ink:#7fd3c8;--teal-soft:#16302b;--gold:#e0a463;--pink:#e08ab3;--shadow:0 14px 40px #0006;--shadow-s:0 4px 16px #0004}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft Yahei",sans-serif;font-size:var(--fs-body);line-height:1.6;overflow-x:hidden}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+.shell{max-width:1260px;margin:auto;padding:0 max(clamp(16px,4vw,48px),env(safe-area-inset-right)) calc(90px + var(--safe-b)) max(clamp(16px,4vw,48px),env(safe-area-inset-left))}
 
-/* Responsive geometry and quick-wayfinding */
-html,body{width:100%;max-width:100%;overflow-x:clip}
-.shell{width:100%;min-width:0;margin-left:auto;margin-right:auto}
-main,.hero,.searchpanel,.section,.catalogue,.sites{min-width:0;max-width:100%}
-.cat,.site,.resulttools,.section-head{min-width:0}
-.catgrid{min-width:0}
-.quick,.chips{max-width:100%}
-#results{scroll-margin-top:18px}
-.category-toggle{display:none}
-.floatnav{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:30;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s}
-.floatnav.visible{opacity:1;transform:none;pointer-events:auto}
-.floatnav button{border:1px solid #c7e1d8;background:#fff;color:#125f5b;border-radius:99px;box-shadow:0 8px 26px #163a3630;padding:13px 16px;font-weight:750;font-size:12px}
-.floatnav .primary{background:#116f69;color:#fff;border-color:#116f69}
-.category-overlay[hidden]{display:none!important}
-.category-overlay{position:fixed;inset:0;z-index:50;display:grid;align-items:end;justify-items:center}
-.category-scrim{position:absolute;inset:0;background:#0a2429a6;border:0;width:100%}
-.category-sheet{position:relative;width:min(100%,640px);background:#f9faf8;border-radius:24px 24px 0 0;max-height:min(80dvh,760px);display:flex;flex-direction:column;padding:21px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -18px 80px #08201d45}
-.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
-.sheet-head h2{font-size:21px;margin:5px 0 0}
-.sheet-close{border:1px solid #d7e5dd;background:white;border-radius:50%;width:40px;height:40px;font-size:23px}
-.sheet-options{overflow:auto;overscroll-behavior:contain;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:2px}
-.sheet-item{border:1px solid #dce9e2;background:#fff;border-radius:14px;padding:14px 12px;text-align:left;color:#244e4c;display:flex;flex-direction:column;gap:6px;min-width:0}
-.sheet-item span{font-size:12px;line-height:1.5;font-weight:700}
-.sheet-item small{color:#839893;font-size:11px}
-.sheet-item.active{border-color:#087e76;background:#e5f6f0}
-body.sheet-open{overflow:hidden}
-@media(max-width:680px){
-  .shell{max-width:100%;margin:0 auto;overflow:clip;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:calc(110px + env(safe-area-inset-bottom))}
-  .hero{overflow:hidden;isolation:isolate;padding-right:0}
-  .orbit{right:0;max-width:48vw;top:6px;transform:translateX(18%);opacity:.2}
-  .hero>div:first-child{position:relative;z-index:1;min-width:0}
-  .hero h1{max-width:100%}
-  .searchpanel{width:100%;margin-inline:auto}
-  .searchrow,.section-head,.resulttools{max-width:100%;min-width:0}
-  .catgrid{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;margin-inline:auto}
-  .cat[data-collapse="true"]{display:none}
-  .category-toggle{display:block;width:100%;border:1px solid #c9dfd6;background:white;color:#086e67;padding:13px;border-radius:14px;font-weight:750;margin-top:11px}
-  .sites{width:100%;margin-inline:auto}
-  .site,.cat{max-width:100%}
-  .floatnav{right:max(16px,env(safe-area-inset-right))}
+/* top bar */
+.topbar{min-height:70px;padding-top:env(safe-area-inset-top,0px);display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line2)}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:12px;font-weight:700;letter-spacing:.16em;line-height:1.3}
+.brand small{display:block;font:10px/1.4 -apple-system,sans-serif;letter-spacing:.1em;color:var(--muted);margin-top:4px}
+.top-controls{display:flex;align-items:center;gap:8px}
+.pill-btn{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 15px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);font-size:13px;font-weight:700;white-space:nowrap}
+.pill-btn:hover{border-color:var(--teal)}
+.km-theme-toggle{min-height:44px;min-width:44px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);font-size:16px}
+.language-switch{display:inline-flex;padding:3px;border:1px solid var(--line2);border-radius:99px;background:var(--teal-soft)}
+.language-switch button{min-width:40px;min-height:38px;border:0;border-radius:99px;background:transparent;color:var(--teal-ink);font-size:12px;font-weight:800}
+.language-switch button.active{background:var(--teal);color:#fff}
+@media(max-width:620px){
+ .topbar{flex-wrap:wrap;padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px}
+ .brand{flex:1 1 auto}
+ .top-controls{width:100%;justify-content:space-between}
+ .back-label{display:none}
 }
 
-.language-switch{display:flex;gap:3px;padding:4px;background:#edf4f0;border:1px solid #d4e4dd;border-radius:50px;flex-shrink:0}
-.language-switch button{border:0;background:transparent;border-radius:99px;color:#55716d;min-height:32px;min-width:37px;padding:7px 10px;font-size:11px;font-weight:750;letter-spacing:.02em}
-.language-switch button.active{background:#116e69;color:white;box-shadow:0 2px 8px #19504b24}
-.top-controls{display:flex;align-items:center;gap:12px;margin-left:auto;flex-shrink:0}
-@media(max-width:680px){.topbar{gap:7px}.topbar .brand{max-width:116px;min-width:0;line-height:1.25;overflow-wrap:normal;letter-spacing:.04em}.topbar .brand small{display:none}.top-controls{gap:5px}.language-switch{padding:3px}.language-switch button{min-width:30px;padding:7px 8px;min-height:31px}.topbar .back{font-size:10px;padding:9px 10px}.brand{min-width:0}.brand small{font-size:8px}}
-</style></head><body>
+/* header */
+.intro{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;padding:clamp(22px,4vw,40px) 0 clamp(14px,2.4vw,24px)}
+.kicker{display:flex;align-items:center;gap:10px;color:var(--teal);text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.15em}
+.kicker:before{content:"";width:22px;height:2px;background:var(--gold)}
+h1{font-size:clamp(27px,3.4vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.2;margin:12px 0 10px}
+h1 [data-t="heroB"]{background:linear-gradient(94deg,#07867d 0%,#1478b4 52%,#bb72a9 100%);color:transparent;-webkit-background-clip:text;background-clip:text}
+[data-theme="dark"] h1 [data-t="heroB"]{background-image:linear-gradient(94deg,#4cc3b5 0%,#6aaee0 52%,#e09ac9 100%)}
+.intro p{margin:0;color:var(--muted);max-width:560px;font-size:clamp(14px,.3vw + 13px,16px)}
+.orbit{width:clamp(96px,12vw,150px);height:auto;filter:drop-shadow(0 10px 18px #2e726522)}
+.orbit .ring{transform-origin:center;animation:spin 85s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.orbit .ring{animation:none}}
+@media(max-width:620px){.orbit{display:none}.intro{grid-template-columns:1fr}}
+
+/* sticky bar: tabs + search */
+.bar{position:sticky;top:0;z-index:30;margin:0 calc(-1 * clamp(16px,4vw,48px));padding:10px clamp(16px,4vw,48px);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;display:flex;gap:12px;align-items:center}
+.bar.stuck{border-bottom-color:var(--line)}
+.tabs{display:inline-flex;padding:4px;border-radius:99px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow-s);flex:0 0 auto}
+.tab{min-height:42px;padding:0 18px;border:0;border-radius:99px;background:transparent;font-size:14px;font-weight:700;color:var(--muted);white-space:nowrap}
+.tab.active{background:var(--teal);color:#fff}
+.tab b{font-weight:700;opacity:.75;margin-left:3px;font-size:12px}
+.search{flex:1 1 auto;display:flex;align-items:center;gap:8px;min-width:0;height:52px;padding:0 8px 0 16px;border-radius:99px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow-s)}
+.search:focus-within{border-color:var(--teal)}
+.search svg{width:20px;flex:none;stroke:var(--teal)}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:15px;height:100%}
+.search input::placeholder{color:var(--soft)}
+.clear{min-height:36px;border:0;border-radius:99px;background:var(--teal-soft);color:var(--teal-ink);font-size:12px;font-weight:700;padding:0 12px}
+@media(max-width:760px){.bar{flex-wrap:wrap;gap:8px}.tabs{width:100%}.tab{flex:1;padding:0 8px}.search{height:48px}}
+
+/* feed */
+.feed-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;flex-wrap:wrap}
+.feed-head h2,.dir-head h2{font-size:clamp(18px,1.4vw + 12px,22px);margin:0;letter-spacing:-.01em}
+.feed-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.feed-tools{display:flex;gap:8px;align-items:center}
+.select{min-height:44px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);padding:0 34px 0 14px;font-size:13px;font-weight:600;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;max-width:52vw}
+.feed{display:flex;gap:clamp(14px,1.6vw,22px);align-items:flex-start}
+.col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(14px,1.6vw,22px)}
+.card{position:relative;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-s);transition:transform .2s,box-shadow .2s,opacity .25s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card.is-seen{opacity:.86}
+.thumb{position:relative;aspect-ratio:16/9;background:var(--tint,#e5f5ef);overflow:hidden;display:block}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.thumb.band{aspect-ratio:auto;height:62px}
+.ph{position:absolute;inset:0;display:flex;align-items:center;gap:12px;padding:0 18px;background:linear-gradient(120deg,var(--tint,#e5f5ef),var(--tint2,#b4e9d9))}
+.ph:after{content:"";position:absolute;right:-18px;top:-26px;width:96px;height:96px;border-radius:44% 56% 62% 38%;background:var(--tint2,#b4e9d9);opacity:.8}
+.ph .glyph{position:relative;z-index:1;font-size:22px;line-height:1;color:#1d4a45}
+.ph .dom{position:relative;z-index:1;font:700 15px/1.2 Georgia,serif;color:#1d3d3a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+[data-theme="dark"] .ph{filter:brightness(.62) saturate(.9)}
+[data-theme="dark"] .thumb img{filter:brightness(.9)}
+.badge{position:absolute;right:12px;top:12px;z-index:2;font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;background:#ffffffe6;color:#2f4b48}
+.badge.dead{background:#fde8e8;color:#a33}
+.body{display:flex;flex-direction:column;gap:6px;padding:15px 18px 6px;flex:1}
+.meta{font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--teal);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card h3{margin:0;font-size:var(--fs-title);line-height:1.38;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card h3 a::after{content:"";position:absolute;inset:0;z-index:0}
+.desc{margin:0;color:var(--muted);font-size:14px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.desc.ai:before{content:attr(data-ai);font-size:10px;font-weight:800;color:var(--soft);border:1px solid var(--line2);border-radius:5px;padding:0 4px;margin-right:6px;vertical-align:1px}
+.foot{display:flex;align-items:center;gap:6px;padding:6px 10px 12px 18px;position:relative;z-index:1}
+.domain{flex:1;min-width:0;font-size:12px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon{min-width:44px;min-height:44px;border:0;border-radius:99px;background:transparent;font-size:18px;color:var(--soft);display:inline-grid;place-items:center}
+.icon:hover{background:var(--teal-soft);color:var(--teal-ink)}
+.icon.liked{color:var(--pink)}
+.card.gone{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;min-height:0;color:var(--muted);font-size:13px;box-shadow:none;background:transparent;border-style:dashed}
+.card.gone:hover{transform:none}
+.undo{min-height:40px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);padding:0 14px;font-size:13px;font-weight:700}
+.sentinel{height:1px}
+.end{text-align:center;color:var(--muted);padding:34px 0 10px;font-size:14px}
+.end button{margin-top:10px}
+
+/* directory */
+.dir-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:18px 0 10px;flex-wrap:wrap}
+.dir-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:4px 0 8px;margin:0 calc(-1 * clamp(16px,4vw,48px));padding-left:clamp(16px,4vw,48px);padding-right:clamp(16px,4vw,48px)}
+.chips::-webkit-scrollbar{display:none}
+@media(min-width:900px){.chips{flex-wrap:wrap;overflow:visible;margin:0;padding-left:0;padding-right:0}}
+.chip{flex:0 0 auto;min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+.chip small{opacity:.6;margin-left:4px;font-size:11px}
+.chip.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.chips.sub .chip{min-height:36px;font-size:12px;background:transparent}
+.chips.sub .chip.active{background:var(--teal-soft);color:var(--teal-ink);border-color:var(--teal)}
+.list{display:grid;gap:10px;margin-top:8px}
+@media(min-width:900px){.list{grid-template-columns:1fr 1fr}}
+.row{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 8px 12px 12px;background:var(--paper);border:1px solid var(--line);border-radius:16px}
+.row:hover{border-color:var(--teal)}
+.mini{width:64px;height:48px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,var(--tint,#e5f5ef),var(--tint2,#b4e9d9));display:grid;place-items:center;font-size:20px;color:#1d4a45}
+.mini img{width:100%;height:100%;object-fit:cover;object-position:top}
+[data-theme="dark"] .mini{filter:brightness(.8)}
+.row h3{margin:0;font-size:15.5px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row h3 a::after{content:"";position:absolute;inset:0}
+.row .desc{-webkit-line-clamp:1;font-size:13px}
+.row .domain{display:block;margin-top:2px}
+.row .tag-dead{color:#b33;font-weight:700}
+.row .acts{display:flex;position:relative;z-index:1}
+.more{display:block;margin:18px auto 0;min-height:48px;padding:0 26px;border:1px solid var(--line2);border-radius:99px;background:var(--paper);font-weight:700;color:var(--teal-ink)}
+.empty{padding:40px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line2);border-radius:var(--radius)}
+.archive{color:var(--teal-ink);text-decoration:underline;text-underline-offset:3px;font-size:12px;position:relative;z-index:1}
+.hidden-note{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
+.hidden-note button{border:0;background:none;color:var(--teal-ink);text-decoration:underline;text-underline-offset:3px;min-height:44px;font-size:13px}
+
+/* note + footer */
+.note{margin-top:46px;padding:20px 22px;border-radius:var(--radius);background:var(--teal-soft);color:var(--muted);font-size:13.5px;line-height:1.8}
+.note strong{color:var(--ink);display:block;margin-bottom:4px;font-size:14px}
+.footer{text-align:center;color:var(--soft);font-size:11px;letter-spacing:.12em;margin-top:28px}
+
+/* back to top */
+.to-top{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(20px + var(--safe-b));z-index:40;width:50px;height:50px;border-radius:50%;border:1px solid var(--line2);background:var(--paper);box-shadow:var(--shadow);font-size:20px;color:var(--teal-ink);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s,transform .25s,visibility .25s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(22px + var(--safe-b));transform:translate(-50%,16px);z-index:50;background:#163a36;color:#eaf6f2;border-radius:12px;padding:11px 16px;font-size:13.5px;opacity:0;visibility:hidden;transition:.25s;max-width:90vw}
+.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
 <div class="shell">
-<header class="topbar"><a class="brand" href="index.html">KNOWLEDGE MUSEUM<small>THE CURATED ATLAS</small></a><div class="top-controls"><nav class="language-switch" aria-label="Language / 语言"><button data-lang="zh-CN" type="button" aria-pressed="true">简</button><button data-lang="zh-TW" type="button" aria-pressed="false">繁</button><button data-lang="en" type="button" aria-pressed="false">EN</button></nav><a class="back" href="index.html">← 返回博物馆</a></div></header>
-<main>
-<section class="hero">
-<div><div class="kicker">Knowledge Atlas · No. 001</div><h1>好奇心的<br><span>无限坐标。</span></h1><p>从科学数据库到世界艺术，从遥远的城市到一杯咖啡。这里收藏的不是网页，而是通往不同知识世界的入口。</p><div class="pill-row"><div class="pill"><b id="totalHero">—</b> 个精选站点</div><div class="pill"><b id="catHero">—</b> 个探索领域</div><div class="pill">独立于馆藏 · 自由探索</div></div></div>
-<svg class="orbit" viewBox="0 0 480 480" role="img" aria-label="由彩色圆环和星点构成的知识探索星图"><defs><linearGradient id="a" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#20bba5"/><stop offset="1" stop-color="#1778b4"/></linearGradient><linearGradient id="b" x1="0" x2="1"><stop stop-color="#e3b56c"/><stop offset="1" stop-color="#de86af"/></linearGradient></defs><circle cx="240" cy="240" r="193" fill="#e4f3ee"/><circle cx="240" cy="240" r="152" fill="#faf4e9"/><circle cx="240" cy="240" r="108" fill="#e2f1f8"/><g class="ring"><circle cx="240" cy="240" r="187" fill="none" stroke="#6ac5ae" stroke-width="1.5" stroke-dasharray="3 13"/><circle cx="53" cy="240" r="17" fill="#0eaaa2"/><circle cx="427" cy="240" r="10" fill="#ecaa66"/><circle cx="240" cy="53" r="12" fill="#9483ce"/><circle cx="240" cy="427" r="14" fill="#ef8c9a"/></g><g class="ring2"><ellipse cx="240" cy="240" rx="202" ry="100" fill="none" stroke="#7db5cd" stroke-width="2" transform="rotate(-35 240 240)"/><circle cx="126" cy="74" r="10" fill="#f3ba6b"/><circle cx="360" cy="399" r="9" fill="#097d76"/></g><circle cx="240" cy="240" r="75" fill="url(#a)"/><path d="M205 265l22-56 17 31 15-20 20 45" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="240" cy="186" r="6" fill="#ffd38f"/><g fill="#fff"><circle cx="75" cy="133" r="4"/><circle cx="389" cy="103" r="5"/><circle cx="108" cy="353" r="3"/><circle cx="403" cy="335" r="4"/></g></svg>
+<header class="topbar">
+ <a class="brand" href="index.html">KNOWLEDGE MUSEUM<small>THE CURATED ATLAS</small></a>
+ <div class="top-controls">
+  <nav class="language-switch" aria-label="Language / 语言"><button data-lang="zh-CN" type="button">简</button><button data-lang="zh-TW" type="button">繁</button><button data-lang="en" type="button">EN</button></nav>
+  <span data-theme-mount></span>
+  <a class="pill-btn" href="index.html"><span aria-hidden="true">←</span> <span class="back-label" data-t="back">博物馆</span></a>
+ </div>
+</header>
+
+<section class="intro">
+ <div>
+  <div class="kicker">Knowledge Atlas</div>
+  <h1><span data-t="heroA">好奇心的</span><span data-t="heroB">无限坐标</span></h1>
+  <p id="introText"></p>
+ </div>
+ <svg class="orbit" viewBox="0 0 480 480" aria-hidden="true"><defs><linearGradient id="og" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#20bba5"/><stop offset="1" stop-color="#1778b4"/></linearGradient></defs><circle cx="240" cy="240" r="193" fill="#e4f3ee"/><circle cx="240" cy="240" r="140" fill="#faf4e9"/><g class="ring"><circle cx="240" cy="240" r="187" fill="none" stroke="#6ac5ae" stroke-width="3" stroke-dasharray="4 16"/><circle cx="53" cy="240" r="20" fill="#0eaaa2"/><circle cx="427" cy="240" r="13" fill="#ecaa66"/><circle cx="240" cy="53" r="15" fill="#9483ce"/><circle cx="240" cy="427" r="17" fill="#ef8c9a"/></g><circle cx="240" cy="240" r="88" fill="url(#og)"/><path d="M200 270l26-64 20 36 17-23 24 51" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </section>
-<div class="searchpanel"><div class="searchrow"><svg class="searchicon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></svg><input id="q" placeholder="搜索网站、主题、关键词…（例如 咖啡、NASA）" aria-label="搜索网站"><button id="clear" class="clear" hidden>清除</button></div><div class="bar"></div><div class="quick"><span>探索灵感</span><button data-query="博物馆">博物馆</button><button data-query="咖啡">咖啡</button><button data-query="天文">天文</button><button data-query="金融">金融数据</button><button data-query="建筑">建筑</button></div></div>
-<section class="section" id="categorySection"><div class="section-head"><div><div class="eyebrow">01 / Discovery</div><h2>探索知识版图</h2></div><span class="subtle" id="categoryHint">选择感兴趣的领域</span></div><div id="categories" class="catgrid"></div><button id="categoryToggle" class="category-toggle" type="button" aria-expanded="false">展开全部分类 ↓</button></section>
-<section class="section" id="results"><div class="section-head"><div><div class="eyebrow">02 / The Directory</div><h2>精选网站目录</h2></div><span class="subtle">让好奇心带路 ↗</span></div><div class="catalogue"><aside class="side"><div class="sidehead">BROWSE / 分类导航</div><div id="side"></div></aside><div><div class="resulttools"><div><strong id="resultTitle">全部网站</strong><p id="resultCount">正在读取网站资料…</p></div><select class="sort" id="sort" aria-label="排列方式"><option value="default">默认排序</option><option value="name">网站名称 A–Z</option><option value="data">数据查询优先</option></select></div><div id="subcats" class="chips"></div><div class="sites" id="sites"></div><button id="more" class="loadmore" hidden>查看更多网站 ↓</button></div></div></section>
-<section class="note"><div><strong>关于网站的打开方式</strong><p>默认在新的浏览器标签页打开，黄页会留在这里，方便继续探索。也可以复制网址，使用其他浏览器打开。某些 iPhone 主屏幕 Web App 会由系统切换到 Safari；返回黄页仍保留搜索与分类状态。</p></div><a href="index.html" class="back">返回知识博物馆 ↗</a></section>
+
+<div class="bar" id="bar">
+ <div class="tabs" role="tablist">
+  <button class="tab" role="tab" data-view="feed" data-t="tabFeed">刷一刷</button>
+  <button class="tab" role="tab" data-view="dir" data-t="tabDir">分类</button>
+  <button class="tab" role="tab" data-view="liked"><span data-t="tabLiked">喜欢</span><b id="likedCount"></b></button>
+ </div>
+ <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></svg><input id="q" type="search" enterkeyhint="search" autocomplete="off"><button id="clear" class="clear" type="button" hidden data-t="clear">清除</button></label>
+</div>
+
+<main>
+ <section id="viewFeed">
+  <div class="feed-head">
+   <div><h2 data-t="feedTitle">随便逛逛</h2><p id="feedNote"></p></div>
+   <div class="feed-tools">
+    <select class="select" id="feedScope" aria-label="Scope"></select>
+    <button class="pill-btn" id="shuffle" type="button">↻ <span data-t="shuffle">换一批</span></button>
+   </div>
+  </div>
+  <div class="feed" id="feed"></div>
+  <div class="sentinel" id="sentinel"></div>
+  <div class="end" id="feedEnd" hidden></div>
+ </section>
+
+ <section id="viewDir" hidden>
+  <div class="dir-head"><div><h2 id="dirTitle"></h2><p id="dirCount"></p></div>
+   <select class="select" id="sort" aria-label="Sort"></select></div>
+  <div class="chips" id="cats"></div>
+  <div class="chips sub" id="subs"></div>
+  <div class="list" id="list"></div>
+  <button class="more" id="more" type="button" hidden></button>
+ </section>
+
+ <section id="viewLiked" hidden>
+  <div class="dir-head"><div><h2 data-t="likedTitle">喜欢的网站</h2><p id="likedNote"></p></div></div>
+  <div class="list" id="likedList"></div>
+  <div class="hidden-note" id="hiddenNote"></div>
+ </section>
+
+ <section class="note"><strong data-t="noteTitle">关于打开方式</strong><span data-t="note"></span></section>
 </main>
-<div class="floatnav" id="floatnav"><button type="button" id="jumpTop" aria-label="返回黄页顶部">↑ 顶部</button><button type="button" class="primary" id="openCategories" aria-label="快速切换网站分类">▦ 切换分类</button></div>
-<div class="category-overlay" id="categoryOverlay" hidden>
-<button class="category-scrim" id="categoryScrim" aria-label="关闭分类菜单"></button>
-<div class="category-sheet" role="dialog" aria-modal="true" aria-labelledby="categoryDialogTitle">
-<div class="sheet-head"><div><div class="eyebrow">Navigate / Quick switch</div><h2 id="categoryDialogTitle">切换探索领域</h2></div><button class="sheet-close" id="categoryClose" aria-label="关闭">×</button></div>
-<div class="sheet-options" id="categoryOptions"></div></div></div>
-<div class="footer">KNOWLEDGE MUSEUM · THE KNOWLEDGE ATLAS · 2026</div></div>
+<div class="footer">KNOWLEDGE MUSEUM · THE KNOWLEDGE ATLAS</div>
+</div>
+<button class="to-top" id="toTop" type="button" aria-label="Top">↑</button>
+<div class="toast" id="toast" role="status"></div>
+
 <script>
 (() => {
-const by=id=>document.getElementById(id);
-const LANG_STORAGE_KEY="knowledge-museum-yellow-pages-language";
-const LANGUAGE_NAMES={"zh-CN":"简体中文","zh-TW":"繁體中文","en":"English"};
-const DICT={
-"zh-CN":{
-back:"← 博物馆",home:"返回知识博物馆 ↗",heroA:"好奇心的",heroB:"无限坐标。",heroDesc:"从科学数据库到世界艺术，从遥远的城市到一杯咖啡。这里收藏的不是网页，而是通往不同知识世界的入口。",sites:"个精选站点",fields:"个探索领域",free:"独立于馆藏 · 自由探索",search:"搜索网站、主题、关键词…（例如 咖啡、NASA）",searchLabel:"搜索网站",clear:"清除",ideas:"探索灵感",prompts:["博物馆","咖啡","天文","金融数据","建筑"],discovery:"探索知识版图",choose:"选择感兴趣的领域",expand:"展开全部分类 ↓",collapse:"收起分类 ↑",directory:"精选网站目录",guide:"让好奇心带路 ↗",side:"BROWSE / 分类导航",loading:"正在读取网站资料…",sortAria:"排列方式",sorts:["默认排序","网站名称 A–Z","数据查询优先"],more:"查看更多网站 ↓",noteTitle:"关于网站的打开方式",note:"默认在新的浏览器标签页打开，黄页会留在这里，方便继续探索。也可以复制网址，使用其他浏览器打开。某些 iPhone 主屏幕 Web App 会由系统切换到 Safari；返回黄页仍保留搜索与分类状态。",top:"↑ 顶部",switch:"▦ 切换分类",close:"关闭",dialog:"切换探索领域",all:"全部领域",allSites:"全部网站",allTopics:"全部专题",perField:"个探索站点 →",perSite:"个网站",found:"发现",result:"个站点",searching:"搜索中",showing:"每次显示最多",rows:"条",data:"数据查询",visit:"访问网站 ↗",copy:"复制",copied:"已复制 ✓",empty:"没有找到匹配的网站。试试其他关键词或清除筛选条件。",loadFail:"加载失败，请检查网络并刷新重试",loadFailDetail:"暂时无法载入黄页数据。请稍后重试。"},
-"zh-TW":{
-back:"← 博物館",home:"返回知識博物館 ↗",heroA:"好奇心的",heroB:"無限座標。",heroDesc:"從科學資料庫到世界藝術，從遙遠的城市到一杯咖啡。這裡收藏的不是網頁，而是通往不同知識世界的入口。",sites:"個精選網站",fields:"個探索領域",free:"獨立於館藏 · 自由探索",search:"搜尋網站、主題、關鍵字…（例如 咖啡、NASA）",searchLabel:"搜尋網站",clear:"清除",ideas:"探索靈感",prompts:["博物館","咖啡","天文","金融數據","建築"],discovery:"探索知識版圖",choose:"選擇感興趣的領域",expand:"展開全部分類 ↓",collapse:"收起分類 ↑",directory:"精選網站目錄",guide:"讓好奇心帶路 ↗",side:"BROWSE / 分類導覽",loading:"正在讀取網站資料…",sortAria:"排序方式",sorts:["預設排序","網站名稱 A–Z","資料查詢優先"],more:"查看更多網站 ↓",noteTitle:"關於網站的開啟方式",note:"預設在新的瀏覽器分頁開啟，黃頁會保留在原處，方便繼續探索。你也可以複製網址，在其他瀏覽器開啟。部分 iPhone 主畫面 Web App 可能由系統切換至 Safari；返回黃頁時仍會保留搜尋與分類狀態。",top:"↑ 頂部",switch:"▦ 切換分類",close:"關閉",dialog:"切換探索領域",all:"全部領域",allSites:"全部網站",allTopics:"全部專題",perField:"個探索網站 →",perSite:"個網站",found:"找到",result:"個網站",searching:"搜尋中",showing:"每次最多顯示",rows:"筆",data:"資料查詢",visit:"瀏覽網站 ↗",copy:"複製",copied:"已複製 ✓",empty:"找不到符合條件的網站，試試其他關鍵字或清除篩選條件。",loadFail:"載入失敗，請檢查網路並重新整理",loadFailDetail:"暫時無法載入黃頁資料，請稍後再試。"},
-"en":{
-back:"← Museum",home:"Back to Knowledge Museum ↗",heroA:"Follow your",heroB:"curiosity.",heroDesc:"From scientific databases to world art, from faraway cities to a perfect cup of coffee. A curated collection of gateways to knowledge.",sites:"curated sites",fields:"fields to explore",free:"Beyond the archive · Explore freely",search:"Search sites, topics or keywords… (e.g. coffee, NASA)",searchLabel:"Search websites",clear:"Clear",ideas:"Try exploring",prompts:["Museum","Coffee","Astronomy","Market data","Architecture"],discovery:"Explore the Knowledge Map",choose:"Pick a subject that inspires you",expand:"Show all categories ↓",collapse:"Show fewer categories ↑",directory:"Curated Website Directory",guide:"Let curiosity lead ↗",side:"BROWSE / Categories",loading:"Loading websites…",sortAria:"Sort websites",sorts:["Default order","Website name A–Z","Data resources first"],more:"Show more websites ↓",noteTitle:"How external websites open",note:"Websites open in a new browser tab by default, keeping the directory available for browsing. You can also copy a URL and open it in another browser. Some iPhone home-screen web apps may switch to Safari; your filters and search are kept when you return.",top:"↑ Top",switch:"▦ Categories",close:"Close",dialog:"Switch category",all:"All categories",allSites:"All websites",allTopics:"All topics",perField:"sites to discover →",perSite:"sites",found:"Found",result:"sites",searching:"searching",showing:"showing up to",rows:"results",data:"Data lookup",visit:"Visit website ↗",copy:"Copy",copied:"Copied ✓",empty:"No matching websites. Try another keyword or clear your filters.",loadFail:"Unable to load sites. Check your connection and retry.",loadFailDetail:"The directory is temporarily unavailable. Please try again later."}
-};
+"use strict";
+const $ = id => document.getElementById(id);
 const CATEGORY_TRANSLATIONS={"en":{"游戏与互动娱乐":"Games & Interactive Entertainment","设计与创意资源":"Design & Creative Resources","科技与互联网资讯":"Technology & Internet","科学自然与地理":"Science, Nature & Geography","语言文字与词典":"Languages & Dictionaries","旅行交通与城市":"Travel, Transit & Cities","家居建筑与装修":"Architecture & Interiors","影视音乐与流行文化":"Film, Music & Pop Culture","政务法律与公共服务":"Government, Law & Services","社交社区与个人空间":"Communities & Personal Sites","医学健康与人体":"Medicine, Health & Anatomy","学术研究与教育":"Research & Education","生活实用信息":"Everyday Reference","新闻媒体与阅读":"News, Media & Reading","手作工艺与兴趣":"Crafts & Hobbies","金融商业与经济":"Finance, Business & Economy","体育运动与户外":"Sports & Outdoors","艺术文化与博物馆":"Art, Culture & Museums","咖啡茶饮与美食":"Coffee, Tea & Food","时尚购物与品牌":"Fashion, Shopping & Brands","游戏资讯与攻略":"Game News & Guides","字体与排版":"Typography & Fonts","网站发现与比较":"Similar Website Discovery","计算与知识查询":"Computational Knowledge","词典与翻译":"Dictionaries & Translation","发音与输入法":"Pronunciation & Input Methods","插画与CG":"Illustration & Digital Art","景点与城市探索":"Destinations & City Discovery","建筑设计与案例":"Architecture Projects","电影与电视剧":"Film & Television","色彩与配色":"Colors & Palettes","天气与气象":"Weather Forecasts","公开模型与技术资料":"Open Models & Technical Resources","地理地图与遥感":"Maps & Remote Sensing","中国内地政务":"Mainland China Government","摄影与创作社区":"Photography & Creator Communities","人体解剖与医学教学":"Anatomy & Medical Education","图书馆与文献":"Libraries & Literature","电话与号码查询":"Phone Number Lookup","地理与国家资料":"Countries & Geography","地图导航与路线":"Maps & Navigation","新加坡政务与公共服务":"Singapore Public Services","人工智能知识与文档":"AI Documentation","博客与个人网站":"Blogs & Personal Websites","地图与地理信息查询":"Geographic Data Lookup","气象与环境数据":"Weather & Environmental Data","阅读与电子书":"Books & E-reading","互联网知识与技术资料":"Internet Knowledge & Technology","装修与家居指南":"Renovation & Home Guides","活动展会与票务":"Events, Exhibitions & Tickets","公共交通与机场":"Public Transit & Airports","游戏数据库与社区":"Game Databases & Communities","旅游规划与预订":"Trip Planning & Booking","AI教程与知识资料":"AI Tutorials & Learning","AI资讯与网站索引":"AI News & Directories","设计工具与资源":"Design Tools & Resources","音乐与音频":"Music & Audio","营养与食品科学":"Nutrition & Food Science","手工DIY与教程":"DIY & Craft Tutorials","3D模型与材质":"3D Models & Materials","搜索引擎与信息检索":"Web Search & Information Retrieval","商业服务与支付":"Business Services & Payments","综合信息查询":"General Information Lookup","药品疾病与医疗查询":"Medicines & Disease Lookup","文献与资料检索":"Research & Literature Search","骑行与户外":"Cycling & Outdoor Activities","学历与教育信息查询":"Education Records & Qualifications","中文学习与语言知识":"Chinese Language Learning","时尚与生活资讯":"Fashion & Lifestyle News","读书榜单与书评":"Book Lists & Reviews","天文与太空":"Astronomy & Space","语言学习":"Language Learning","钩针与编织":"Crochet & Knitting","经济与价格数据":"Prices & Economic Data","经济数据与行业研究":"Industry & Economic Research","开发技术文档与教程":"Developer Docs & Tutorials","学校考试与资格":"Schools, Exams & Credentials","在线课程与学习":"Online Courses","医学期刊与研究":"Medical Journals & Research","医疗健康资讯":"Health News & Information","论文检索与数据库":"Research Papers & Databases","学术检索导航":"Academic Search Guides","百科与知识检索":"Encyclopedias & Reference","香港台湾媒体":"Hong Kong & Taiwan Media","博物馆与馆藏":"Museums & Collections","生物与生态":"Biology & Ecology","文化历史与人文":"History & Humanities","艺术史与名作":"Art History & Masterpieces","杂志与专题阅读":"Magazines & Features","视频剪辑与制作":"Video Editing & Production","科学资讯与机构":"Science News & Institutions","动漫与漫画":"Animation & Comics","科学期刊与论文":"Scientific Journals & Papers","画廊与艺术机构":"Galleries & Art Institutions","摄影与影像素材":"Photography & Visual Assets","艺术家与创作者":"Artists & Creators","珠宝与宝石知识":"Jewelry & Gemstone Knowledge","行业资讯与研究":"Industry News & Research","建筑与空间设计":"Architecture & Spatial Design","家具家饰与产品":"Furniture & Home Products","艺术市场与拍卖":"Art Markets & Auctions","平面设计与灵感":"Graphic Design & Inspiration","学术出版与期刊":"Academic Publishing & Journals","科技与商业媒体":"Tech & Business Media","中国内地媒体":"Mainland China Media","国际新闻媒体":"International News Media","科技博客与科普":"Tech Blogs & Popular Science","地球与环境":"Earth & Environment","香港政务与公共服务":"Hong Kong Public Services","开放数据与统计":"Open Data & Statistics","数据集与科研检索":"Dataset & Research Discovery","金融投资与行情":"Investing & Market Data","数字资产行情数据":"Digital Asset Price Data","美食食谱与餐饮":"Recipes & Dining","数字资产市场资讯":"Digital Asset Market News","房地产与房屋信息":"Real Estate & Housing Data","法律法规与政策":"Law, Policy & Regulations","旅行资讯与攻略":"Travel Information & Guides","心理健康与科普":"Mental Health & Psychology","茶酒与饮品":"Tea, Wine & Beverages","咖啡知识与研究":"Coffee Knowledge & Research","咖啡烘焙商与产地信息":"Coffee Roasters & Origins","咖啡赛事与组织":"Coffee Events & Organizations","艺人与演出":"Artists & Live Events","商品价格比较":"Product Price Comparison","商场与实体零售":"Malls & Retail Spaces","跑步马拉松与赛事":"Running & Marathons","其他运动与场馆":"Sports Venues & Activities","美妆产品资料库":"Cosmetics Database","在线视频与直播":"Video & Live Streaming","图片检索与素材库":"Image Search & Stock Media"},"trad":{"游戏与互动娱乐":"遊戲與互動娛樂","设计与创意资源":"設計與創意資源","科技与互联网资讯":"科技與互联網資讯","科学自然与地理":"科學自然與地理","语言文字与词典":"語言文字與詞典","旅行交通与城市":"旅行交通與城市","家居建筑与装修":"家居建築與裝修","影视音乐与流行文化":"影視音樂與流行文化","政务法律与公共服务":"政務法律與公共服務","社交社区与个人空间":"社交社區與個人空間","医学健康与人体":"醫學健康與人體","学术研究与教育":"學術研究與教育","生活实用信息":"生活實用資訊","新闻媒体与阅读":"新聞媒體與閱讀","手作工艺与兴趣":"手作工藝與興趣","金融商业与经济":"金融商業與經濟","体育运动与户外":"體育運動與戶外","艺术文化与博物馆":"藝術文化與博物館","咖啡茶饮与美食":"咖啡茶飲與美食","时尚购物与品牌":"時尚購物與品牌","游戏资讯与攻略":"遊戲資讯與攻略","字体与排版":"字體與排版","网站发现与比较":"網站發現與比較","计算与知识查询":"計算與知识查詢","词典与翻译":"詞典與翻译","发音与输入法":"發音與輸入法","插画与CG":"插畫與CG","景点与城市探索":"景点與城市探索","建筑设计与案例":"建築設計與案例","电影与电视剧":"電影與電視剧","色彩与配色":"色彩與配色","天气与气象":"天氣與氣象","公开模型与技术资料":"公開模型與技術資料","地理地图与遥感":"地理地圖與遙感","中国内地政务":"中國內地政務","摄影与创作社区":"攝影與創作社區","人体解剖与医学教学":"人體解剖與醫學教學","图书馆与文献":"圖書館與文献","电话与号码查询":"電話與號碼查詢","地理与国家资料":"地理與國家資料","地图导航与路线":"地圖導航與路線","新加坡政务与公共服务":"新加坡政務與公共服務","人工智能知识与文档":"人工智能知识與文檔","博客与个人网站":"博客與個人網站","地图与地理信息查询":"地圖與地理資訊查詢","气象与环境数据":"氣象與環境數據","阅读与电子书":"閱讀與電子書","互联网知识与技术资料":"互联網知识與技術資料","装修与家居指南":"裝修與家居指南","活动展会与票务":"活動展会與票務","公共交通与机场":"公共交通與機場","游戏数据库与社区":"遊戲數據庫與社區","旅游规划与预订":"旅遊规划與预訂","AI教程与知识资料":"AI教程與知识資料","AI资讯与网站索引":"AI資讯與網站索引","设计工具与资源":"設計工具與資源","音乐与音频":"音樂與音頻","营养与食品科学":"營養與食品科學","手工DIY与教程":"手工DIY與教程","3D模型与材质":"3D模型與材质","搜索引擎与信息检索":"搜索引擎與資訊檢索","商业服务与支付":"商業服務與支付","综合信息查询":"综合資訊查詢","药品疾病与医疗查询":"药品疾病與醫療查詢","文献与资料检索":"文献與資料檢索","骑行与户外":"骑行與戶外","学历与教育信息查询":"學歷與教育資訊查詢","中文学习与语言知识":"中文學習與語言知识","时尚与生活资讯":"時尚與生活資讯","读书榜单与书评":"讀書榜單與書评","天文与太空":"天文與太空","语言学习":"語言學習","钩针与编织":"钩针與編織","经济与价格数据":"經濟與价格數據","经济数据与行业研究":"經濟數據與行業研究","开发技术文档与教程":"開發技術文檔與教程","学校考试与资格":"學校考试與資格","在线课程与学习":"在線课程與學習","医学期刊与研究":"醫學期刊與研究","医疗健康资讯":"醫療健康資讯","论文检索与数据库":"论文檢索與數據庫","学术检索导航":"學術檢索導航","百科与知识检索":"百科與知识檢索","香港台湾媒体":"香港臺灣媒體","博物馆与馆藏":"博物館與館藏","生物与生态":"生物與生态","文化历史与人文":"文化歷史與人文","艺术史与名作":"藝術史與名作","杂志与专题阅读":"杂志與專题閱讀","视频剪辑与制作":"視頻剪輯與制作","科学资讯与机构":"科學資讯與機构","动漫与漫画":"動漫與漫畫","科学期刊与论文":"科學期刊與论文","画廊与艺术机构":"畫廊與藝術機构","摄影与影像素材":"攝影與影像素材","艺术家与创作者":"藝術家與創作者","珠宝与宝石知识":"珠宝與宝石知识","行业资讯与研究":"行業資讯與研究","建筑与空间设计":"建築與空間設計","家具家饰与产品":"家具家饰與產品","艺术市场与拍卖":"藝術市場與拍賣","平面设计与灵感":"平面設計與靈感","学术出版与期刊":"學術出版與期刊","科技与商业媒体":"科技與商業媒體","中国内地媒体":"中國內地媒體","国际新闻媒体":"國際新聞媒體","科技博客与科普":"科技博客與科普","地球与环境":"地球與環境","香港政务与公共服务":"香港政務與公共服務","开放数据与统计":"開放數據與统計","数据集与科研检索":"數據集與科研檢索","金融投资与行情":"金融投資與行情","数字资产行情数据":"數字資產行情數據","美食食谱与餐饮":"美食食谱與餐飲","数字资产市场资讯":"數字資產市場資讯","房地产与房屋信息":"房地產與房屋資訊","法律法规与政策":"法律法规與政策","旅行资讯与攻略":"旅行資讯與攻略","心理健康与科普":"心理健康與科普","茶酒与饮品":"茶酒與飲品","咖啡知识与研究":"咖啡知识與研究","咖啡烘焙商与产地信息":"咖啡烘焙商與產地資訊","咖啡赛事与组织":"咖啡賽事與組織","艺人与演出":"藝人與演出","商品价格比较":"商品价格比較","商场与实体零售":"商場與實體零售","跑步马拉松与赛事":"跑步马拉松與賽事","其他运动与场馆":"其他運動與場館","美妆产品资料库":"美妆產品資料庫","在线视频与直播":"在線視頻與直播","图片检索与素材库":"圖片檢索與素材庫"}};
-let language="zh-CN";
-try{const stored=localStorage.getItem(LANG_STORAGE_KEY);if(stored&&Object.prototype.hasOwnProperty.call(LANGUAGE_NAMES,stored))language=stored;else{const browser=(navigator.languages?.[0]||navigator.language||"zh-CN").toLowerCase();language=browser.startsWith("zh")?(browser.includes("tw")||browser.includes("hk")||browser.includes("hant")?"zh-TW":"zh-CN"):"en";}}catch{}
-const T=(key)=>DICT[language][key];
-const categoryLabel=(text)=>language==="en"?(CATEGORY_TRANSLATIONS.en[text]||text):language==="zh-TW"?(CATEGORY_TRANSLATIONS.trad[text]||text):text;
-const countLabel=(num,key)=>language==="en"?num+" "+T(key):num+" "+T(key);
-function translateChrome(){
- document.documentElement.lang=language;document.title=(language==="en"?"Knowledge Atlas":language==="zh-TW"?"知識座標":"知识坐标")+" · Knowledge Museum";
- const entries={
- ".top-controls>.back":"back",".hero h1":"heroA",".hero h1 span":"heroB",".hero p":"heroDesc",
- ".pill-row .pill:nth-child(3)":"free","#clear":"clear",".quick span":"ideas",
- "#categorySection h2":"discovery","#categoryHint":"choose","#results h2":"directory","#results .section-head>.subtle":"guide",
- ".sidehead":"side","#more":"more",".note strong":"noteTitle",".note p":"note",
- ".note .back":"home","#jumpTop":"top","#openCategories":"switch","#categoryDialogTitle":"dialog"
- };
- for(const [selector,key] of Object.entries(entries)){const el=document.querySelector(selector);if(el)el.textContent=T(key)}
- const title=document.querySelector(".hero h1");if(title)title.innerHTML=nice(T("heroA"))+"<br><span>"+nice(T("heroB"))+"</span>";
- const sitePill=document.querySelector(".pill-row .pill:first-child");if(sitePill)sitePill.innerHTML='<b id="totalHero">'+all.length.toLocaleString(language)+'</b> '+nice(T("sites"));
- const catPill=document.querySelector(".pill-row .pill:nth-child(2)");if(catPill)catPill.innerHTML='<b id="catHero">'+cats().length+'</b> '+nice(T("fields"));
- const input=by("q");input.placeholder=T("search");input.setAttribute("aria-label",T("searchLabel"));
- const quick=document.querySelectorAll("[data-query]");quick.forEach((el,i)=>{el.textContent=T("prompts")[i]});
- by("sort").setAttribute("aria-label",T("sortAria"));[...by("sort").options].forEach((o,i)=>o.textContent=T("sorts")[i]);
- by("categoryToggle").textContent=T(catExpanded?"collapse":"expand");
- by("openCategories").setAttribute("aria-label",T("switch"));by("jumpTop").setAttribute("aria-label",T("top"));
- by("categoryClose").setAttribute("aria-label",T("close"));by("categoryScrim").setAttribute("aria-label",T("close"));
- document.querySelectorAll(".language-switch button").forEach(b=>{const selected=b.dataset.lang===language;b.classList.toggle("active",selected);b.setAttribute("aria-pressed",String(selected))});
+const DICT = {
+ "zh-CN": {back:"博物馆",heroA:"好奇心的",heroB:"无限坐标",intro:"{n} 个收藏的网站，{c} 个领域。闲下来的时候刷一刷，看到感兴趣的就点进去逛逛。",tabFeed:"刷一刷",tabDir:"分类",tabLiked:"喜欢",search:"搜索网站、主题、关键词…",clear:"清除",feedTitle:"随便逛逛",feedNote:"每次顺序都不一样，没看过的优先",allFields:"全部领域",shuffle:"换一批",like:"喜欢",unlike:"取消喜欢",hide:"不感兴趣",hidden:"已隐藏这个网站",undo:"撤销",seen:"看过",dead:"可能已失效",archive:"网页存档",ai:"AI 简介",endFeed:"这一轮刷完了",again:"再来一轮",allSites:"全部网站",found:"{n} 个网站",sortDefault:"默认顺序",sortName:"按名称",sortRandom:"随机",allTopics:"全部",more:"再显示 {n} 个",likedTitle:"喜欢的网站",likedNote:"点 ♡ 收进这里，只保存在这台设备的浏览器里",likedEmpty:"还没有喜欢的网站。刷的时候点 ♡ 就会出现在这里。",hiddenNote:"已隐藏 {n} 个网站",restore:"全部恢复",restored:"已恢复全部隐藏的网站",noResult:"没有找到匹配的网站",noteTitle:"关于打开方式",note:"网站会在新标签页打开，黄页留在原处。在 iPhone 主屏幕 App 里，系统可能会切换到 Safari，回来时刷到的位置还在。标着「可能已失效」的网站，可以点「网页存档」查看以前的样子。",loadFail:"读取黄页数据失败，请稍后再试。",open:"打开"},
+ "zh-TW": {back:"博物館",heroA:"好奇心的",heroB:"無限座標",intro:"{n} 個收藏的網站，{c} 個領域。閒下來的時候刷一刷，看到感興趣的就點進去逛逛。",tabFeed:"刷一刷",tabDir:"分類",tabLiked:"喜歡",search:"搜尋網站、主題、關鍵字…",clear:"清除",feedTitle:"隨便逛逛",feedNote:"每次順序都不一樣，沒看過的優先",allFields:"全部領域",shuffle:"換一批",like:"喜歡",unlike:"取消喜歡",hide:"不感興趣",hidden:"已隱藏這個網站",undo:"復原",seen:"看過",dead:"可能已失效",archive:"網頁存檔",ai:"AI 簡介",endFeed:"這一輪刷完了",again:"再來一輪",allSites:"全部網站",found:"{n} 個網站",sortDefault:"預設順序",sortName:"依名稱",sortRandom:"隨機",allTopics:"全部",more:"再顯示 {n} 個",likedTitle:"喜歡的網站",likedNote:"點 ♡ 收進這裡，只儲存在這台裝置的瀏覽器裡",likedEmpty:"還沒有喜歡的網站。刷的時候點 ♡ 就會出現在這裡。",hiddenNote:"已隱藏 {n} 個網站",restore:"全部恢復",restored:"已恢復全部隱藏的網站",noResult:"沒有找到符合的網站",noteTitle:"關於開啟方式",note:"網站會在新分頁開啟，黃頁留在原處。在 iPhone 主畫面 App 裡，系統可能會切換到 Safari，回來時刷到的位置還在。標著「可能已失效」的網站，可以點「網頁存檔」查看以前的樣子。",loadFail:"讀取黃頁資料失敗，請稍後再試。",open:"開啟"},
+ "en": {back:"Museum",heroA:"Follow your ",heroB:"curiosity",intro:"{n} saved websites across {c} fields. Scroll through when you have a spare moment and open whatever catches your eye.",tabFeed:"Discover",tabDir:"Browse",tabLiked:"Liked",search:"Search sites, topics, keywords…",clear:"Clear",feedTitle:"Wander around",feedNote:"A different order every time, unseen sites first",allFields:"All fields",shuffle:"Shuffle",like:"Like",unlike:"Unlike",hide:"Not interested",hidden:"Site hidden",undo:"Undo",seen:"Seen",dead:"May be offline",archive:"Archived copy",ai:"AI summary",endFeed:"That's everything for this round",again:"Another round",allSites:"All sites",found:"{n} sites",sortDefault:"Default order",sortName:"By name",sortRandom:"Random",allTopics:"All",more:"Show {n} more",likedTitle:"Liked sites",likedNote:"Tap ♡ to keep a site here. Saved in this browser only.",likedEmpty:"Nothing liked yet. Tap ♡ while browsing and it shows up here.",hiddenNote:"{n} sites hidden",restore:"Restore all",restored:"All hidden sites restored",noResult:"No matching sites",noteTitle:"How links open",note:"Sites open in a new tab so the atlas stays where you left it. In the iPhone home-screen app the system may switch to Safari; your place in the feed is kept. For sites marked “may be offline”, tap “Archived copy” to see an earlier version.",loadFail:"Could not load the atlas. Please try again later.",open:"Open"}
+};
+const TINTS = [["#e5f5ef","#b4e9d9"],["#edf0ff","#ccd7ff"],["#fff1e1","#ffd7a5"],["#fbeaf2","#f9c4dc"],["#eef2ec","#c7e4c5"],["#e3f4f0","#a9dccf"]];
+const GLYPHS = ["✺","◈","✦","◎","✳","◉","⌘","✿","◌","◆","✧","◐","⌁","⬡","◍","❖","✵","♧","◬","✴"];
+const LANG_KEY = "knowledge-museum-yellow-pages-language", STORE_KEY = "km-atlas-v1", SESSION_KEY = "km-atlas-session-v1";
+
+let lang = "zh-CN";
+try {
+ const s = localStorage.getItem(LANG_KEY);
+ if (s && DICT[s]) lang = s;
+ else { const b = (navigator.languages?.[0] || navigator.language || "zh-CN").toLowerCase(); lang = b.startsWith("zh") ? (/tw|hk|hant/.test(b) ? "zh-TW" : "zh-CN") : "en"; }
+} catch {}
+const T = (k, vars) => { let v = DICT[lang][k] ?? DICT["zh-CN"][k] ?? k; if (vars) for (const x in vars) v = v.replace("{" + x + "}", vars[x]); return v; };
+const L = s => lang === "en" ? (CATEGORY_TRANSLATIONS.en[s] || s) : lang === "zh-TW" ? (CATEGORY_TRANSLATIONS.trad[s] || s) : s;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safe = u => /^https?:\/\//i.test(u || "") ? u : "#";
+const host = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return ""; } };
+
+/* ---------- personal state (this browser only) ---------- */
+let store = { likes: {}, hidden: {}, seen: {} };
+try { store = Object.assign(store, JSON.parse(localStorage.getItem(STORE_KEY) || "{}")); } catch {}
+const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch {} };
+
+/* ---------- session state (survives leaving to a site and coming back) ---------- */
+let sess = { view: "feed", seed: 0, shown: 12, scope: "", cat: "", sub: "", q: "", sort: "default", dirCount: 40, scroll: 0 };
+try { sess = Object.assign(sess, JSON.parse(sessionStorage.getItem(SESSION_KEY) || "{}")); } catch {}
+if (!sess.seed) sess.seed = (Math.random() * 2 ** 31) | 0;
+const persist = () => { sess.scroll = scrollY; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(sess)); } catch {} };
+addEventListener("pagehide", persist);
+document.addEventListener("visibilitychange", () => { if (document.hidden) persist(); });
+
+let all = [], cats = [], catIndex = new Map();
+
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function tintOf(s) { const i = catIndex.get(s.c) ?? 0; return TINTS[i % TINTS.length]; }
+function glyphOf(s) { return GLYPHS[(catIndex.get(s.c) ?? 0) % GLYPHS.length]; }
+function matches(s, terms) {
+ if (!terms.length) return true;
+ const hay = (s.n + " " + (s.o || "") + " " + (s.d || "") + " " + s.c + " " + s.s + " " + L(s.c) + " " + L(s.s) + " " + (CATEGORY_TRANSLATIONS.en[s.c] || "") + " " + (CATEGORY_TRANSLATIONS.en[s.s] || "") + " " + host(s.u)).toLowerCase();
+ return terms.every(t => hay.includes(t));
 }
-function setLanguage(next){
- if(!Object.prototype.hasOwnProperty.call(LANGUAGE_NAMES,next)||next===language)return;
- const top=window.scrollY;language=next;try{localStorage.setItem(LANG_STORAGE_KEY,next)}catch{}
- translateChrome();if(all.length)render();if(!by("categoryOverlay").hidden)renderSheet();window.scrollTo({top,behavior:"instant"});persist();
+const terms = () => sess.q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+
+/* Feed order: weighted random (Efraimidis–Spirakis). Unseen sites, sites with a preview,
+   and fields you have liked before come up more often. Hidden and dead sites are left out. */
+function feedOrder() {
+ const r = rng(sess.seed);
+ const likedCats = {};
+ for (const id in store.likes) { const s = all.find(x => x.id === id); if (s) likedCats[s.c] = (likedCats[s.c] || 0) + 1; }
+ return all
+  .filter(s => !store.hidden[s.id] && s.st !== "dead" && (!sess.scope || s.c === sess.scope))
+  .map(s => {
+   let w = 1;
+   if (!store.seen[s.id]) w *= 3;
+   if (s.img) w *= 1.6;
+   if (s.d) w *= 1.25;
+   w *= 1 + Math.min(likedCats[s.c] || 0, 6) * 0.25;
+   return { s, k: -Math.log(1 - r()) / w };
+  })
+  .sort((a, b) => a.k - b.k)
+  .map(x => x.s);
 }
 
-let all=[],current="全部领域",sub="全部",count=24,query="",restoreY=0,catExpanded=false;
-const symbols=["✺","◈","✦","◎","✳","◉","⌘","✿","◌","◆","✧","◐","⌁","⬡","◍","❖","✵","♧","◬","✴","◓"];
-const nice=s=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-const safely=url=>/^https?:\/\//i.test(url||"")?url:"#";
-const domains=url=>{try{return new URL(url).hostname.replace(/^www\./,"")}catch{return "web resource"}};
-const key="km-yellow-pages-state-v1";
-try {let saved=JSON.parse(sessionStorage.getItem(key)||"{}");current=saved.current||current;sub=saved.sub||sub;query=saved.query||"";by("q").value=query;if(saved.scroll){restoreY=saved.scroll;history.scrollRestoration="manual"}}catch{}
-function persist(){try{sessionStorage.setItem(key,JSON.stringify({current,sub,query,scroll:window.scrollY}))}catch{}}
-function cats(){return [...new Set(all.map(x=>x.c))].map(name=>({name,items:all.filter(x=>x.c===name)})).sort((a,b)=>b.items.length-a.items.length)}
-document.querySelectorAll(".language-switch button").forEach(b=>b.addEventListener("click",()=>setLanguage(b.dataset.lang)));
-function choose(name){current=name;sub="全部";count=24;closeCategoryMenu();persist();render();by("results").scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"start"})}
-function openCategoryMenu(){renderSheet();by("categoryOverlay").hidden=false;document.body.classList.add("sheet-open");by("categoryClose").focus()}
-function closeCategoryMenu(){by("categoryOverlay").hidden=true;document.body.classList.remove("sheet-open")}
-function renderSheet(){const list=cats();by("categoryOptions").innerHTML='<button class="sheet-item '+(current==="全部领域"?"active":"")+'" data-sheet="全部领域"><span>✺ '+nice(T("all"))+'</span><small>'+all.length+' '+nice(T("perSite"))+'</small></button>'+list.map((x,i)=>'<button class="sheet-item '+(current===x.name?"active":"")+'" data-sheet="'+nice(x.name)+'"><span>'+symbols[i%symbols.length]+' '+nice(categoryLabel(x.name))+'</span><small>'+x.items.length+' '+nice(T("perSite"))+'</small></button>').join("");by("categoryOptions").querySelectorAll("[data-sheet]").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.sheet)))}
-function updateFloatnav(){by("floatnav").classList.toggle("visible",window.scrollY>360)}
-by("openCategories").addEventListener("click",openCategoryMenu);
-by("categoryClose").addEventListener("click",closeCategoryMenu);
-by("categoryScrim").addEventListener("click",closeCategoryMenu);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCategoryMenu()});
-by("jumpTop").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
-by("categoryToggle").addEventListener("click",()=>{catExpanded=!catExpanded;by("categoryToggle").textContent=T(catExpanded?"collapse":"expand");by("categoryToggle").setAttribute("aria-expanded",String(catExpanded));renderCategories()});
-window.addEventListener("scroll",updateFloatnav,{passive:true});
-function renderCategories(){const list=cats();by("catHero").textContent=list.length;by("categories").innerHTML=list.map((c,i)=>'<button type="button" class="cat '+(current===c.name?'active':'')+'" data-collapse="'+(!catExpanded&&i>=6)+'" data-cat="'+nice(c.name)+'"><span class="mark"></span><span class="num">FIELD / '+String(i+1).padStart(2,"0")+'</span><span><span class="glyph">'+symbols[i%symbols.length]+'</span><strong>'+nice(categoryLabel(c.name))+'</strong><small>'+c.items.length+' '+nice(T("perField"))+'</small></span></button>').join("");by("categories").querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.cat)))}
-function renderSide(){const list=cats();by("side").innerHTML='<button class="filter '+(current==="全部领域"?'active':'')+'" data-cat="全部领域">'+nice(T("all"))+' <b>'+all.length+'</b></button>'+list.map(x=>'<button class="filter '+(current===x.name?'active':'')+'" data-cat="'+nice(x.name)+'">'+nice(categoryLabel(x.name))+' <b>'+x.items.length+'</b></button>').join("");by("side").querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.cat)))}
-function renderSub(){const scope=all.filter(x=>current==="全部领域"||x.c===current);let ss=[...new Set(scope.map(x=>x.s))].sort((a,b)=>scope.filter(x=>x.s===b).length-scope.filter(x=>x.s===a).length);by("subcats").innerHTML='<button class="chip '+(sub==="全部"?'active':'')+'" data-sub="全部">'+nice(T("allTopics"))+'</button>'+ss.map(s=>'<button class="chip '+(sub===s?'active':'')+'" data-sub="'+nice(s)+'">'+nice(categoryLabel(s))+'</button>').join("");by("subcats").querySelectorAll("[data-sub]").forEach(b=>b.addEventListener("click",()=>{sub=b.dataset.sub;count=24;persist();renderList()}))}
-function renderList(){
- let data=all.filter(x=>(current==="全部领域"||x.c===current)&&(sub==="全部"||x.s===sub));
- const terms=query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
- if(terms.length)data=data.filter(x=>terms.every(t=>(x.n+" "+x.c+" "+x.s+" "+categoryLabel(x.c)+" "+categoryLabel(x.s)+" "+CATEGORY_TRANSLATIONS.en[x.c]+" "+CATEGORY_TRANSLATIONS.en[x.s]+" "+CATEGORY_TRANSLATIONS.trad[x.c]+" "+CATEGORY_TRANSLATIONS.trad[x.s]+" "+domains(x.u)).toLocaleLowerCase().includes(t)));
- const sort=by("sort").value;if(sort==="name")data.sort((a,b)=>a.n.localeCompare(b.n,"zh"));else if(sort==="data")data.sort((a,b)=>(a.t==="data"?-1:1)-(b.t==="data"?-1:1));
- by("resultTitle").textContent=current==="全部领域"?T("allSites"):categoryLabel(current);
- by("resultCount").textContent=T("found")+" "+data.length+" "+T("result")+(query?" · "+T("searching"):"")+" · "+T("showing")+" "+Math.min(count,data.length)+" "+T("rows");
- by("clear").hidden=!query;
- by("sites").innerHTML=data.slice(0,count).map((x,i)=>'<article class="site"><div class="site-top"><div class="favicon" aria-hidden="true">'+symbols[(i+3)%symbols.length]+'</div><div class="site-content"><h3 title="'+nice(x.n)+'">'+nice(x.n)+'</h3><div class="domain">'+nice(domains(x.u))+'</div></div></div><div class="tags"><span class="tag">'+nice(categoryLabel(x.s))+'</span>'+(x.t==="data"?'<span class="tag data">'+nice(T("data"))+'</span>':'')+'</div><div class="actions"><a target="_blank" rel="noopener noreferrer" href="'+nice(safely(x.u))+'" data-open="new">'+nice(T("visit"))+'</a><button type="button" data-copy="'+nice(x.u)+'">'+nice(T("copy"))+'</button></div></article>').join("")||'<div class="empty">'+nice(T("empty"))+'</div>';
- by("more").hidden=data.length<=count;
- by("sites").querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(b.dataset.copy);b.textContent=T("copied");setTimeout(()=>b.textContent=T("copy"),1400)}catch{prompt("复制网址",b.dataset.copy)}}));
- 
- by("sites").querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",persist));
+/* ---------- rendering ---------- */
+function thumb(s, cls) {
+ const [t1, t2] = tintOf(s);
+ const style = `--tint:${t1};--tint2:${t2}`;
+ if (cls === "mini") return `<div class="mini" style="${style}">${s.img ? `<img src="${esc(s.img)}" alt="" loading="lazy" decoding="async">` : glyphOf(s)}</div>`;
+ const badge = s.st === "dead" ? `<span class="badge dead">${esc(T("dead"))}</span>` : store.seen[s.id] ? `<span class="badge">${esc(T("seen"))}</span>` : "";
+ return `<div class="thumb${s.img ? "" : " band"}" style="${style}">${badge}${s.img
+   ? `<img src="${esc(s.img)}" alt="" loading="lazy" decoding="async" onerror="this.parentNode.classList.add('band');this.remove()">`
+   : `<div class="ph"><span class="glyph" aria-hidden="true">${glyphOf(s)}</span><span class="dom">${esc(host(s.u))}</span></div>`}</div>`;
 }
-function render(){renderCategories();renderSide();renderSub();renderList()}
-translateChrome();
-by("q").addEventListener("input",e=>{query=e.target.value;count=24;persist();renderList()});
-by("sort").addEventListener("change",()=>{count=24;renderList()});by("clear").addEventListener("click",()=>{query="";by("q").value="";persist();renderList();by("q").focus()});
-by("more").addEventListener("click",()=>{count+=24;renderList()});
-document.querySelectorAll("[data-query]").forEach((b,i)=>b.addEventListener("click",()=>{query=DICT["zh-CN"].prompts[i];by("q").value=query;current="全部领域";sub="全部";persist();render();by("results").scrollIntoView({behavior:"smooth"})}));
-addEventListener("pagehide",persist);
-fetch("data/yellow-pages.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(r=>{all=(r.sites||[]).filter(x=>/^https?:\/\//i.test(x.u));by("totalHero").textContent=all.length.toLocaleString(language);if(current!=="全部领域"&&!all.some(x=>x.c===current))current="全部领域";render();translateChrome();if(restoreY)requestAnimationFrame(()=>window.scrollTo(0,restoreY));updateFloatnav();}).catch(e=>{by("resultCount").textContent=T("loadFail");by("sites").innerHTML='<div class="empty">'+nice(T("loadFailDetail"))+'</div>';console.error(e)});
+function desc(s) {
+ if (!s.d) return "";
+ const ai = s.ds === "ai";
+ return `<p class="desc${ai ? " ai" : ""}"${ai ? ` data-ai="${esc(T("ai"))}"` : ""}>${esc(s.d)}</p>`;
+}
+const archiveUrl = s => "https://web.archive.org/web/2024/" + s.u;
+function likeBtn(s) { const on = !!store.likes[s.id]; return `<button class="icon${on ? " liked" : ""}" type="button" data-like="${esc(s.id)}" aria-pressed="${on}" aria-label="${esc(T(on ? "unlike" : "like"))}" title="${esc(T(on ? "unlike" : "like"))}">${on ? "♥" : "♡"}</button>`; }
+function card(s) {
+ return `<article class="card${store.seen[s.id] ? " is-seen" : ""}" data-id="${esc(s.id)}">
+  ${thumb(s)}
+  <div class="body">
+   <div class="meta">${esc(L(s.c))} · ${esc(L(s.s))}</div>
+   <h3><a href="${esc(safe(s.u))}" target="_blank" rel="noopener noreferrer" data-open="${esc(s.id)}" title="${esc(s.o || s.n)}">${esc(s.n)}</a></h3>
+   ${desc(s)}
+  </div>
+  <div class="foot"><span class="domain">${esc(host(s.u))}</span>${likeBtn(s)}<button class="icon" type="button" data-hide="${esc(s.id)}" aria-label="${esc(T("hide"))}" title="${esc(T("hide"))}">⊘</button></div>
+ </article>`;
+}
+function row(s) {
+ const dead = s.st === "dead";
+ return `<article class="row" data-id="${esc(s.id)}">
+  ${thumb(s, "mini")}
+  <div style="min-width:0">
+   <h3><a href="${esc(safe(s.u))}" target="_blank" rel="noopener noreferrer" data-open="${esc(s.id)}" title="${esc(s.o || s.n)}">${esc(s.n)}</a></h3>
+   ${desc(s)}
+   <span class="domain">${dead ? `<span class="tag-dead">${esc(T("dead"))}</span> · <a class="archive" href="${esc(archiveUrl(s))}" target="_blank" rel="noopener">${esc(T("archive"))}</a> · ` : ""}${esc(host(s.u))} · ${esc(L(s.s))}</span>
+  </div>
+  <div class="acts">${likeBtn(s)}</div>
+ </article>`;
+}
+
+/* feed: cards go into the shortest column (masonry), in feed order */
+let order = [], observer = null, colCount = 0;
+const wantCols = () => { const w = $("feed").clientWidth || innerWidth; return w < 620 ? 1 : w < 980 ? 2 : 3; };
+function placeCards(nodes) {
+ const cols = [...$("feed").children];
+ for (const n of nodes) {
+  let best = cols[0];
+  for (const c of cols) if (c.offsetHeight < best.offsetHeight - 1) best = c;
+  best.appendChild(n);
+ }
+}
+function cardNodes(list) { const t = document.createElement("template"); t.innerHTML = list.map(card).join(""); return [...t.content.children]; }
+function setCols(n) {
+ const old = [...document.querySelectorAll("#feed .card")].sort((a, b) => a.dataset.i - b.dataset.i);
+ colCount = n;
+ $("feed").innerHTML = Array.from({ length: n }, () => '<div class="col"></div>').join("");
+ placeCards(old);
+}
+function renderFeed(keep) {
+ order = feedOrder();
+ if (!keep) sess.shown = 12;
+ $("feedNote").textContent = T("feedNote");
+ setCols(wantCols());
+ const nodes = cardNodes(order.slice(0, sess.shown));
+ nodes.forEach((n, i) => n.dataset.i = i);
+ placeCards(nodes);
+ if (!order.length) $("feed").innerHTML = `<div class="empty" style="flex:1">${esc(T("noResult"))}</div>`;
+ updateFeedEnd();
+}
+function moreFeed() {
+ if (sess.shown >= order.length) return;
+ const from = sess.shown;
+ sess.shown = Math.min(order.length, sess.shown + 12);
+ const nodes = cardNodes(order.slice(from, sess.shown));
+ nodes.forEach((n, i) => n.dataset.i = from + i);
+ placeCards(nodes);
+ updateFeedEnd();
+}
+let rz;
+addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => { if (sess.view === "feed" && wantCols() !== colCount) setCols(wantCols()); }, 150); });
+function updateFeedEnd() {
+ const end = $("feedEnd");
+ end.hidden = sess.shown < order.length;
+ end.innerHTML = `${esc(T("endFeed"))}<br><button class="pill-btn" type="button" id="again">↻ ${esc(T("again"))}</button>`;
+ const again = $("again"); if (again) again.onclick = reshuffle;
+}
+function reshuffle() { sess.seed = (Math.random() * 2 ** 31) | 0; renderFeed(); scrollTo({ top: $("bar").offsetTop - 4, behavior: "smooth" }); persist(); }
+
+/* directory */
+function renderDir() {
+ const ts = terms();
+ $("cats").innerHTML = `<button class="chip${sess.cat ? "" : " active"}" data-cat="">${esc(T("allFields"))}<small>${all.length}</small></button>` +
+  cats.map(c => `<button class="chip${sess.cat === c.name ? " active" : ""}" data-cat="${esc(c.name)}">${esc(L(c.name))}<small>${c.n}</small></button>`).join("");
+ const scope = all.filter(s => !sess.cat || s.c === sess.cat);
+ const subs = [...scope.reduce((m, s) => m.set(s.s, (m.get(s.s) || 0) + 1), new Map())].sort((a, b) => b[1] - a[1]);
+ const subsEl = $("subs");
+ subsEl.hidden = !sess.cat || subs.length < 2;
+ subsEl.innerHTML = `<button class="chip${sess.sub ? "" : " active"}" data-sub="">${esc(T("allTopics"))}</button>` +
+  subs.map(([n, k]) => `<button class="chip${sess.sub === n ? " active" : ""}" data-sub="${esc(n)}">${esc(L(n))}<small>${k}</small></button>`).join("");
+ let data = scope.filter(s => (!sess.sub || s.s === sess.sub) && matches(s, ts));
+ if (sess.sort === "name") data.sort((a, b) => a.n.localeCompare(b.n, lang === "en" ? "en" : "zh"));
+ else if (sess.sort === "random") { const r = rng(sess.seed + 7); data = data.map(s => [r(), s]).sort((a, b) => a[0] - b[0]).map(x => x[1]); }
+ $("dirTitle").textContent = sess.cat ? L(sess.cat) : T("allSites");
+ $("dirCount").textContent = T("found", { n: data.length });
+ $("list").innerHTML = data.slice(0, sess.dirCount).map(row).join("") || `<div class="empty">${esc(T("noResult"))}</div>`;
+ const left = data.length - sess.dirCount;
+ $("more").hidden = left <= 0;
+ $("more").textContent = T("more", { n: Math.min(40, left) });
+}
+
+/* liked */
+function renderLiked() {
+ const liked = all.filter(s => store.likes[s.id]).sort((a, b) => store.likes[b.id] - store.likes[a.id]);
+ $("likedNote").textContent = T("likedNote");
+ $("likedList").innerHTML = liked.map(row).join("") || `<div class="empty">${esc(T("likedEmpty"))}</div>`;
+ const nh = Object.keys(store.hidden).length;
+ $("hiddenNote").innerHTML = nh ? `${esc(T("hiddenNote", { n: nh }))} · <button type="button" id="restoreAll">${esc(T("restore"))}</button>` : "";
+ const rb = $("restoreAll"); if (rb) rb.onclick = () => { store.hidden = {}; save(); toast(T("restored")); renderLiked(); };
+}
+function updateLikedCount() { const n = Object.keys(store.likes).length; $("likedCount").textContent = n ? n : ""; }
+
+/* views */
+function setView(v, opts) {
+ sess.view = v;
+ document.querySelectorAll(".tab").forEach(b => { const on = b.dataset.view === v; b.classList.toggle("active", on); b.setAttribute("aria-selected", on); });
+ $("viewFeed").hidden = v !== "feed"; $("viewDir").hidden = v !== "dir"; $("viewLiked").hidden = v !== "liked";
+ if (v === "feed") renderFeed(opts && opts.keep);
+ if (v === "dir") renderDir();
+ if (v === "liked") renderLiked();
+ persist();
+}
+
+/* chrome text */
+function translate() {
+ document.documentElement.lang = lang;
+ document.title = (lang === "en" ? "Knowledge Atlas" : lang === "zh-TW" ? "知識座標" : "知识坐标") + " · Knowledge Museum";
+ document.querySelectorAll("[data-t]").forEach(el => { el.textContent = T(el.dataset.t); });
+ $("q").placeholder = T("search"); $("q").setAttribute("aria-label", T("search"));
+ $("introText").textContent = T("intro", { n: all.length || "—", c: cats.length || "—" });
+ $("feedScope").innerHTML = `<option value="">${esc(T("allFields"))}</option>` + cats.map(c => `<option value="${esc(c.name)}"${sess.scope === c.name ? " selected" : ""}>${esc(L(c.name))} (${c.n})</option>`).join("");
+ $("sort").innerHTML = ["default", "name", "random"].map(k => `<option value="${k}"${sess.sort === k ? " selected" : ""}>${esc(T("sort" + k[0].toUpperCase() + k.slice(1)))}</option>`).join("");
+ $("toTop").setAttribute("aria-label", T("back"));
+ document.querySelectorAll(".language-switch button").forEach(b => { const on = b.dataset.lang === lang; b.classList.toggle("active", on); b.setAttribute("aria-pressed", on); });
+}
+function setLang(l) {
+ if (!DICT[l] || l === lang) return;
+ lang = l; try { localStorage.setItem(LANG_KEY, l); } catch {}
+ const y = scrollY; translate(); setView(sess.view, { keep: true }); scrollTo(0, y);
+}
+
+let toastTimer;
+function toast(msg, action) {
+ const el = $("toast");
+ el.innerHTML = esc(msg) + (action ? ` <button class="undo" type="button" id="toastAct">${esc(action.label)}</button>` : "");
+ el.classList.add("show");
+ if (action) $("toastAct").onclick = () => { el.classList.remove("show"); action.run(); };
+ clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 4000);
+}
+
+/* ---------- events ---------- */
+document.querySelectorAll(".language-switch button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { setView(b.dataset.view); const top = $("bar").offsetTop - 4; if (scrollY > top) scrollTo({ top }); }));
+$("shuffle").addEventListener("click", reshuffle);
+$("feedScope").addEventListener("change", e => { sess.scope = e.target.value; renderFeed(); persist(); });
+$("sort").addEventListener("change", e => { sess.sort = e.target.value; sess.dirCount = 40; renderDir(); persist(); });
+$("more").addEventListener("click", () => { sess.dirCount += 40; renderDir(); persist(); });
+$("cats").addEventListener("click", e => { const b = e.target.closest("[data-cat]"); if (!b) return; sess.cat = b.dataset.cat; sess.sub = ""; sess.dirCount = 40; renderDir(); persist(); });
+$("subs").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; sess.sub = b.dataset.sub; sess.dirCount = 40; renderDir(); persist(); });
+let qTimer;
+$("q").value = sess.q;
+$("clear").hidden = !sess.q;
+$("q").addEventListener("input", e => {
+ clearTimeout(qTimer);
+ qTimer = setTimeout(() => {
+  sess.q = e.target.value; sess.dirCount = 40; $("clear").hidden = !sess.q;
+  if (sess.q && sess.view !== "dir") { sess.cat = ""; sess.sub = ""; setView("dir"); } else renderDir();
+  persist();
+ }, 160);
+});
+$("clear").addEventListener("click", () => { sess.q = ""; $("q").value = ""; $("clear").hidden = true; renderDir(); persist(); $("q").focus(); });
+
+document.addEventListener("click", e => {
+ const like = e.target.closest("[data-like]");
+ if (like) {
+  const id = like.dataset.like;
+  if (store.likes[id]) delete store.likes[id]; else store.likes[id] = Date.now();
+  save(); updateLikedCount();
+  document.querySelectorAll(`[data-like="${CSS.escape(id)}"]`).forEach(b => { const s = all.find(x => x.id === id); b.outerHTML = likeBtn(s); });
+  if (sess.view === "liked") renderLiked();
+  return;
+ }
+ const hide = e.target.closest("[data-hide]");
+ if (hide) {
+  const id = hide.dataset.hide, el = hide.closest(".card"), html = el.outerHTML.replace('<article class="card', `<article data-i="${el.dataset.i}" class="card`);
+  store.hidden[id] = Date.now(); save();
+  el.className = "card gone"; el.innerHTML = `<span>${esc(T("hidden"))}</span><button class="undo" type="button">${esc(T("undo"))}</button>`;
+  el.querySelector(".undo").onclick = () => { delete store.hidden[id]; save(); el.outerHTML = html; };
+  return;
+ }
+ const open = e.target.closest("[data-open]");
+ if (open) {
+  store.seen[open.dataset.open] = Date.now(); save(); persist();
+  const c = open.closest(".card"); if (c) setTimeout(() => c.classList.add("is-seen"), 400);
+ }
+});
+
+const bar = $("bar");
+addEventListener("scroll", () => {
+ $("toTop").classList.toggle("show", scrollY > 300);
+ bar.classList.toggle("stuck", bar.getBoundingClientRect().top <= 0 && scrollY > 10);
+}, { passive: true });
+$("toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ---------- load ---------- */
+fetch("data/yellow-pages.json", { cache: "no-cache" })
+ .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+ .then(data => {
+  all = (data.sites || []).filter(s => /^https?:\/\//i.test(s.u)).map(s => Object.assign(s, { id: String(s.id) }));
+  const counts = all.reduce((m, s) => m.set(s.c, (m.get(s.c) || 0) + 1), new Map());
+  cats = [...counts].map(([name, n]) => ({ name, n })).sort((a, b) => b.n - a.n);
+  cats.forEach((c, i) => catIndex.set(c.name, i));
+  if (sess.scope && !counts.has(sess.scope)) sess.scope = "";
+  if (sess.cat && !counts.has(sess.cat)) { sess.cat = ""; sess.sub = ""; }
+  translate(); updateLikedCount();
+  const y = sess.scroll;
+  setView(sess.view || "feed", { keep: true });
+  if (y) requestAnimationFrame(() => scrollTo(0, y));
+  observer = new IntersectionObserver(es => { if (es.some(x => x.isIntersecting) && sess.view === "feed") moreFeed(); }, { rootMargin: "600px 0px" });
+  observer.observe($("sentinel"));
+ })
+ .catch(err => { console.error(err); translate(); $("feed").innerHTML = `<div class="empty">${esc(T("loadFail"))}</div>`; });
+translate();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {});
 })();
-</script></body></html>
+</script>
+</body>
+</html>

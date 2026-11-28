@@ -103,7 +103,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  if (path.includes('/assets/icons/') || path.includes('/assets/splash/') || path.includes('/assets/covers/')) {
+  if (path.includes('/assets/icons/') || path.includes('/assets/splash/') || path.includes('/assets/covers/') || path.includes('/assets/yp-thumbs/')) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });
