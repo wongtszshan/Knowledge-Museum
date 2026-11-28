@@ -3,11 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f7f3ea">
-  <meta name="theme-color" content="#f4f0e7"><title>All Exhibits · Knowledge Museum</title>
+  <meta name="theme-color" content="#f4f0e7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Knowledge Museum">
+  <title>All Exhibits · Knowledge Museum</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css?v=20261116-museum-i18n">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="assets/js/theme.js"></script>
 </head>
 <body data-page="archive">
   <div class="shell">
@@ -25,24 +30,22 @@
       <section class="section compact-section">
         <div class="browse-toolbar archive-toolbar">
           <div class="controls archive-controls">
-            <input class="search" id="archiveSearch" data-i18n-placeholder="archiveSearch" placeholder="搜索标题、标签或关键词…">
+            <input class="search" id="archiveSearch" type="search" enterkeyhint="search" data-i18n-placeholder="archiveSearch" placeholder="搜索标题、标签或关键词…">
+            <div class="chip-row tag-filter-row" id="archiveTag" hidden></div>
             <div class="chip-row" id="archiveFilters"></div>
           </div>
           <div class="view-toggle" data-i18n-aria="viewLabel" aria-label="切换展示方式">
-  <button class="view-btn active" data-view="gallery" title="Gallery">▦ <span data-i18n="gallery">Gallery</span></button>
-  <button class="view-btn" data-view="list" title="List">☰ <span data-i18n="list">List</span></button>
-</div>
+            <button class="view-btn active" data-view="gallery" title="Gallery">▦ <span data-i18n="gallery">Gallery</span></button>
+            <button class="view-btn" data-view="list" title="List">☰ <span data-i18n="list">List</span></button>
+          </div>
         </div>
         <div class="exhibit-view gallery-view" id="archiveList"></div>
       </section>
     </main>
     <footer data-i18n="archiveFooter">KNOWLEDGE MUSEUM · Full Archive</footer>
   </div>
-  <script defer src="assets/js/i18n.js?v=20261116-1"></script><script defer src="assets/js/app.js?v=20261116-museum-i18n"></script>
-<script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(() => {});
-    }
-  </script>
+  <script defer src="assets/js/i18n.js"></script>
+  <script defer src="assets/js/core.js"></script>
+  <script defer src="assets/js/app.js"></script>
 </body>
 </html>

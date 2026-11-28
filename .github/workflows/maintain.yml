@@ -1,0 +1,61 @@
+# Runs after every push to main that touches the catalogue or exhibits.
+#  1. tools/validate.py         — stops here (red ✗) if articles.json / categories.json has a mistake.
+#  2. tools/update_catalogue.py — fills created / updated dates and PDF page counts from git,
+#                                 rebuilds data/search-index.json for full-text search.
+#  3. Commits those generated changes back to main (GitHub Pages then redeploys).
+name: Maintain catalogue
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "data/articles.json"
+      - "data/categories.json"
+      - "tools/**"
+      - ".github/workflows/maintain.yml"
+  pull_request:
+    paths:
+      - "content/**"
+      - "data/**"
+      - "tools/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: maintain-catalogue
+  cancel-in-progress: false
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, needed for created / updated dates
+
+      - name: Install PDF tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+
+      - name: Validate catalogue
+        run: python3 tools/validate.py
+
+      - name: Update dates, page counts and search index
+        if: github.event_name != 'pull_request'
+        run: python3 tools/update_catalogue.py
+
+      - name: Commit generated changes
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to update."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add data/articles.json data/search-index.json
+          git commit -m "Auto-update catalogue dates and search index"
+          git pull --rebase origin main
+          git push origin HEAD:main

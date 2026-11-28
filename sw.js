@@ -1,4 +1,10 @@
-const CACHE_NAME = 'knowledge-museum-shell-v15-audited-sites';
+/* Knowledge Museum service worker.
+   - Catalogue (data/) and exhibits (content/html/): network first, cached copy when offline.
+   - Site shell (pages, assets/js, assets/css): network first, so code updates appear on next open
+     without touching version numbers.
+   - Icons and splash images: cache first, refreshed in the background.
+   - PDFs are never cached here: they are large and stream straight from GitHub Pages / R2. */
+const CACHE_NAME = 'knowledge-museum-shell-v16';
 const CORE = [
   './',
   './index.html',
@@ -8,13 +14,20 @@ const CORE = [
   './archive.html',
   './yellow-pages.html',
   './data/yellow-pages.json',
-  './assets/css/app.css?v=20261116-search-spacing-fix',
-  './assets/js/i18n.js?v=20261116-1',
-  './assets/js/app.js?v=20261116-museum-i18n',
+  './data/articles.json',
+  './data/categories.json',
+  './assets/css/app.css',
+  './assets/js/theme.js',
+  './assets/js/i18n.js',
+  './assets/js/core.js',
+  './assets/js/app.js',
+  './assets/js/reader.js',
   './manifest.webmanifest',
-  './assets/icons/app-icon-1024.png',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/apple-touch-icon.png',
   './assets/splash/background.png',
-  './assets/splash/startup-image.png'
+  './assets/splash/startup-image.webp'
 ];
 
 self.addEventListener('install', event => {
@@ -33,14 +46,14 @@ self.addEventListener('activate', event => {
   );
 });
 
-async function networkFirst(request) {
+async function networkFirst(request, { ignoreSearch = false } = {}) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request, { cache: 'no-store' });
     if (response && response.ok) await cache.put(request, response.clone());
     return response;
   } catch (error) {
-    const cached = await cache.match(request);
+    const cached = await cache.match(request) || (ignoreSearch ? await cache.match(request, { ignoreSearch: true }) : null);
     if (cached) return cached;
     throw error;
   }
@@ -64,34 +77,33 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  const path = url.pathname;
 
-  if (url.pathname.includes('/data/') || url.pathname.includes('/content/html/')) {
+  if (path.includes('/content/pdf/') || path.endsWith('.pdf')) return;
+
+  // The full-text index is only needed for searching: serve the cached copy instantly, refresh behind.
+  if (path.endsWith('/data/search-index.json')) {
+    event.respondWith(staleWhileRevalidate(request));
+    return;
+  }
+
+  if (path.includes('/data/') || path.includes('/content/html/')) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // PDF files are intentionally not cached by the app shell: museum guides can be large.
-  // Let the browser stream them normally from GitHub Pages.
-  if (url.pathname.includes('/content/pdf/')) {
-    return;
-  }
-
+  // Pages: viewer.html?id=… falls back to the cached shell when offline.
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(request));
+    event.respondWith(networkFirst(request, { ignoreSearch: true }));
     return;
   }
 
-  if (
-    url.pathname.endsWith('/assets/js/app.js') ||
-    url.pathname.endsWith('/assets/js/i18n.js') ||
-    url.pathname.endsWith('/assets/css/app.css') ||
-    url.pathname.endsWith('/manifest.webmanifest')
-  ) {
-    event.respondWith(networkFirst(request));
+  if (path.includes('/assets/js/') || path.includes('/assets/css/') || path.endsWith('/manifest.webmanifest')) {
+    event.respondWith(networkFirst(request, { ignoreSearch: true }));
     return;
   }
 
-  if (url.pathname.includes('/assets/icons/') || url.pathname.includes('/assets/splash/')) {
+  if (path.includes('/assets/icons/') || path.includes('/assets/splash/') || path.includes('/assets/covers/')) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });

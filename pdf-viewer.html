@@ -3,68 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#171714">
+  <meta name="theme-color" content="#172721">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Knowledge Museum">
   <title>PDF · Knowledge Museum</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css?v=20261116-museum-i18n">
-  <script defer src="assets/js/i18n.js?v=20261116-1"></script>
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="assets/js/theme.js"></script>
 </head>
-<body class="pdf-viewer-body">
-  <header class="pdf-viewer-bar">
-    <div class="pdf-viewer-left">
-      <button class="pdf-viewer-btn" id="backBtn" data-i18n="back">← 返回</button>
-      <a class="pdf-viewer-btn" href="index.html">Museum</a>
-      <span class="pdf-viewer-title" id="pdfTitle">PDF</span>
+<body class="reader-body pdf-viewer-body" data-reader="pdf">
+  <header class="reader-bar" id="readerBar">
+    <div class="reader-left">
+      <button class="reader-btn icon-only" id="backBtn" type="button" data-i18n-aria="back" aria-label="返回">←</button>
+      <a class="reader-btn icon-only" href="index.html" data-i18n-aria="museum" aria-label="知识博物馆">⌂</a>
     </div>
-    <div class="pdf-viewer-actions">
-      <a class="pdf-viewer-btn" id="openPdf" href="#" target="_blank" rel="noopener" data-i18n="originalPdf">原始 PDF ↗</a>
+    <div class="reader-heading">
+      <a class="reader-kicker" id="readerCat" href="archive.html"></a>
+      <div class="reader-title" id="readerTitle" data-i18n="loading">正在载入…</div>
+    </div>
+    <div class="reader-right">
+      <button class="reader-btn icon-only" id="favBtn" type="button" aria-pressed="false" data-i18n-aria="favorite" aria-label="收藏">☆</button>
+      <button class="reader-btn wide-only" id="shareBtn" type="button" data-i18n="share">分享</button>
+      <a class="reader-btn wide-only" id="openRaw" target="_blank" rel="noopener" data-i18n="originalPdf">原始 PDF ↗</a>
+      <button class="reader-btn" id="moreBtn" type="button" aria-expanded="false" aria-controls="readerDrawer"><span aria-hidden="true">☰</span> <span data-i18n="more">更多</span></button>
     </div>
   </header>
-
-  <main class="pdf-stage">
-    <div class="pdf-fallback" id="pdfFallback" data-i18n="loadingPdf">正在载入 PDF…</div>
-    <iframe class="pdf-frame" id="pdfFrame" title="PDF 阅读器"></iframe>
+  <main class="reader-stage">
+    <div class="reader-fallback" id="readerFallback" data-i18n="loadingPdf">正在载入 PDF…</div>
+    <iframe class="reader-frame" id="frame" title="PDF"></iframe>
   </main>
 
-  <script>
-    const params=new URLSearchParams(location.search);
-    const id=params.get('id');
-    const titleEl=document.getElementById('pdfTitle');
-    const frame=document.getElementById('pdfFrame');
-    const fallback=document.getElementById('pdfFallback');
-    const openPdf=document.getElementById('openPdf');
-    document.addEventListener('km-language-change',()=>{if(fallback.style.display!=='none'&&!frame.src)fallback.textContent=KM_I18N.t('loadingPdf')});
+  <div class="reader-drawer" id="readerDrawer" aria-hidden="true">
+    <button class="reader-drawer-backdrop" id="drawerBackdrop" type="button" tabindex="-1" data-i18n-aria="close" aria-label="关闭"></button>
+    <section class="reader-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer-head">
+        <div><div class="kicker" id="drawerKicker">Exhibit</div><h2 id="drawerTitle"></h2></div>
+        <button class="collections-close" id="drawerClose" type="button" data-i18n-aria="close" aria-label="关闭">×</button>
+      </div>
+      <div class="drawer-actions">
+        <button class="drawer-action" id="drawerFav" type="button"></button>
+        <button class="drawer-action" id="drawerDone" type="button"></button>
+        <button class="drawer-action" id="drawerShare" type="button" data-i18n="share">分享</button>
+        <a class="drawer-action" id="drawerRaw" target="_blank" rel="noopener" data-i18n="originalPdf">原始 PDF ↗</a>
+      </div>
+      <div class="drawer-block">
+        <h3><span data-i18n="inThisHall">本展厅</span> · <a id="drawerCat" href="archive.html"></a></h3>
+        <div class="drawer-nav" id="drawerNav"></div>
+      </div>
+      <div class="drawer-block">
+        <h3 data-i18n="related">相关展品</h3>
+        <div class="drawer-related" id="drawerRelated"></div>
+      </div>
+      <div class="drawer-block">
+        <h3 data-i18n="appearance">外观与语言</h3>
+        <div class="drawer-prefs"><div data-lang-mount></div><div data-theme-mount></div></div>
+      </div>
+    </section>
+  </div>
 
-    document.getElementById('backBtn').addEventListener('click',()=>{
-      if(history.length>1) history.back();
-      else location.href='index.html';
-    });
-
-    fetch('data/articles.json',{cache:'no-store'})
-      .then(r=>r.json())
-      .then(items=>{
-        const a=items.find(x=>x.id===id && x.type==='pdf');
-        if(!a) throw new Error('PDF not found');
-        const encodePath=p=>p.split('/').map(encodeURIComponent).join('/');
-        const rawPdfUrl=a.url || (/^https?:\/\//i.test(a.file||'') ? a.file : 'content/pdf/'+encodePath(a.file||''));
-        if(!rawPdfUrl) throw new Error('PDF URL missing');
-        const src=rawPdfUrl+(rawPdfUrl.includes('#')?'':'#view=FitH');
-        document.title=a.title+' · Knowledge Museum';
-        titleEl.textContent=a.title;
-        openPdf.href=rawPdfUrl;
-        frame.src=src;
-        frame.addEventListener('load',()=>{fallback.style.display='none'},{once:true});
-        setTimeout(()=>{
-          if(fallback.style.display!=='none'){
-            fallback.innerHTML=KM_I18N.t('pdfFallbackPrefix')+'<a href="'+openPdf.href+'" target="_blank" rel="noopener">'+KM_I18N.t('pdfFallbackLink')+'</a>。';
-          }
-        },2500);
-      })
-      .catch(()=>{
-        fallback.innerHTML=KM_I18N.t('pdfMissing')+'<br><a href="index.html">'+KM_I18N.t('backMuseum')+'</a>';
-        openPdf.style.display='none';
-      });
-  </script>
+  <script defer src="assets/js/i18n.js"></script>
+  <script defer src="assets/js/core.js"></script>
+  <script defer src="assets/js/reader.js"></script>
 </body>
 </html>

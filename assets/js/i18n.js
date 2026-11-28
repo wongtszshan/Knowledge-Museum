@@ -70,6 +70,12 @@ const original={
 "categoryFooter":"KNOWLEDGE MUSEUM · Collection",
 "indexFooter":"KNOWLEDGE MUSEUM · Curated by you · GitHub Pages ready"
 }};
+const additions={
+"zh-CN":{"continueReading":"继续阅读","continueNote":"从上次停下的地方继续","favorites":"我的收藏","favoritesNote":"你标记的展品","readPct":"已读 {n}%","readDone":"已读完","opened":"已打开","themeToDark":"切换到深色模式","themeToLight":"切换到浅色模式","more":"更多","share":"分享","linkCopied":"链接已复制","favorite":"收藏","favorited":"已收藏","markRead":"标记为已读","markUnread":"标记为未读","prevItem":"← 上一件","nextItem":"下一件 →","inThisHall":"本展厅","related":"相关展品","noRelated":"暂时没有相关展品","resumeAt":"上次读到 {n}%","resumeGo":"跳过去","finishedHint":"读完了，看看相关展品？","appearance":"外观与语言","tagLabel":"标签","clearFilter":"清除","fulltextHit":"正文","searchingText":"正在搜索正文…","randomHall":"随机 ↗","topics":"主题","allTopics":"全部","resultCount":"{n} 件匹配"},
+"zh-TW":{"continueReading":"繼續閱讀","continueNote":"從上次停下的地方繼續","favorites":"我的收藏","favoritesNote":"你標記的展品","readPct":"已讀 {n}%","readDone":"已讀完","opened":"已開啟","themeToDark":"切換到深色模式","themeToLight":"切換到淺色模式","more":"更多","share":"分享","linkCopied":"連結已複製","favorite":"收藏","favorited":"已收藏","markRead":"標記為已讀","markUnread":"標記為未讀","prevItem":"← 上一件","nextItem":"下一件 →","inThisHall":"本展廳","related":"相關展品","noRelated":"暫時沒有相關展品","resumeAt":"上次讀到 {n}%","resumeGo":"跳過去","finishedHint":"讀完了，看看相關展品？","appearance":"外觀與語言","tagLabel":"標籤","clearFilter":"清除","fulltextHit":"正文","searchingText":"正在搜尋正文…","randomHall":"隨機 ↗","topics":"主題","allTopics":"全部","resultCount":"{n} 件符合"},
+"en":{"continueReading":"Continue Reading","continueNote":"Pick up where you left off","favorites":"Favorites","favoritesNote":"Exhibits you starred","readPct":"{n}% read","readDone":"Finished","opened":"Opened","themeToDark":"Switch to dark mode","themeToLight":"Switch to light mode","more":"More","share":"Share","linkCopied":"Link copied","favorite":"Favorite","favorited":"Favorited","markRead":"Mark as read","markUnread":"Mark as unread","prevItem":"← Previous","nextItem":"Next →","inThisHall":"In this collection","related":"Related exhibits","noRelated":"No related exhibits yet","resumeAt":"You stopped at {n}%","resumeGo":"Jump there","finishedHint":"Finished? See related exhibits","appearance":"Appearance & language","tagLabel":"Tag","clearFilter":"Clear","fulltextHit":"Text","searchingText":"Searching full text…","randomHall":"Random ↗","topics":"Topics","allTopics":"All","resultCount":"{n} matches"}
+};
+for(const l in additions)Object.assign(original[l],additions[l]);
 const categories={
 "history":{trad:"歷史與文明",en:"History & Civilization",descriptionTrad:"制度、社會、文化與文明變遷",descriptionEn:"Institutions, society, culture and changing civilizations"},
 "science":{trad:"科學與原理",en:"Science & Principles",descriptionTrad:"物理、自然現象與視覺化演示",descriptionEn:"Physics, natural phenomena and interactive explanations"},
@@ -81,9 +87,9 @@ const categories={
 };
 let current="zh-CN";
 try{const stored=localStorage.getItem(KEY);if(LANGS.includes(stored))current=stored;else{const l=(navigator.languages?.[0]||navigator.language||"zh-CN").toLowerCase();current=l.startsWith("zh")&&(l.includes("tw")||l.includes("hk")||l.includes("hant"))?"zh-TW":l.startsWith("zh")?"zh-CN":"en"}}catch{}
-function t(key){return original[current][key]||original["zh-CN"][key]||key}
-function categoryName(c){if(!c)return "";const e=categories[c.id];if(current==="en")return e?.en||c.nameEn||c.name;if(current==="zh-TW")return e?.trad||c.name;return c.name}
-function categoryDescription(c){if(!c)return "";const e=categories[c.id];if(current==="en")return e?.descriptionEn||c.description||"";if(current==="zh-TW")return e?.descriptionTrad||c.description||"";return c.description||""}
+function t(key,vars){let v=original[current][key]||original["zh-CN"][key]||key;if(vars)for(const k in vars)v=v.replace("{"+k+"}",vars[k]);return v}
+function categoryName(c){if(!c)return "";const e=categories[c.id];if(current==="en")return c.nameEn||e?.en||c.name;if(current==="zh-TW")return c.nameTrad||e?.trad||c.name;return c.name}
+function categoryDescription(c){if(!c)return "";const e=categories[c.id];if(current==="en")return c.descriptionEn||e?.descriptionEn||c.description||"";if(current==="zh-TW")return c.descriptionTrad||e?.descriptionTrad||c.description||"";return c.description||""}
 function categorySubname(c){if(!c)return "";return current==="en"?(c.name||""):(c.nameEn||"")}
 function apply(){
  document.documentElement.lang=current;
@@ -101,7 +107,7 @@ function set(lang){
 }
 function mount(){
  if(!document.querySelector(".km-language-switch")){
-  const top=document.querySelector(".topbar .top-actions");
+  const custom=document.querySelector("[data-lang-mount]");const top=custom||document.querySelector(".topbar .top-actions");
   const viewer=document.querySelector(".viewer-right");
   const pdf=document.querySelector(".pdf-viewer-actions");
   const parent=top||viewer||pdf;

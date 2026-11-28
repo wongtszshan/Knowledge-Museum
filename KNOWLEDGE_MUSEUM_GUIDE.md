@@ -27,27 +27,37 @@ Knowledge Museum 是一个基于 GitHub Pages 的个人知识库 / PWA。
 ```text
 Knowledge-Museum/
 │
-├── index.html
-├── viewer.html
+├── index.html / archive.html / category.html   ← 博物馆页面
+├── viewer.html / pdf-viewer.html               ← 阅读器外壳（HTML / PDF）
+├── yellow-pages.html                           ← 知识黄页（独立，不与馆藏关联）
 ├── manifest.webmanifest
 ├── sw.js
 │
 ├── data/
-│   ├── categories.json
-│   └── articles.json
+│   ├── categories.json      ← 展厅（手动维护）
+│   ├── articles.json        ← 展品目录（手动维护；日期/页数由 Action 自动补）
+│   ├── search-index.json    ← 全文搜索索引（自动生成，不要手改）
+│   └── yellow-pages.json
 │
 ├── content/
-│   └── html/
-│       ├── chinese-dynasties.html
-│       ├── venturi-effect.html
-│       ├── inflorescence-types.html
-│       └── us-stock-investing-guide.html
+│   ├── html/                ← HTML 展品
+│   └── pdf/                 ← 本地 PDF 展品
 │
-└── assets/
-    ├── css/
-    │   └── app.css
-    └── js/
-        └── app.js
+├── assets/
+│   ├── css/app.css
+│   ├── js/theme.js          ← 浅色/深色切换
+│   ├── js/i18n.js           ← 简/繁/EN 界面文字
+│   ├── js/core.js           ← 公共：目录读取、阅读记录、相关推荐
+│   ├── js/app.js            ← 首页 / 展厅 / 全部馆藏
+│   ├── js/reader.js         ← 阅读器
+│   ├── icons/  splash/
+│   └── covers/              ← （可选）展品封面
+│
+├── tools/
+│   ├── validate.py          ← 检查目录是否有错
+│   └── update_catalogue.py  ← 补日期、PDF 页数，生成全文索引
+│
+└── .github/workflows/maintain.yml  ← 每次 push 后自动运行上面两个脚本
 ```
 
 ---
@@ -337,11 +347,25 @@ false
   "id": "finance",
   "name": "金融与投资",
   "nameEn": "Finance & Investing",
+  "nameTrad": "金融與投資",
   "description": "市场、投资、资产与个人金融知识",
+  "descriptionTrad": "市場、投資、資產與個人金融知識",
+  "descriptionEn": "Markets, investing, assets and personal finance",
   "accent": "#7A6A45",
+  "tint": "#e9e3d1",
+  "symbol": "F",
   "order": 4
 }
 ```
+
+新增字段（2026-11）：
+
+- `nameTrad` / `descriptionTrad`：繁体界面显示的名称和简介（缺省时显示简体）。
+- `descriptionEn`：英文界面显示的简介。
+- `tint`：首页展厅卡片的浅底色，`#RRGGBB`。
+- `symbol`：首页卡片右上角的大字母，一个字符。
+
+加新展厅时把这些一起填上，**不需要改任何 JS**。
 
 ### `id`
 
@@ -692,12 +716,13 @@ data/articles.json
 正常新增内容时不要改：
 
 ```text
-index.html
-viewer.html
-assets/js/app.js
+index.html / archive.html / category.html
+viewer.html / pdf-viewer.html
+assets/js/*.js
 assets/css/app.css
 sw.js
 manifest.webmanifest
+data/search-index.json（自动生成）
 ```
 
 只有用户明确要求网站功能或界面调整时才修改。
@@ -850,3 +875,57 @@ PDF 展品同时支持 GitHub 本地文件和远程 URL。
 ```
 
 当 `url` 存在时，PDF 阅读器优先使用远程 URL；没有 `url` 时才读取本地 `content/pdf/` 文件。因此本地小 PDF 和 R2 大 PDF 可以同时存在。
+
+
+---
+
+## 19. 自动维护（GitHub Action）
+
+文件：`.github/workflows/maintain.yml`。每次 push 到 `main`，只要改动了 `content/`、`data/articles.json`、`data/categories.json` 或 `tools/`，就会自动：
+
+1. **检查目录**（`tools/validate.py`）：JSON 格式、必填字段、重复 id、分类是否存在、`file` 指向的文件是否存在、日期和颜色格式。
+   - 有错误时，这次运行显示红色 ✗，GitHub 的 Actions 页面会列出具体是哪一条、哪个字段出错。
+   - `content/` 里有没登记的文件只会提示（⚠），不算错误。
+2. **自动补信息**（`tools/update_catalogue.py`）：
+   - `created` 为空时，用这个文件第一次提交的日期补上；
+   - `updated` 自动更新为这个文件最近一次提交的日期（只会往后更新，不会改回去）；
+   - PDF 的 `pages` 为空时自动补页数；
+   - 重新生成 `data/search-index.json`（全文搜索用）。
+3. 有改动就由 `github-actions[bot]` 自动提交回 `main`，GitHub Pages 随后重新部署。
+
+所以新增展品时，`created` / `updated` / `pages` **可以不填**。手填的值会被保留（`updated` 除外，它会跟随文件的实际修改时间）。
+
+本地手动运行：
+
+```bash
+python3 tools/validate.py
+python3 tools/update_catalogue.py --no-dates   # 浅克隆时跳过日期
+```
+
+需要 `poppler-utils`（`pdftotext`、`pdfinfo`）来处理 PDF；Action 里已自动安装。远程 R2 PDF 会下载一次提取文字，之后会复用索引里已有的结果，不会每次都下载。
+
+---
+
+## 20. 全文搜索、阅读记录与其它功能
+
+- **全文搜索**：全部馆藏和展厅页的搜索框会同时搜索标题、标签、简介和展品正文（来自 `search-index.json`）。只在正文中匹配到的结果排在后面，并显示命中的那句话。扫描版 PDF 没有文字层，搜不到正文。
+- **标签**：卡片上的 `#标签` 可以点击，跳到 `archive.html?tag=标签`，列出所有带这个标签的展品。
+- **展厅主题**：展厅页会自动把展厅内出现 2 次以上的标签做成筛选按钮（几乎所有展品都有的标签，例如「博物馆」，会自动略过）。
+- **阅读记录**：记录在当前浏览器的 localStorage（`km-reading-v1`），不上传、不跨设备同步。
+  - HTML 展品会自动记录阅读进度，读到 95% 标记为「已读完」；PDF 只记录「已打开」，可在阅读器「更多」里手动标记已读。
+  - 首页会显示「继续阅读」和「我的收藏」（有内容时才出现）。
+- **阅读器**：顶栏显示所属展厅；☆ 收藏；「更多」里有上一件 / 下一件（同展厅）、相关展品（按共同标签和展厅推荐）、分享、标记已读、外观与语言。HTML 展品往下滚动时顶栏自动收起，往上滚动时出现。
+- **随机漫游**：优先挑没打开过的展品；在展厅页只在本展厅（和当前主题）里随机，在全部馆藏页跟随当前筛选。
+- **深色模式**：顶栏 ☾ / ☀ 按钮手动切换，默认浅色。只作用于博物馆外壳，展品 HTML 本身保持原样。
+
+### 可选：展品封面 `cover`
+
+```json
+"cover": "assets/covers/venturi-effect.webp"
+```
+
+有 `cover` 时，画廊视图的卡片顶部会显示这张图（16:9，从顶部裁切）。没有就保持原来的纯文字卡片。建议 WebP、宽 800px 左右。
+
+### 不再需要版本号
+
+页面引用 CSS / JS 时不再带 `?v=...`。Service Worker 对页面、JS、CSS 使用「联网优先」，改完代码 push 后，下次打开就是新版本。只有修改 `sw.js` 里的预缓存清单时才需要改 `CACHE_NAME`。

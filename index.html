@@ -9,10 +9,11 @@
   <meta name="apple-mobile-web-app-title" content="Knowledge Museum">
   <title>Knowledge Museum</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="assets/icons/app-icon-1024.png">
-  <link rel="apple-touch-startup-image" href="assets/splash/startup-image.png">
-  <link rel="icon" type="image/png" href="assets/icons/app-icon-1024.png">
-  <link rel="stylesheet" href="assets/css/app.css?v=20261116-search-spacing-fix">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="assets/splash/startup-image.jpg">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <script src="assets/js/theme.js"></script>
   <style>
     #app-splash{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#f7f3ea url('assets/splash/background.png') center/cover no-repeat;opacity:1;visibility:visible;transition:opacity .38s ease,visibility .38s ease}
     #app-splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -20,11 +21,10 @@
     @media (prefers-reduced-motion:reduce){#app-splash{transition:none}}
       .yellow-pages-toplink{background:linear-gradient(115deg,#087e76,#137fa0)!important;color:#fff!important;border-color:transparent!important;font-weight:800!important;box-shadow:0 6px 20px rgba(12,124,119,.19)}
     .yellow-pages-toplink:hover{transform:translateY(-1px);box-shadow:0 9px 25px rgba(12,124,119,.28)}
-    @media(max-width:600px){.topbar{gap:8px}.top-actions{gap:6px}.top-actions .icon-btn{font-size:11px;padding:9px 10px;white-space:nowrap}.topbar .brand{font-size:11px;min-width:0}.topbar .brand small{font-size:9px}}
   </style>
 </head>
 <body data-page="home">
-  <div id="app-splash" aria-hidden="true"><img src="assets/splash/startup-image.png" alt=""></div>
+  <div id="app-splash" aria-hidden="true"><img src="assets/splash/startup-image.webp" alt=""></div>
   <div class="shell">
     <header class="topbar">
       <a class="brand" href="index.html">KNOWLEDGE MUSEUM<small>PERSONAL ARCHIVE</small></a>
@@ -47,6 +47,16 @@
           <input class="search home-search" id="homeSearch" data-i18n-placeholder="homeSearch" placeholder="探索标题、主题或关键词…">
           <button class="icon-btn" id="homeSearchBtn" data-i18n="search">搜索</button>
         </div>
+      </section>
+
+      <section class="section compact-section shelf-section" id="continueSection" hidden>
+        <div class="section-head"><h2><span data-i18n="continueReading">继续阅读</span> <span class="heading-english">/ Continue</span></h2><span data-i18n="continueNote">从上次停下的地方继续</span></div>
+        <div class="article-list" id="continueList"></div>
+      </section>
+
+      <section class="section compact-section shelf-section" id="favoritesSection" hidden>
+        <div class="section-head"><h2><span data-i18n="favorites">我的收藏</span> <span class="heading-english">/ Favorites</span></h2><span data-i18n="favoritesNote">你标记的展品</span></div>
+        <div class="article-list" id="favoritesList"></div>
       </section>
 
       <section class="section compact-section collections-section">
@@ -98,10 +108,11 @@
     </section>
   </div>
 
-  <script defer src="assets/js/i18n.js?v=20261116-1"></script><script defer src="assets/js/app.js?v=20261116-museum-i18n"></script>
+  <script defer src="assets/js/i18n.js"></script>
+  <script defer src="assets/js/core.js"></script>
+  <script defer src="assets/js/app.js"></script>
   <script>
-    (()=>{const s=document.getElementById('app-splash');const hide=()=>{if(!s)return;s.classList.add('is-hidden');setTimeout(()=>s.remove(),450)};if(sessionStorage.getItem('km-splash-shown'))s?.remove();else{sessionStorage.setItem('km-splash-shown','1');addEventListener('load',()=>setTimeout(hide,650),{once:true});setTimeout(hide,1800)}})();
-    if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+    (()=>{const s=document.getElementById('app-splash');const hide=()=>{if(!s)return;s.classList.add('is-hidden');setTimeout(()=>s.remove(),450)};let seen=false;try{seen=!!sessionStorage.getItem('km-splash-shown');sessionStorage.setItem('km-splash-shown','1')}catch(e){}if(seen)s?.remove();else{addEventListener('load',()=>setTimeout(hide,650),{once:true});setTimeout(hide,1800)}})();
   </script>
 </body>
 </html>
