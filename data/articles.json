@@ -292,7 +292,8 @@
     "summary": "《古波斯的荣耀》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "precious-rarities",
@@ -312,7 +313,8 @@
     "summary": "《古犀献珍 · 上海博物馆》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "the-gifts-of-the-gods",
@@ -333,7 +335,8 @@
     "summary": "《瑰丽永驻——古希腊彩陶及普利亚艺术文化特展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 21
   },
   {
     "id": "sea-of-the-cloud",
@@ -352,7 +355,8 @@
     "summary": "《海溟溟》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 6
   },
   {
     "id": "legend-of-han-and-huai-valleys",
@@ -373,7 +377,8 @@
     "summary": "《汉淮传奇 · 上海博物馆》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "red-jade-in-bloom",
@@ -413,7 +418,8 @@
     "summary": "《红山文化古国文明特展 · 上海博物馆》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "cartier-the-power-of-magic",
@@ -434,7 +440,8 @@
     "summary": "《卡地亚展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "pearls-returned-home",
@@ -453,7 +460,8 @@
     "summary": "《两涂轩展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "wonders-of-the-world",
@@ -473,7 +481,8 @@
     "summary": "《马可波罗展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "resonance-of-wood-and-stone",
@@ -493,7 +502,8 @@
     "summary": "《木石双清展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "towering-treasure-house",
@@ -512,7 +522,8 @@
     "summary": "《西林塔特展》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 2
   },
   {
     "id": "panda-era",
@@ -532,7 +543,8 @@
     "summary": "《熊猫时代》相关 PDF 展览手册。",
     "created": "2026-10-05",
     "updated": "2026-10-05",
-    "featured": false
+    "featured": false,
+    "pages": 16
   },
   {
     "id": "coffee-beans-resting-freezing",
@@ -640,7 +652,7 @@
     ],
     "summary": "2026 年诺贝尔奖专题，聚焦光遗传学与南极冰立方中微子天文台，并整理六大奖项进度与来源。",
     "created": "2026-10-07",
-    "updated": "2026-10-07",
+    "updated": "2026-10-13",
     "featured": false,
     "type": "html"
   },
